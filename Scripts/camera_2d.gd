@@ -94,7 +94,7 @@ func check_player_is_near_edges(player_local_pos: Vector2, viewport_size: Vector
 	var visible_area = viewport_size / camera.zoom
 	
 	# Adjust the offset to reduce the detection area
-	var detection_offset = offset * 0.8  # Change factor to make it more or less sensitive
+	var detection_offset = offset * 0.5  # Change factor to make it more or less sensitive
 
 	var edges = []
 	if player_local_pos.x < -visible_area.x / 2 + detection_offset:
