@@ -201,7 +201,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_r68tu")
 }],
-"loop": false,
+"loop": true,
 "name": &"dash",
 "speed": 20.0
 }, {
@@ -317,7 +317,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_77uck")
 }],
-"loop": false,
+"loop": true,
 "name": &"slide",
 "speed": 13.0
 }]
@@ -328,12 +328,14 @@ height = 32.0
 
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_3a4ae")
+camera_node_path = null
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -10)
 sprite_frames = SubResource("SpriteFrames_sqakd")
 animation = &"dash"
 autoplay = "idle"
+frame_progress = 0.101157
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -10)
