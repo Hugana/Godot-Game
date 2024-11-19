@@ -1,7 +1,6 @@
 extends Camera2D
 
 @export var sensitivity: float = 0.05
-@export var bounds: Rect2 = Rect2(Vector2(0, 0), Vector2(2000, 2000))
 @export var deadzone_radius: float = 100  
 @export var camera_node_path: NodePath 
 @export var player_path: NodePath  
@@ -24,11 +23,11 @@ enum Edge {
 	BOTTOM
 }
 const opposing_edges = {
-		Edge.TOP: Edge.BOTTOM,
-		Edge.BOTTOM: Edge.TOP,
-		Edge.LEFT: Edge.RIGHT,
-		Edge.RIGHT: Edge.LEFT
-	}
+	Edge.TOP: Edge.BOTTOM,
+	Edge.BOTTOM: Edge.TOP,
+	Edge.LEFT: Edge.RIGHT,
+	Edge.RIGHT: Edge.LEFT
+}
 
 var mouse_edge = Edge.NONE
 var result = {"is_near_edge": false, "edges": []}
@@ -41,22 +40,21 @@ func _process(delta: float) -> void:
 	screen_size = get_viewport_rect().size
 	var mouse_pos = get_viewport().get_mouse_position()
 	mouse_edge = detect_mouse_edge(mouse_pos)
+	var player_pos = player.position
 
 	var player_local_pos = to_local(player.global_position)
 	result = check_player_is_near_edges(player_local_pos, screen_size, edge_offset)
 	
-	if (Input.is_action_just_pressed("focus_Camera")):
+	if Input.is_action_just_pressed("focus_Camera"):
 		camera_focus_bool = !camera_focus_bool
 		
 	if camera_focus_bool:
-		global_position = lerp(global_position, player.global_position, delta * 80)
+		global_position = lerp(global_position, player_pos, delta * 80)
 	else:
-		if mouse_edge != Edge.NONE:
+		if mouse_edge != Edge.NONE and not camera_focus_bool:
 			move_camera_if_needed(delta)
-		
 
 func detect_mouse_edge(mouse_pos: Vector2) -> Edge:
-
 	if mouse_pos.y <= deadzone_radius: 
 		return Edge.TOP
 	elif mouse_pos.x <= deadzone_radius: 
@@ -68,16 +66,14 @@ func detect_mouse_edge(mouse_pos: Vector2) -> Edge:
 	return Edge.NONE
 
 func move_camera_if_needed(delta: float) -> void:
-	
 	for edge in result["edges"]:
 		if mouse_edge == opposing_edges.get(edge, Edge.NONE):
-			return  
-			
+			return 
+	
 	var offset = calculate_mouse_offset(mouse_edge)
 	
 	if offset != Vector2.ZERO:
-		target_offset = clamp_vector(global_position + offset, bounds)
-		global_position = lerp(global_position, target_offset, delta * 80)
+		global_position += offset * delta * 80
 
 func calculate_mouse_offset(edge: Edge) -> Vector2:
 	var offset = Vector2.ZERO
@@ -105,10 +101,3 @@ func check_player_is_near_edges(player_local_pos: Vector2, viewport_size: Vector
 		edges.append(Edge.BOTTOM)
 
 	return {"is_near_edge": edges.size() > 0, "edges": edges}
-
-
-func clamp_vector(pos: Vector2, bounds: Rect2) -> Vector2:
-	return Vector2(
-		clamp(pos.x, bounds.position.x, bounds.position.x + bounds.size.x),
-		clamp(pos.y, bounds.position.y, bounds.position.y + bounds.size.y)
-	)

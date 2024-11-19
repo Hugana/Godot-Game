@@ -759,7 +759,7 @@ layer_3/tile_data = PackedInt32Array(-589838, 655362, 3, -524302, 655362, 4, -58
 
 [node name="Player" parent="." instance=ExtResource("1_glsjn")]
 z_index = 100
-position = Vector2(1428, 520)
+position = Vector2(1428, 518)
 camera_node_path = NodePath("../Camera2D")
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -774,10 +774,7 @@ script = ExtResource("3_gfv8e")
 camera_node_path = NodePath(".")
 player_path = NodePath("../Player")
 
-
-
 [node name="Jump" type="Label" parent="."]
-
 z_index = 50
 offset_left = 1806.0
 offset_top = 451.0
@@ -786,10 +783,7 @@ offset_bottom = 467.0
 theme_override_fonts/font = ExtResource("8_yj568")
 text = "[Space] to jump"
 
-
-
 [node name="Slide" type="Label" parent="."]
-
 z_index = 50
 offset_left = 2102.0
 offset_top = 508.0
@@ -815,4 +809,3 @@ script = ExtResource("8_rxc4v")
 libraries = {
 "": SubResource("AnimationLibrary_jlug2")
 }
-
