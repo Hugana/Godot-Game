@@ -11,6 +11,7 @@ extends Camera2D
 
 var player: Node2D 
 var camera: Camera2D
+var camera_focus_bool = true
 
 const edge_offset = 50
 var target_offset: Vector2 = Vector2.ZERO
@@ -42,10 +43,16 @@ func _process(delta: float) -> void:
 
 	var player_local_pos = to_local(player.global_position)
 	result = check_player_is_near_edges(player_local_pos, screen_size, edge_offset)
-
 	
-	if mouse_edge != Edge.NONE:
-		move_camera_if_needed(delta)
+	if (Input.is_action_just_pressed("focus_Camera")):
+		camera_focus_bool = !camera_focus_bool
+		
+	if camera_focus_bool:
+		global_position = lerp(global_position, player.global_position, delta * 80)
+	else:
+		if mouse_edge != Edge.NONE:
+			move_camera_if_needed(delta)
+		
 
 func detect_mouse_edge(mouse_pos: Vector2) -> Edge:
 

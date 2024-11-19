@@ -17,6 +17,8 @@ var camera: Camera2D
 var is_sliding = false
 var slide_timer = 0.0
 
+var inversion = 1
+
 func _ready() -> void:
 	camera = get_node(camera_node_path)
 	screen_size = get_viewport().size  
@@ -40,7 +42,16 @@ func _physics_process(delta: float) -> void:
 		start_slide(direction)
 	elif is_sliding:
 		handle_slide(delta)
-
+		
+	if Input.is_action_just_pressed("camera_1"):
+		inversion = 1
+	if Input.is_action_just_pressed("camera_2"):
+		inversion = -1
+	
+	if inversion == 1:
+		screen_wrap()
+	elif inversion == -1:
+		print("ya")
 	
 	if not is_sliding:
 		if direction:
@@ -109,6 +120,7 @@ func screen_wrap():
 	var top_edge = camera_pos.y - visible_height / 2
 	var bottom_edge = camera_pos.y + visible_height / 2
 
+	
 
 	if global_position.x > right_edge:
 		#print("Reached the right edge!")
@@ -123,6 +135,3 @@ func screen_wrap():
 	elif global_position.y < top_edge:
 		#print("Reached the top edge!")
 		global_position.y = bottom_edge
-
-
-		
