@@ -75,7 +75,6 @@ texture = ExtResource("1_bu5ru")
 5:6/0 = 0
 5:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 0:7/0 = 0
-
 0:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(8, -1, 8, 8, -8, 8, -8, -8, -6.1875, -8)
 1:7/0 = 0
 1:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(8, 7.07107, 8, 8, -8, 8, -8, -0.972272)
@@ -83,7 +82,6 @@ texture = ExtResource("1_bu5ru")
 2:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, 7.07107, -8, 8, 8, 8, 8, -0.972272)
 3:7/0 = 0
 3:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -0.984375, 6.27557, -8, 8, -8, 8, 8, -8, 8)
-
 4:7/0 = 0
 5:7/0 = 0
 0:8/0 = 0
@@ -694,7 +692,7 @@ layer_3/tile_data = PackedInt32Array(-589838, 655362, 3, -524302, 655362, 4, -58
 
 [node name="Player" parent="." instance=ExtResource("1_glsjn")]
 z_index = 100
-position = Vector2(1428, 519)
+position = Vector2(1428, 520)
 camera_node_path = NodePath("../Camera2D")
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -712,7 +710,7 @@ player_path = NodePath("../Player")
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 physics_interpolation_mode = 2
 
-[node name="Movement" type="Label" parent="Labels"]
+[node name="Labels#Movement" type="Label" parent="."]
 z_index = 50
 offset_left = 1451.0
 offset_top = 451.0
@@ -723,7 +721,7 @@ text = "[WASD] to move"
 autowrap_mode = 2
 script = ExtResource("8_rxc4v")
 
-[node name="Jump" type="Label" parent="Labels"]
+[node name="Labels#Jump" type="Label" parent="."]
 z_index = 50
 offset_left = 1806.0
 offset_top = 451.0
@@ -732,7 +730,7 @@ offset_bottom = 467.0
 theme_override_fonts/font = ExtResource("8_yj568")
 text = "[Space] to jump"
 
-[node name="Slide" type="Label" parent="Labels"]
+[node name="Labels#Slide" type="Label" parent="."]
 z_index = 50
 offset_left = 2102.0
 offset_top = 508.0
@@ -740,4 +738,3 @@ offset_right = 2290.0
 offset_bottom = 524.0
 theme_override_fonts/font = ExtResource("8_yj568")
 text = "[CTRL] to slide"
-
