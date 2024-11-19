@@ -38,6 +38,7 @@ func _ready() -> void:
 	camera = get_node(camera_node_path)
 
 func _process(delta: float) -> void:
+	screen_size = get_viewport_rect().size
 	var mouse_pos = get_viewport().get_mouse_position()
 	mouse_edge = detect_mouse_edge(mouse_pos)
 
@@ -93,17 +94,14 @@ func calculate_mouse_offset(edge: Edge) -> Vector2:
 func check_player_is_near_edges(player_local_pos: Vector2, viewport_size: Vector2, offset: float) -> Dictionary:
 	var visible_area = viewport_size / camera.zoom
 	
-	# Adjust the offset to reduce the detection area
-	var detection_offset = offset * 0.5  # Change factor to make it more or less sensitive
-
 	var edges = []
-	if player_local_pos.x < -visible_area.x / 2 + detection_offset:
+	if player_local_pos.x < -visible_area.x / 2 + offset:
 		edges.append(Edge.LEFT)
-	if player_local_pos.x > visible_area.x / 2 - detection_offset:
+	if player_local_pos.x > visible_area.x / 2 - offset:
 		edges.append(Edge.RIGHT)
-	if player_local_pos.y < -visible_area.y / 2 + detection_offset:
+	if player_local_pos.y < -visible_area.y / 2 + offset:
 		edges.append(Edge.TOP)
-	if player_local_pos.y > visible_area.y / 2 - detection_offset:
+	if player_local_pos.y > visible_area.y / 2 - offset:
 		edges.append(Edge.BOTTOM)
 
 	return {"is_near_edge": edges.size() > 0, "edges": edges}

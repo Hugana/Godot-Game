@@ -22,7 +22,7 @@ enum camera_perspectives {
 	INVERTED
 }
 
-var camera_perspective
+var camera_perspective = camera_perspectives.NORMAL
 
 
 
@@ -31,6 +31,8 @@ func _ready() -> void:
 	screen_size = get_viewport().size  
 
 func _physics_process(delta: float) -> void:
+	
+	screen_size = get_viewport_rect().size
 
 	var direction = Input.get_axis("move_left", "move_right")
 	
