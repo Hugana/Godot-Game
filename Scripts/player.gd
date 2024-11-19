@@ -15,6 +15,9 @@ var dash_timer = 0.0
 @onready var animated_sprite = $AnimatedSprite2D
 @onready var screen_size = get_viewport_rect().size
 
+@onready var collision_shape = $CollisionShape2D
+var rect
+
 @export var camera_node_path: NodePath
 var camera: Camera2D
 
@@ -30,6 +33,7 @@ var camera_perspective = camera_perspectives.NORMAL
 
 func _ready() -> void:
 	camera = get_node(camera_node_path)
+	rect = collision_shape.shape as RectangleShape2D
 	screen_size = get_viewport().size  
 
 func _physics_process(delta: float) -> void:
@@ -103,7 +107,9 @@ func handle_dash(delta: float) -> void:
 func start_slide(direction: float) -> void:
 	is_sliding = true
 	slide_timer = SLIDE_DURATION
-
+	
+	adjust_collision_height(rect.size.y - 10)
+	
 	# Slide based on direction
 	if direction != 0:
 		velocity.x = SLIDE_SPEED * direction
@@ -118,6 +124,10 @@ func start_slide(direction: float) -> void:
 func handle_slide(delta: float) -> void:
 	slide_timer -= delta
 	if slide_timer <= 0 or not is_on_floor():
+		
+		
+		adjust_collision_height(rect.size.y + 10)
+		
 		is_sliding = false
 		velocity.x = 0
 		if not is_on_floor():
@@ -162,3 +172,9 @@ func screen_wrap_normal():
 		global_position.y = top_edge
 	elif global_position.y < top_edge:
 		global_position.y = bottom_edge
+		
+func adjust_collision_height(new_height: float) -> void:
+	
+	var height_difference = rect.size.y - new_height
+	rect.size.y = new_height
+	collision_shape.position.y += height_difference / 2
