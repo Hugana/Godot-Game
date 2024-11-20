@@ -708,8 +708,8 @@ script = ExtResource("3_gfv8e")
 camera_node_path = NodePath(".")
 player_path = NodePath("../Player")
 
-
 [node name="Labels" type="Node2D" parent="."]
+
 [node name="Slide" parent="Labels" instance=ExtResource("8_g3qnm")]
 offset_left = 2095.0
 offset_top = 508.0
@@ -724,7 +724,6 @@ offset_top = 454.0
 offset_right = 1646.0
 offset_bottom = 470.0
 text = "[WASD] to move"
-
 input1 = "move_left"
 input2 = "move_right"
 
@@ -735,4 +734,3 @@ offset_right = 2019.0
 offset_bottom = 457.0
 text = "[SPACE] to jump"
 input1 = "jump"
-
