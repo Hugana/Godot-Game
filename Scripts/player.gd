@@ -31,6 +31,8 @@ enum camera_perspectives {
 
 var camera_perspective = camera_perspectives.NORMAL
 
+var camera_focus_bool = true 
+
 func _ready() -> void:
 	camera = get_node(camera_node_path)
 	rect = collision_shape.shape as RectangleShape2D
@@ -58,15 +60,22 @@ func _physics_process(delta: float) -> void:
 	
 	if is_sliding:
 		handle_slide(delta)
+		
+	if (Input.is_action_just_pressed("focus_Camera")):
+		camera_focus_bool = !camera_focus_bool
 
-	# Camera perspective handling
+	
 	if Input.is_action_just_pressed("camera_1"):
 		camera_perspective = camera_perspectives.NORMAL
 	if Input.is_action_just_pressed("camera_2"):
 		camera_perspective = camera_perspectives.INVERTED
 	
+	
 	if camera_perspective == camera_perspectives.NORMAL:
 		screen_wrap_normal()
+	elif camera_perspective == camera_perspectives.INVERTED:
+		screen_wrap_inverted()
+		
 
 	
 	if not is_sliding and not is_dashing:
@@ -151,6 +160,37 @@ func animations(direction: float) -> void:
 		animated_sprite.flip_h = false
 	elif direction < 0:
 		animated_sprite.flip_h = true
+		
+func screen_wrap_inverted():
+	var camera_pos = camera.global_position
+	var camera_zoom = camera.zoom  
+	var visible_width = screen_size.x / camera_zoom.x
+	var visible_height = screen_size.y / camera_zoom.y
+
+	var left_edge = camera_pos.x - visible_width / 2 
+	var right_edge = camera_pos.x + visible_width / 2
+	var top_edge = camera_pos.y - visible_height / 2
+	var bottom_edge = camera_pos.y + visible_height / 2
+
+
+	var center_x = (left_edge + right_edge) / 2
+	var center_y = (top_edge + bottom_edge) / 2
+
+	
+	if global_position.x > right_edge:
+		global_position.x = left_edge
+		global_position.y = center_y - (global_position.y - center_y)
+	elif global_position.x < left_edge:
+		global_position.x = right_edge
+		global_position.y = center_y - (global_position.y - center_y)
+
+	if global_position.y > bottom_edge:
+		global_position.y = top_edge
+		global_position.x = center_x - (global_position.x - center_x)
+	elif global_position.y < top_edge:
+		global_position.y = bottom_edge
+		global_position.x = center_x - (global_position.x - center_x)
+
 
 func screen_wrap_normal():
 	var camera_pos = camera.global_position
@@ -162,7 +202,7 @@ func screen_wrap_normal():
 	var right_edge = camera_pos.x + visible_width / 2
 	var top_edge = camera_pos.y - visible_height / 2
 	var bottom_edge = camera_pos.y + visible_height / 2
-
+	
 	if global_position.x > right_edge:
 		global_position.x = left_edge
 	elif global_position.x < left_edge:
