@@ -99,7 +99,7 @@ _data = {
 radius = 116.004
 
 [node name="Text" type="Label"]
-z_index = 50
+z_index = 100
 offset_right = 40.0
 offset_bottom = 23.0
 theme_override_fonts/font = ExtResource("1_5ffl0")
