@@ -12,13 +12,20 @@ const DASH_DURATION = 0.2
 var is_dashing = false
 var dash_timer = 0.0 
 
+@export var collision_checker_path : NodePath
+
 @onready var animated_sprite = $AnimatedSprite2D
 @onready var screen_size = get_viewport_rect().size
 
 @onready var collision_shape = $CollisionShape2D
+
+var can_wrap = true
+
+
 var rect
 
 @export var camera_node_path: NodePath
+var collision_checker : CollisionShape2D
 var camera: Camera2D
 
 var is_sliding = false
@@ -35,12 +42,26 @@ var camera_focus_bool = true
 
 func _ready() -> void:
 	camera = get_node(camera_node_path)
+	collision_checker = get_node(collision_checker_path)
+	
 	rect = collision_shape.shape as RectangleShape2D
 	screen_size = get_viewport().size  
 
 func _physics_process(delta: float) -> void:
 	screen_size = get_viewport_rect().size
 
+	var player_local_pos = camera.to_local(global_position)
+	
+	collision_checker.position.x = -player_local_pos.x * 2
+	collision_checker.position.y = player_local_pos.y - 15
+	
+	#print("player position:" + str(player_local_pos))
+	#print("collision_checker:" + str(collision_checker.position))
+	
+	print(can_wrap)
+	
+
+	
 	var direction = Input.get_axis("move_left", "move_right")
 
 	if not is_on_floor():
@@ -70,13 +91,14 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("camera_2"):
 		camera_perspective = camera_perspectives.INVERTED
 	
+	if can_wrap:
+		if camera_perspective == camera_perspectives.NORMAL:
+			screen_wrap_normal()
+		elif camera_perspective == camera_perspectives.INVERTED:
+			screen_wrap_inverted()
 	
-	if camera_perspective == camera_perspectives.NORMAL:
-		screen_wrap_normal()
-	elif camera_perspective == camera_perspectives.INVERTED:
-		screen_wrap_inverted()
 		
-
+	
 	
 	if not is_sliding and not is_dashing:
 		if direction:
@@ -218,3 +240,13 @@ func adjust_collision_height(new_height: float) -> void:
 	var height_difference = rect.size.y - new_height
 	rect.size.y = new_height
 	collision_shape.position.y += height_difference / 2
+
+
+func _on_area_2d_body_entered(body: Node2D) -> void:
+	can_wrap = false
+	pass 
+
+
+func _on_area_2d_body_exited(body: Node2D) -> void:
+	can_wrap = true
+	pass 

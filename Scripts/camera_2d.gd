@@ -5,12 +5,16 @@ extends Camera2D
 @export var camera_node_path: NodePath 
 @export var player_path: NodePath  
 
+
 @onready var viewport_center = get_viewport().size / 2
 @onready var screen_size = get_viewport_rect().size
+
 
 var player: Node2D 
 var camera: Camera2D
 var camera_focus_bool = true
+
+
 
 const edge_offset = 50
 var target_offset: Vector2 = Vector2.ZERO
