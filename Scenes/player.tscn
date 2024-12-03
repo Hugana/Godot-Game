@@ -477,9 +477,8 @@ camera_node_path = NodePath("CollisionShape2D")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -10)
 sprite_frames = SubResource("SpriteFrames_sqakd")
-animation = &"pull"
+animation = &"push"
 autoplay = "idle"
-frame_progress = 0.113641
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -9)
@@ -514,12 +513,12 @@ metadata/_edit_use_anchors_ = true
 [node name="RayCastRight" type="RayCast2D" parent="."]
 position = Vector2(3, -10)
 rotation = -1.5708
-target_position = Vector2(0, 8)
+target_position = Vector2(-3.24249e-05, 9)
 
 [node name="RayCastLeft" type="RayCast2D" parent="."]
 position = Vector2(-3, -10)
 rotation = -4.71239
-target_position = Vector2(-7.62939e-06, 8)
+target_position = Vector2(-7.62939e-06, 9)
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
