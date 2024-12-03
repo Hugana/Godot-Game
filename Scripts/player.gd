@@ -6,6 +6,7 @@ const JUMP_VELOCITY = -250.0
 var GRAVITY = 600
 const MAX_FALL_SPEED = 800
 const SLIDE_DURATION = 0.5
+const PUSH_FORCE = 20
 
 const DASH_SPEED = 700.0
 const DASH_DURATION = 0.2
@@ -14,6 +15,10 @@ var dash_timer = 0.0
 
 @export var collision_checker_path : NodePath
 
+@onready var RayCastRight = $RayCastRight
+@onready var RayCastLeft = $RayCastLeft
+
+
 @onready var animated_sprite = $AnimatedSprite2D
 @onready var x_ray_shadder = $x_ray_shadder
 @onready var screen_size = get_viewport_rect().size
@@ -21,6 +26,8 @@ var dash_timer = 0.0
 @onready var collision_shape = $CollisionShape2D
 
 var can_wrap = true
+var is_xray_toggled = false
+
 
 
 var rect
@@ -30,7 +37,11 @@ var collision_checker : CollisionShape2D
 var camera: Camera2D
 
 var is_sliding = false
+var is_pulling = false
 var slide_timer = 0.0
+
+var is_movable 
+var collider
 
 enum camera_perspectives {
 	NORMAL,
@@ -47,8 +58,31 @@ func _ready() -> void:
 	
 	rect = collision_shape.shape as RectangleShape2D
 	screen_size = get_viewport().size  
+	
+func rayCastHandleMovables() -> Array:
+	# Check if RayCastLeft is colliding
+	if $RayCastLeft.is_colliding():
+		var collider = $RayCastLeft.get_collider()
+		if collider and collider.is_in_group("movable"):	
+			return [true, collider, Vector2(-1, 0)]  # Direction is left
+	
+	# Check if RayCastRight is colliding
+	if $RayCastRight.is_colliding():
+		var collider = $RayCastRight.get_collider()
+		if collider and collider.is_in_group("movable"):
+		
+			return [true, collider, Vector2(1, 0)]  # Direction is right
+	return [false, null, Vector2(0, 0)]  # No collision
+
 
 func _physics_process(delta: float) -> void:
+	
+	var result = rayCastHandleMovables()
+	is_movable = result[0]
+	collider = result[1]
+	
+	
+	
 	screen_size = get_viewport_rect().size
 	var player_local_pos = camera.to_local(global_position)
 	var direction = Input.get_axis("move_left", "move_right")
@@ -60,6 +94,36 @@ func _physics_process(delta: float) -> void:
 		velocity.y = min(velocity.y + GRAVITY * delta, MAX_FALL_SPEED)
 
 	handle_inputs(direction,delta)
+	
+	if Input.is_action_just_pressed("pull"):
+		is_pulling = true
+		
+	if Input.is_action_just_released("pull"):
+		is_pulling = false
+	
+	print(is_pulling)
+	
+	if direction:
+		if is_pulling:
+			if is_movable and result[2] == Vector2(-1, 0):
+				animated_sprite.flip_h = false
+				animated_sprite.play("pull")
+				collider.apply_impulse(Vector2(350, 0)) 
+			elif is_movable and result[2] == Vector2(1, 0):
+				animated_sprite.flip_h = true
+				animated_sprite.play("pull")
+				collider.apply_impulse(Vector2(-350, 0)) 
+		else:
+			if is_movable and result[2] == Vector2(-1, 0):
+				animated_sprite.flip_h = false
+				animated_sprite.play("push")
+				collider.apply_impulse(Vector2(-350, 0)) 
+			elif is_movable and result[2] == Vector2(1, 0):
+				animated_sprite.flip_h = true
+				animated_sprite.play("push")
+				collider.apply_impulse(Vector2(350, 0)) 
+	
+	#push_elements()
 	
 	if can_wrap:
 		if camera_perspective == camera_perspectives.NORMAL:
@@ -142,7 +206,7 @@ func animations(direction: float) -> void:
 	else:
 		if direction == 0:
 			animated_sprite.play("idle")
-		else:
+		elif !is_movable:
 			animated_sprite.play("run")
 
 	if direction > 0:
@@ -228,11 +292,11 @@ func _on_area_2d_body_exited(body: Node2D) -> void:
 	
 func handle_inputs(direction,delta):
 	
-	if Input.is_action_just_pressed("normal_camera_toggle"):
-		x_ray_shadder.visible = false
+	
 		
 	if Input.is_action_just_pressed("x_ray_camera_toggle"):
-		x_ray_shadder.visible = true
+		is_xray_toggled = !is_xray_toggled
+		x_ray_shadder.visible = is_xray_toggled
 	
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
@@ -251,3 +315,10 @@ func handle_inputs(direction,delta):
 		
 	if (Input.is_action_just_pressed("focus_Camera")):
 		camera_focus_bool = !camera_focus_bool
+	
+func push_elements():
+	
+	for i in get_slide_collision_count():
+		var c = get_slide_collision(i)
+		if c.get_collider() is RigidBody2D:
+			c.get_collider().apply_central_impulse(-c.get_normal() * PUSH_FORCE)
