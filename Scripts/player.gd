@@ -15,6 +15,7 @@ var dash_timer = 0.0
 @export var collision_checker_path : NodePath
 
 @onready var animated_sprite = $AnimatedSprite2D
+@onready var x_ray_shadder = $x_ray_shadder
 @onready var screen_size = get_viewport_rect().size
 
 @onready var collision_shape = $CollisionShape2D
@@ -49,57 +50,23 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	screen_size = get_viewport_rect().size
-
 	var player_local_pos = camera.to_local(global_position)
+	var direction = Input.get_axis("move_left", "move_right")
 	
 	collision_checker.position.x = -player_local_pos.x * 2
 	collision_checker.position.y = player_local_pos.y - 15
-	
-	#print("player position:" + str(player_local_pos))
-	#print("collision_checker:" + str(collision_checker.position))
-	
-	print(can_wrap)
-	
-
-	
-	var direction = Input.get_axis("move_left", "move_right")
 
 	if not is_on_floor():
 		velocity.y = min(velocity.y + GRAVITY * delta, MAX_FALL_SPEED)
 
-	if Input.is_action_just_pressed("jump") and is_on_floor():
-		velocity.y = JUMP_VELOCITY
-		
-	
-	if Input.is_action_just_pressed("dash") and not is_dashing:
-		start_dash(direction)
-		GRAVITY = 0
-
-	
-	if Input.is_action_just_pressed("slide") and is_on_floor() and not is_sliding and (velocity.x != 0):
-		start_slide(direction)
-	
-	if is_sliding:
-		handle_slide(delta)
-		
-	if (Input.is_action_just_pressed("focus_Camera")):
-		camera_focus_bool = !camera_focus_bool
-
-	
-	if Input.is_action_just_pressed("camera_1"):
-		camera_perspective = camera_perspectives.NORMAL
-	if Input.is_action_just_pressed("camera_2"):
-		camera_perspective = camera_perspectives.INVERTED
+	handle_inputs(direction,delta)
 	
 	if can_wrap:
 		if camera_perspective == camera_perspectives.NORMAL:
 			screen_wrap_normal()
 		elif camera_perspective == camera_perspectives.INVERTED:
 			screen_wrap_inverted()
-	
-		
-	
-	
+
 	if not is_sliding and not is_dashing:
 		if direction:
 			velocity.x = direction * SPEED
@@ -183,6 +150,14 @@ func animations(direction: float) -> void:
 	elif direction < 0:
 		animated_sprite.flip_h = true
 		
+
+
+	
+	if Input.is_action_just_pressed("camera_1"):
+		camera_perspective = camera_perspectives.NORMAL
+	if Input.is_action_just_pressed("camera_2"):
+		camera_perspective = camera_perspectives.INVERTED
+		
 func screen_wrap_inverted():
 	var camera_pos = camera.global_position
 	var camera_zoom = camera.zoom  
@@ -250,3 +225,29 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 func _on_area_2d_body_exited(body: Node2D) -> void:
 	can_wrap = true
 	pass 
+	
+func handle_inputs(direction,delta):
+	
+	if Input.is_action_just_pressed("normal_camera_toggle"):
+		x_ray_shadder.visible = false
+		
+	if Input.is_action_just_pressed("x_ray_camera_toggle"):
+		x_ray_shadder.visible = true
+	
+	if Input.is_action_just_pressed("jump") and is_on_floor():
+		velocity.y = JUMP_VELOCITY
+		
+	
+	if Input.is_action_just_pressed("dash") and not is_dashing:
+		start_dash(direction)
+		GRAVITY = 0
+
+	
+	if Input.is_action_just_pressed("slide") and is_on_floor() and not is_sliding and (velocity.x != 0):
+		start_slide(direction)
+	
+	if is_sliding:
+		handle_slide(delta)
+		
+	if (Input.is_action_just_pressed("focus_Camera")):
+		camera_focus_bool = !camera_focus_bool

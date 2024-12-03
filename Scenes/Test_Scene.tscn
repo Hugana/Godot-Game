@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://cdkjxgcebppc7"]
+[gd_scene load_steps=13 format=3 uid="uid://cdkjxgcebppc7"]
 
 [ext_resource type="Texture2D" uid="uid://dm8dlkoorq7fy" path="res://Assets/sprites/Tiles.png" id="1_mj2cp"]
 [ext_resource type="Texture2D" uid="uid://cfdoeo4xdt24m" path="res://Assets/sprites/Props-01.png" id="2_sgh3h"]
@@ -7,7 +7,6 @@
 [ext_resource type="PackedScene" uid="uid://k87tmg5y1swd" path="res://Scenes/player.tscn" id="5_sbj3d"]
 [ext_resource type="Script" path="res://Scripts/camera_2d.gd" id="6_ge07h"]
 [ext_resource type="PackedScene" uid="uid://ctjxdr6h1vjxx" path="res://Scenes/platform.tscn" id="7_lqafv"]
-[ext_resource type="Shader" path="res://Shader/Shader_Glitch.gdshader" id="8_h24j8"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_7oerx"]
 texture = ExtResource("1_mj2cp")
@@ -668,21 +667,6 @@ sources/1 = SubResource("TileSetAtlasSource_0e4t8")
 sources/2 = SubResource("TileSetAtlasSource_b1bx4")
 sources/3 = SubResource("TileSetAtlasSource_gfvpc")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_13rvl"]
-shader = ExtResource("8_h24j8")
-shader_parameter/resolution = Vector2(320, 180)
-shader_parameter/scan_line_amount = 1.0
-shader_parameter/warp_amount = 0.1
-shader_parameter/noise_amount = 0.03
-shader_parameter/grille_amount = 0.1
-shader_parameter/vignette_amount = 0.6
-shader_parameter/vignette_intensity = 0.4
-shader_parameter/aberation_amount = 0.5
-shader_parameter/roll_line_amount = 0.3
-shader_parameter/roll_speed = 1.0
-shader_parameter/scan_line_strength = -8.0
-shader_parameter/pixel_strength = -2.0
-
 [node name="TestScene" type="Node2D"]
 
 [node name="TileMap" type="TileMap" parent="."]
@@ -725,14 +709,3 @@ position = Vector2(2836, 525)
 distance_top_bottom_edge = 100.0
 distance_right_left_edge = 100.0
 camera_path = NodePath("../Camera2D")
-
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
-visible = false
-material = SubResource("ShaderMaterial_13rvl")
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
