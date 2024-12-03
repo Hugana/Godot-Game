@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-const SPEED = 180.0
+var SPEED = 180.0
 const SLIDE_SPEED = 350.0
 const JUMP_VELOCITY = -250.0
 var GRAVITY = 600
@@ -98,30 +98,33 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("pull"):
 		is_pulling = true
 		
+		
 	if Input.is_action_just_released("pull"):
 		is_pulling = false
+		SPEED = 180
 	
 	print(is_pulling)
 	
-	if direction:
+	if direction and is_movable:
 		if is_pulling:
+			SPEED = 15
 			if is_movable and result[2] == Vector2(-1, 0):
-				animated_sprite.flip_h = false
+				animated_sprite.flip_h = true
 				animated_sprite.play("pull")
 				collider.apply_impulse(Vector2(350, 0)) 
 			elif is_movable and result[2] == Vector2(1, 0):
-				animated_sprite.flip_h = true
+				animated_sprite.flip_h = false
 				animated_sprite.play("pull")
 				collider.apply_impulse(Vector2(-350, 0)) 
 		else:
 			if is_movable and result[2] == Vector2(-1, 0):
 				animated_sprite.flip_h = false
 				animated_sprite.play("push")
-				collider.apply_impulse(Vector2(-350, 0)) 
+				collider.apply_impulse(Vector2(-320, 0)) 
 			elif is_movable and result[2] == Vector2(1, 0):
 				animated_sprite.flip_h = true
 				animated_sprite.play("push")
-				collider.apply_impulse(Vector2(350, 0)) 
+				collider.apply_impulse(Vector2(320, 0)) 
 	
 	#push_elements()
 	
@@ -209,9 +212,9 @@ func animations(direction: float) -> void:
 		elif !is_movable:
 			animated_sprite.play("run")
 
-	if direction > 0:
+	if direction > 0 and !is_pulling:
 		animated_sprite.flip_h = false
-	elif direction < 0:
+	elif direction < 0 and !is_pulling:
 		animated_sprite.flip_h = true
 		
 
