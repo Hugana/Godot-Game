@@ -37,6 +37,7 @@ var collision_checker : CollisionShape2D
 var camera: Camera2D
 
 var is_sliding = false
+var is_pulling = false
 var slide_timer = 0.0
 
 var is_movable 
@@ -62,19 +63,15 @@ func rayCastHandleMovables() -> Array:
 	# Check if RayCastLeft is colliding
 	if $RayCastLeft.is_colliding():
 		var collider = $RayCastLeft.get_collider()
-		if collider and collider.is_in_group("movable"):
-			print("RayCast2D hit a movable object on the left!")
+		if collider and collider.is_in_group("movable"):	
 			return [true, collider, Vector2(-1, 0)]  # Direction is left
 	
 	# Check if RayCastRight is colliding
 	if $RayCastRight.is_colliding():
 		var collider = $RayCastRight.get_collider()
 		if collider and collider.is_in_group("movable"):
-			print("RayCast2D hit a movable object on the right!")
+		
 			return [true, collider, Vector2(1, 0)]  # Direction is right
-	
-	# Default return if no movable object is hit
-	print("RayCast2D is not colliding with anything.")
 	return [false, null, Vector2(0, 0)]  # No collision
 
 
@@ -84,14 +81,7 @@ func _physics_process(delta: float) -> void:
 	is_movable = result[0]
 	collider = result[1]
 	
-	if is_movable and result[2] == Vector2(-1, 0):
-		animated_sprite.flip_h = false
-		animated_sprite.play("push")
-		collider.apply_impulse(Vector2(-350, 0)) 
-	elif is_movable and result[2] == Vector2(1, 0):
-		animated_sprite.flip_h = true
-		animated_sprite.play("push")
-		collider.apply_impulse(Vector2(350, 0)) 
+	
 	
 	screen_size = get_viewport_rect().size
 	var player_local_pos = camera.to_local(global_position)
@@ -104,6 +94,34 @@ func _physics_process(delta: float) -> void:
 		velocity.y = min(velocity.y + GRAVITY * delta, MAX_FALL_SPEED)
 
 	handle_inputs(direction,delta)
+	
+	if Input.is_action_just_pressed("pull"):
+		is_pulling = true
+		
+	if Input.is_action_just_released("pull"):
+		is_pulling = false
+	
+	print(is_pulling)
+	
+	if direction:
+		if is_pulling:
+			if is_movable and result[2] == Vector2(-1, 0):
+				animated_sprite.flip_h = false
+				animated_sprite.play("pull")
+				collider.apply_impulse(Vector2(350, 0)) 
+			elif is_movable and result[2] == Vector2(1, 0):
+				animated_sprite.flip_h = true
+				animated_sprite.play("pull")
+				collider.apply_impulse(Vector2(-350, 0)) 
+		else:
+			if is_movable and result[2] == Vector2(-1, 0):
+				animated_sprite.flip_h = false
+				animated_sprite.play("push")
+				collider.apply_impulse(Vector2(-350, 0)) 
+			elif is_movable and result[2] == Vector2(1, 0):
+				animated_sprite.flip_h = true
+				animated_sprite.play("push")
+				collider.apply_impulse(Vector2(350, 0)) 
 	
 	#push_elements()
 	
