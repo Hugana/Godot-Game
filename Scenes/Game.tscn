@@ -5,14 +5,9 @@
 [ext_resource type="Texture2D" uid="uid://5p3phyi35ssr" path="res://Assets/Tiles/Cyberpunk-Sprite/Buildings.png" id="3_8fxtu"]
 [ext_resource type="Texture2D" uid="uid://cfdoeo4xdt24m" path="res://Assets/Tiles/Cyberpunk-Sprite/Props-01.png" id="3_cxg0j"]
 [ext_resource type="Script" path="res://Scripts/camera_2d.gd" id="3_gfv8e"]
-<<<<<<< HEAD
 [ext_resource type="Texture2D" uid="uid://b1l2en2hpywqs" path="res://Assets/Tiles/Cyberpunk-Sprite/Backgrounds/Background Props.png" id="4_yawcb"]
-[ext_resource type="PackedScene" uid="uid://b6sbuswitaoef" path="res://Objects/Level_Design/label.tscn" id="8_g3qnm"]
-=======
-[ext_resource type="Texture2D" uid="uid://b1l2en2hpywqs" path="res://Assets/Backgrounds/Background Props.png" id="4_yawcb"]
 [ext_resource type="Script" path="res://Scripts/tile_map.gd" id="5_nk2g5"]
-[ext_resource type="PackedScene" uid="uid://b6sbuswitaoef" path="res://Scenes/label.tscn" id="8_g3qnm"]
->>>>>>> 7ee4419b911437b27a65900ecde71c227c4556e0
+[ext_resource type="PackedScene" uid="uid://b6sbuswitaoef" path="res://Objects/Level_Design/label.tscn" id="8_g3qnm"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_uf2iv"]
 texture = ExtResource("1_bu5ru")

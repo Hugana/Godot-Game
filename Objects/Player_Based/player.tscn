@@ -1,23 +1,14 @@
 [gd_scene load_steps=72 format=3 uid="uid://k87tmg5y1swd"]
 
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_3a4ae"]
-<<<<<<< HEAD:Objects/Player_Based/player.tscn
 [ext_resource type="Texture2D" uid="uid://dm2mm6yu6mq5h" path="res://Assets/Player/Asset Packs 1-5/Asset Pack-V1/Player Idle/Player Idle 48x48.png" id="1_wvkja"]
 [ext_resource type="Texture2D" uid="uid://dekhhxtq7nqeh" path="res://Assets/Player/Asset Packs 1-5/Asset Pack-V1/Player Run/player run 48x48.png" id="2_1jneh"]
 [ext_resource type="Texture2D" uid="uid://u0qol5r5kxaf" path="res://Assets/Player/Asset Packs 1-5/Asset Pack-V5/Dash/dash.png" id="2_ggrj2"]
 [ext_resource type="Texture2D" uid="uid://de1a5mwp2k0wg" path="res://Assets/Player/Asset Packs 1-5/Asset Pack-V1/Player Jump/player new jump 48x48.png" id="3_vtmqu"]
+[ext_resource type="Texture2D" uid="uid://b53ogs27wbd3r" path="res://Assets/Player/Asset Packs 1-5/Asset Pack-V2/Push/player push 48x48.png" id="5_7alfa"]
+[ext_resource type="Texture2D" uid="uid://mhlb4tcydjd2" path="res://Assets/Player/Asset Packs 1-5/Asset Pack-V2/Pull/Player Pull 48x48.png" id="5_k5grl"]
 [ext_resource type="Texture2D" uid="uid://b7wdqydkynrvs" path="res://Assets/Player/Asset Packs 1-5/Asset Pack-V5/Slide/Player Slide 48x48.png" id="5_mbhft"]
 [ext_resource type="Texture2D" uid="uid://5p3phyi35ssr" path="res://Assets/Tiles/Cyberpunk-Sprite/Buildings.png" id="7_mrdbn"]
-=======
-[ext_resource type="Texture2D" uid="uid://dm2mm6yu6mq5h" path="res://Assets/Asset Packs 1-5/Asset Pack-V1/Player Idle/Player Idle 48x48.png" id="1_wvkja"]
-[ext_resource type="Texture2D" uid="uid://dekhhxtq7nqeh" path="res://Assets/Asset Packs 1-5/Asset Pack-V1/Player Run/player run 48x48.png" id="2_1jneh"]
-[ext_resource type="Texture2D" uid="uid://u0qol5r5kxaf" path="res://Assets/Asset Packs 1-5/Asset Pack-V5/Dash/dash.png" id="2_ggrj2"]
-[ext_resource type="Texture2D" uid="uid://de1a5mwp2k0wg" path="res://Assets/Asset Packs 1-5/Asset Pack-V1/Player Jump/player new jump 48x48.png" id="3_vtmqu"]
-[ext_resource type="Texture2D" uid="uid://b53ogs27wbd3r" path="res://Assets/Asset Packs 1-5/Asset Pack-V2/Push/player push 48x48.png" id="5_7alfa"]
-[ext_resource type="Texture2D" uid="uid://mhlb4tcydjd2" path="res://Assets/Asset Packs 1-5/Asset Pack-V2/Pull/Player Pull 48x48.png" id="5_k5grl"]
-[ext_resource type="Texture2D" uid="uid://b7wdqydkynrvs" path="res://Assets/Asset Packs 1-5/Asset Pack-V5/Slide/Player Slide 48x48.png" id="5_mbhft"]
-[ext_resource type="Texture2D" uid="uid://5p3phyi35ssr" path="res://Assets/sprites/Buildings.png" id="7_mrdbn"]
->>>>>>> 7ee4419b911437b27a65900ecde71c227c4556e0:Scenes/player.tscn
 [ext_resource type="Shader" path="res://Shader/Shader_Glitch.gdshader" id="8_k1bkt"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pfl3e"]
