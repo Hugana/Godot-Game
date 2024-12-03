@@ -296,7 +296,7 @@ func handle_inputs(direction,delta):
 		
 	if Input.is_action_just_pressed("x_ray_camera_toggle"):
 		is_xray_toggled = !is_xray_toggled
-		x_ray_shadder.visible = !is_xray_toggled
+		x_ray_shadder.visible = is_xray_toggled
 	
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
