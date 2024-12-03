@@ -11,9 +11,13 @@ config_version=5
 [application]
 
 config/name="Game"
-run/main_scene="res://Scenes/Game.tscn"
+run/main_scene="res://Scenes/UI/menu.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"
+
+[autoload]
+
+SceneHandler="*res://Scripts/Scene_Handler.gd"
 
 [input]
 

@@ -1,0 +1,160 @@
+[gd_scene load_steps=4 format=3 uid="uid://chqlmm2ac72ux"]
+
+[ext_resource type="FontFile" uid="uid://8kqas1157155" path="res://Assets/Fonts/PixelOperator8.ttf" id="1_4iq5k"]
+[ext_resource type="Script" path="res://Scripts/menu.gd" id="1_k7hwd"]
+[ext_resource type="Texture2D" uid="uid://1u31oh6pdmbe" path="res://Assets/Tiles/Cyberpunk-Sprite/Backgrounds/free-city-backgrounds-pixel-art/city 1/10.png" id="2_ctsni"]
+
+[node name="Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("1_k7hwd")
+
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(577, -0.500021)
+scale = Vector2(0.500868, 0.500772)
+texture = ExtResource("2_ctsni")
+
+[node name="Main Menu" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -148.0
+offset_top = -92.5
+offset_right = 148.0
+offset_bottom = 92.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Start" type="Button" parent="Main Menu"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_4iq5k")
+theme_override_font_sizes/font_size = 50
+text = "Start"
+
+[node name="Options" type="Button" parent="Main Menu"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_4iq5k")
+theme_override_font_sizes/font_size = 50
+text = "Options
+"
+
+[node name="Quit" type="Button" parent="Main Menu"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_4iq5k")
+theme_override_font_sizes/font_size = 50
+text = "Quit
+"
+
+[node name="Start" type="VBoxContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -148.0
+offset_top = -61.0
+offset_right = 148.0
+offset_bottom = 61.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TestGame" type="Button" parent="Start"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_4iq5k")
+theme_override_font_sizes/font_size = 50
+text = "Teste"
+
+[node name="Game" type="Button" parent="Start"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_4iq5k")
+theme_override_font_sizes/font_size = 50
+text = "Game"
+
+[node name="Select Level" type="Button" parent="Start"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_4iq5k")
+theme_override_font_sizes/font_size = 50
+text = "Select Level"
+
+[node name="Back" type="Button" parent="Start"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_4iq5k")
+theme_override_font_sizes/font_size = 50
+text = "Back"
+
+[node name="Select Level" type="VBoxContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -241.5
+offset_top = -124.0
+offset_right = 241.5
+offset_bottom = 124.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Level" type="Button" parent="Select Level"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_4iq5k")
+theme_override_font_sizes/font_size = 50
+text = "Level 1"
+
+[node name="Level2" type="Button" parent="Select Level"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_4iq5k")
+theme_override_font_sizes/font_size = 50
+text = "Level 2"
+
+[node name="Level3" type="Button" parent="Select Level"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_4iq5k")
+theme_override_font_sizes/font_size = 50
+text = "Level 3"
+
+[node name="Back" type="Button" parent="Select Level"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_4iq5k")
+theme_override_font_sizes/font_size = 50
+text = "Back"
+
+[node name="Options" type="VBoxContainer" parent="."]
+visible = false
+layout_mode = 2
+offset_left = 428.0
+offset_top = 2.0
+offset_right = 724.0
+offset_bottom = 187.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Back" type="Button" parent="Options"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_4iq5k")
+theme_override_font_sizes/font_size = 50
+text = "Back"
+
+[connection signal="pressed" from="Main Menu/Start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="Main Menu/Options" to="." method="_on_options_pressed"]
+[connection signal="pressed" from="Main Menu/Quit" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="Start/TestGame" to="." method="_on_test_game_pressed"]
+[connection signal="pressed" from="Start/Game" to="." method="_on_new_game_pressed"]
+[connection signal="pressed" from="Start/Select Level" to="." method="_on_select_level_pressed"]
+[connection signal="pressed" from="Start/Back" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="Select Level/Back" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="Options/Back" to="." method="_on_back_pressed"]
