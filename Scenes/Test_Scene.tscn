@@ -706,7 +706,7 @@ camera_node_path = NodePath(".")
 player_path = NodePath("../Player")
 
 [node name="StaticBody2D" parent="." instance=ExtResource("7_lqafv")]
-position = Vector2(2870, 446)
+position = Vector2(2836, 525)
 distance_top_bottom_edge = 100.0
 distance_right_left_edge = 100.0
 camera_path = NodePath("../Camera2D")
