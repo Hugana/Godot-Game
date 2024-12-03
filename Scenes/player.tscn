@@ -1,4 +1,4 @@
-[gd_scene load_steps=52 format=3 uid="uid://k87tmg5y1swd"]
+[gd_scene load_steps=54 format=3 uid="uid://k87tmg5y1swd"]
 
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_3a4ae"]
 [ext_resource type="Texture2D" uid="uid://dm2mm6yu6mq5h" path="res://Assets/Asset Packs 1-5/Asset Pack-V1/Player Idle/Player Idle 48x48.png" id="1_wvkja"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://de1a5mwp2k0wg" path="res://Assets/Asset Packs 1-5/Asset Pack-V1/Player Jump/player new jump 48x48.png" id="3_vtmqu"]
 [ext_resource type="Texture2D" uid="uid://b7wdqydkynrvs" path="res://Assets/Asset Packs 1-5/Asset Pack-V5/Slide/Player Slide 48x48.png" id="5_mbhft"]
 [ext_resource type="Texture2D" uid="uid://5p3phyi35ssr" path="res://Assets/sprites/Buildings.png" id="7_mrdbn"]
+[ext_resource type="Shader" path="res://Shader/Shader_Glitch.gdshader" id="8_k1bkt"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pfl3e"]
 atlas = ExtResource("2_ggrj2")
@@ -329,6 +330,21 @@ size = Vector2(9, 30)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dlhcx"]
 size = Vector2(24.3125, 30)
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_usw5w"]
+shader = ExtResource("8_k1bkt")
+shader_parameter/resolution = Vector2(320, 180)
+shader_parameter/scan_line_amount = 1.0
+shader_parameter/warp_amount = 0.1
+shader_parameter/noise_amount = 0.03
+shader_parameter/grille_amount = 0.1
+shader_parameter/vignette_amount = 0.6
+shader_parameter/vignette_intensity = 0.4
+shader_parameter/aberation_amount = 0.5
+shader_parameter/roll_line_amount = 0.3
+shader_parameter/roll_speed = 1.0
+shader_parameter/scan_line_strength = -8.0
+shader_parameter/pixel_strength = -2.0
+
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_3a4ae")
 collision_checker_path = NodePath("Area2D/CollisionShapeChecker")
@@ -346,6 +362,7 @@ position = Vector2(0, -9)
 shape = SubResource("RectangleShape2D_1yrtt")
 
 [node name="Area2D" type="Area2D" parent="."]
+visible = false
 collision_layer = 7
 collision_mask = 7
 
@@ -357,6 +374,18 @@ shape = SubResource("RectangleShape2D_dlhcx")
 texture = ExtResource("7_mrdbn")
 region_enabled = true
 region_rect = Rect2(2.7031, 10.7457, 24.6807, 30.4252)
+
+[node name="x_ray_shadder" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="x_ray_shadder"]
+material = SubResource("ShaderMaterial_usw5w")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
