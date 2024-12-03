@@ -6,7 +6,7 @@
 size = Vector2(30, 28)
 
 [node name="Sprite2D" type="RigidBody2D" groups=["movable"]]
-mass = 15.0
+mass = 16.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_ov4w8")

@@ -101,7 +101,8 @@ func _physics_process(delta: float) -> void:
 		
 	if Input.is_action_just_released("pull"):
 		is_pulling = false
-		SPEED = 180
+	
+	SPEED = 180
 	
 	print(is_pulling)
 	
@@ -117,6 +118,7 @@ func _physics_process(delta: float) -> void:
 				animated_sprite.play("pull")
 				collider.apply_impulse(Vector2(-350, 0)) 
 		else:
+			SPEED = 80
 			if is_movable and result[2] == Vector2(-1, 0):
 				animated_sprite.flip_h = false
 				animated_sprite.play("push")
