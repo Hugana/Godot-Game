@@ -5,7 +5,7 @@ extends Label
 var entered = false
 var pressed = false
 
-@export var appeared = false
+var appeared = false
 
 @export var input1 = ""
 @export var input2 = ""
@@ -15,10 +15,10 @@ var pressed = false
 @onready var area_2d: Area2D = $Area2D
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
-	if !entered:
-		print('body entered')
-		entered = true
-		_fade_in(self)
+	if body.name == 'Player':
+		if !entered:
+			entered = true
+			_fade_in(self)
 
 
 # Fazer a label desaparecer quando o jogador pressiona "A" ou "D"
@@ -28,8 +28,6 @@ func _process(delta: float) -> void:
 		pressed = true
 		_fade_out(self)
 
-
-
 # Fazer a animação de esconder o texto
 func _fade_out(body):
 	animation_player.play("hide")
@@ -37,3 +35,4 @@ func _fade_out(body):
 
 func _fade_in(body):
 	animation_player.play("show")
+	appeared = true
