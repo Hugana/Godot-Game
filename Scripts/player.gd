@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-const SPEED = 180.0
+var SPEED = 180.0
 const SLIDE_SPEED = 350.0
 const JUMP_VELOCITY = -250.0
 var GRAVITY = 600
@@ -28,7 +28,7 @@ var dash_timer = 0.0
 var can_wrap = true
 var is_xray_toggled = false
 
-
+var death_bool = false
 
 var rect
 
@@ -77,6 +77,9 @@ func rayCastHandleMovables() -> Array:
 
 func _physics_process(delta: float) -> void:
 	
+	if Input.is_action_just_pressed("checkpoint"):
+		death_bool = false
+	
 	var result = rayCastHandleMovables()
 	is_movable = result[0]
 	collider = result[1]
@@ -98,30 +101,37 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("pull"):
 		is_pulling = true
 		
+		
 	if Input.is_action_just_released("pull"):
 		is_pulling = false
 	
-	print(is_pulling)
 	
-	if direction:
+	
+	
+	
+	if direction and is_movable:
 		if is_pulling:
+			SPEED = 15
 			if is_movable and result[2] == Vector2(-1, 0):
-				animated_sprite.flip_h = false
+				animated_sprite.flip_h = true
 				animated_sprite.play("pull")
 				collider.apply_impulse(Vector2(350, 0)) 
 			elif is_movable and result[2] == Vector2(1, 0):
-				animated_sprite.flip_h = true
+				animated_sprite.flip_h = false
 				animated_sprite.play("pull")
 				collider.apply_impulse(Vector2(-350, 0)) 
 		else:
+			SPEED = 80
 			if is_movable and result[2] == Vector2(-1, 0):
 				animated_sprite.flip_h = false
 				animated_sprite.play("push")
-				collider.apply_impulse(Vector2(-350, 0)) 
+				collider.apply_impulse(Vector2(-320, 0)) 
 			elif is_movable and result[2] == Vector2(1, 0):
 				animated_sprite.flip_h = true
 				animated_sprite.play("push")
-				collider.apply_impulse(Vector2(350, 0)) 
+				collider.apply_impulse(Vector2(320, 0)) 
+				
+	SPEED = 180
 	
 	#push_elements()
 	
@@ -137,8 +147,9 @@ func _physics_process(delta: float) -> void:
 		else:
 			velocity.x = move_toward(velocity.x, 0, SPEED)
 
-	animations(direction)
-	move_and_slide()
+	if(!death_bool):
+		animations(direction)
+		move_and_slide()
 
 	
 	if is_dashing:
@@ -209,9 +220,9 @@ func animations(direction: float) -> void:
 		elif !is_movable:
 			animated_sprite.play("run")
 
-	if direction > 0:
+	if direction > 0 and !is_pulling:
 		animated_sprite.flip_h = false
-	elif direction < 0:
+	elif direction < 0 and !is_pulling:
 		animated_sprite.flip_h = true
 		
 
@@ -322,3 +333,19 @@ func push_elements():
 		var c = get_slide_collision(i)
 		if c.get_collider() is RigidBody2D:
 			c.get_collider().apply_central_impulse(-c.get_normal() * PUSH_FORCE)
+
+
+func _on_check_collision_body_entered(body: Node2D) -> void:
+	
+	if body.is_in_group("kills"):
+		# Stop all current animations
+		death_bool = true
+		animated_sprite.stop()
+		print("kills");
+		
+		# Play the death animation (ensure "death" exists in your AnimatedSprite2D)
+		animated_sprite.play("death")
+		
+		# Disable player input
+		set_process_input(false)
+		velocity = Vector2.ZERO 

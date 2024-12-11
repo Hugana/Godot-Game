@@ -1,9 +1,10 @@
-[gd_scene load_steps=72 format=3 uid="uid://k87tmg5y1swd"]
+[gd_scene load_steps=84 format=3 uid="uid://k87tmg5y1swd"]
 
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_3a4ae"]
 [ext_resource type="Texture2D" uid="uid://dm2mm6yu6mq5h" path="res://Assets/Player/Asset Packs 1-5/Asset Pack-V1/Player Idle/Player Idle 48x48.png" id="1_wvkja"]
 [ext_resource type="Texture2D" uid="uid://dekhhxtq7nqeh" path="res://Assets/Player/Asset Packs 1-5/Asset Pack-V1/Player Run/player run 48x48.png" id="2_1jneh"]
 [ext_resource type="Texture2D" uid="uid://u0qol5r5kxaf" path="res://Assets/Player/Asset Packs 1-5/Asset Pack-V5/Dash/dash.png" id="2_ggrj2"]
+[ext_resource type="Texture2D" uid="uid://rxutc677r8mx" path="res://Assets/Player/Asset Packs 1-5/Asset Pack-V3/Player Death/Player Death 64x64.png" id="3_k0y0u"]
 [ext_resource type="Texture2D" uid="uid://de1a5mwp2k0wg" path="res://Assets/Player/Asset Packs 1-5/Asset Pack-V1/Player Jump/player new jump 48x48.png" id="3_vtmqu"]
 [ext_resource type="Texture2D" uid="uid://b53ogs27wbd3r" path="res://Assets/Player/Asset Packs 1-5/Asset Pack-V2/Push/player push 48x48.png" id="5_7alfa"]
 [ext_resource type="Texture2D" uid="uid://mhlb4tcydjd2" path="res://Assets/Player/Asset Packs 1-5/Asset Pack-V2/Pull/Player Pull 48x48.png" id="5_k5grl"]
@@ -46,6 +47,46 @@ region = Rect2(336, 0, 48, 48)
 [sub_resource type="AtlasTexture" id="AtlasTexture_r68tu"]
 atlas = ExtResource("2_ggrj2")
 region = Rect2(384, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bm4lg"]
+atlas = ExtResource("3_k0y0u")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0mytg"]
+atlas = ExtResource("3_k0y0u")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q4ofq"]
+atlas = ExtResource("3_k0y0u")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7173g"]
+atlas = ExtResource("3_k0y0u")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mxuad"]
+atlas = ExtResource("3_k0y0u")
+region = Rect2(192, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g5t4h"]
+atlas = ExtResource("3_k0y0u")
+region = Rect2(240, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5ts2p"]
+atlas = ExtResource("3_k0y0u")
+region = Rect2(288, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n4d2d"]
+atlas = ExtResource("3_k0y0u")
+region = Rect2(336, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c631y"]
+atlas = ExtResource("3_k0y0u")
+region = Rect2(384, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t3dkp"]
+atlas = ExtResource("3_k0y0u")
+region = Rect2(432, 0, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xkbim"]
 atlas = ExtResource("1_wvkja")
@@ -275,6 +316,41 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_bm4lg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0mytg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q4ofq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7173g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mxuad")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g5t4h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5ts2p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n4d2d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c631y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t3dkp")
+}],
+"loop": false,
+"name": &"death",
+"speed": 9.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_xkbim")
 }, {
 "duration": 1.0,
@@ -469,6 +545,9 @@ shader_parameter/roll_speed = 1.0
 shader_parameter/scan_line_strength = -8.0
 shader_parameter/pixel_strength = -2.0
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_h6y57"]
+size = Vector2(10, 32)
+
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_3a4ae")
 collision_checker_path = NodePath("Area2D/CollisionShapeChecker")
@@ -477,11 +556,13 @@ camera_node_path = NodePath("CollisionShape2D")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -10)
 sprite_frames = SubResource("SpriteFrames_sqakd")
-animation = &"pull"
+animation = &"death"
 autoplay = "idle"
-frame_progress = 0.113641
+frame = 9
+frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(0, -9)
 shape = SubResource("RectangleShape2D_1yrtt")
 
@@ -514,12 +595,19 @@ metadata/_edit_use_anchors_ = true
 [node name="RayCastRight" type="RayCast2D" parent="."]
 position = Vector2(3, -10)
 rotation = -1.5708
-target_position = Vector2(0, 8)
+target_position = Vector2(-3.24249e-05, 9)
 
 [node name="RayCastLeft" type="RayCast2D" parent="."]
 position = Vector2(-3, -10)
 rotation = -4.71239
-target_position = Vector2(-7.62939e-06, 8)
+target_position = Vector2(-7.62939e-06, 9)
+
+[node name="Check_collision" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Check_collision"]
+position = Vector2(0, -8)
+shape = SubResource("RectangleShape2D_h6y57")
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
+[connection signal="body_entered" from="Check_collision" to="." method="_on_check_collision_body_entered"]
