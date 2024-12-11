@@ -1,13 +1,13 @@
 [gd_scene load_steps=14 format=3 uid="uid://cdkjxgcebppc7"]
 
-[ext_resource type="Texture2D" uid="uid://dm8dlkoorq7fy" path="res://Assets/sprites/Tiles.png" id="1_mj2cp"]
-[ext_resource type="Texture2D" uid="uid://cfdoeo4xdt24m" path="res://Assets/sprites/Props-01.png" id="2_sgh3h"]
-[ext_resource type="Texture2D" uid="uid://5p3phyi35ssr" path="res://Assets/sprites/Buildings.png" id="3_f8666"]
-[ext_resource type="Texture2D" uid="uid://b1l2en2hpywqs" path="res://Assets/Backgrounds/Background Props.png" id="4_0ryv1"]
-[ext_resource type="PackedScene" uid="uid://k87tmg5y1swd" path="res://Scenes/player.tscn" id="5_sbj3d"]
+[ext_resource type="Texture2D" uid="uid://dm8dlkoorq7fy" path="res://Assets/Tiles/Cyberpunk-Sprite/Tiles.png" id="1_mj2cp"]
+[ext_resource type="Texture2D" uid="uid://cfdoeo4xdt24m" path="res://Assets/Tiles/Cyberpunk-Sprite/Props-01.png" id="2_sgh3h"]
+[ext_resource type="Texture2D" uid="uid://5p3phyi35ssr" path="res://Assets/Tiles/Cyberpunk-Sprite/Buildings.png" id="3_f8666"]
+[ext_resource type="Texture2D" uid="uid://b1l2en2hpywqs" path="res://Assets/Tiles/Cyberpunk-Sprite/Backgrounds/Background Props.png" id="4_0ryv1"]
+[ext_resource type="PackedScene" uid="uid://k87tmg5y1swd" path="res://Objects/Player_Based/player.tscn" id="5_sbj3d"]
 [ext_resource type="Script" path="res://Scripts/camera_2d.gd" id="6_ge07h"]
-[ext_resource type="PackedScene" uid="uid://ctjxdr6h1vjxx" path="res://Scenes/platform.tscn" id="7_lqafv"]
-[ext_resource type="PackedScene" uid="uid://dcp0tqp5ganyh" path="res://box.tscn" id="8_q1e4s"]
+[ext_resource type="PackedScene" uid="uid://ctjxdr6h1vjxx" path="res://Objects/Level_Design/platform.tscn" id="7_lqafv"]
+[ext_resource type="PackedScene" uid="uid://dcp0tqp5ganyh" path="res://Objects/Level_Design/box.tscn" id="8_q1e4s"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_7oerx"]
 texture = ExtResource("1_mj2cp")
