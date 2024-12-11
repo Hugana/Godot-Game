@@ -105,6 +105,7 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_released("pull"):
 		is_pulling = false
 	
+	SPEED = 180
 	
 	
 	
@@ -130,8 +131,8 @@ func _physics_process(delta: float) -> void:
 				animated_sprite.flip_h = true
 				animated_sprite.play("push")
 				collider.apply_impulse(Vector2(320, 0)) 
-				
-	SPEED = 180
+	
+	
 	
 	#push_elements()
 	
@@ -327,22 +328,12 @@ func handle_inputs(direction,delta):
 	if (Input.is_action_just_pressed("focus_Camera")):
 		camera_focus_bool = !camera_focus_bool
 	
-func push_elements():
-	
-	for i in get_slide_collision_count():
-		var c = get_slide_collision(i)
-		if c.get_collider() is RigidBody2D:
-			c.get_collider().apply_central_impulse(-c.get_normal() * PUSH_FORCE)
-
-
 func _on_check_collision_body_entered(body: Node2D) -> void:
 	
 	if body.is_in_group("kills"):
 		# Stop all current animations
 		death_bool = true
-		animated_sprite.stop()
-		print("kills");
-		
+		animated_sprite.stop()		
 		# Play the death animation (ensure "death" exists in your AnimatedSprite2D)
 		animated_sprite.play("death")
 		
