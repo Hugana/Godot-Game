@@ -41,7 +41,7 @@ vec3 fetch_pixel(vec2 uv, vec2 off) {
 	return clr;
 }
 
-vec2 Dist(vec2 pos) { 
+vec2 Dist(vec2 pos) {
 	pos = pos * resolution;
 	return -((pos - floor(pos)) - vec2(0.5));
 }

@@ -1,5 +1,6 @@
-[gd_scene load_steps=14 format=3 uid="uid://cdkjxgcebppc7"]
+[gd_scene load_steps=17 format=3 uid="uid://cdkjxgcebppc7"]
 
+[ext_resource type="Script" path="res://Scenes/LevelHandle.gd" id="1_lavuu"]
 [ext_resource type="Texture2D" uid="uid://dm8dlkoorq7fy" path="res://Assets/Tiles/Cyberpunk-Sprite/Tiles.png" id="1_mj2cp"]
 [ext_resource type="Texture2D" uid="uid://cfdoeo4xdt24m" path="res://Assets/Tiles/Cyberpunk-Sprite/Props-01.png" id="2_sgh3h"]
 [ext_resource type="Texture2D" uid="uid://5p3phyi35ssr" path="res://Assets/Tiles/Cyberpunk-Sprite/Buildings.png" id="3_f8666"]
@@ -668,7 +669,17 @@ sources/1 = SubResource("TileSetAtlasSource_0e4t8")
 sources/2 = SubResource("TileSetAtlasSource_b1bx4")
 sources/3 = SubResource("TileSetAtlasSource_gfvpc")
 
-[node name="TestScene" type="Node2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7wtow"]
+size = Vector2(32, 9)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_76qg1"]
+size = Vector2(12, 12)
+
+[node name="TestScene" type="Node2D" node_paths=PackedStringArray("checkpoint_1", "checkpoint_2", "player")]
+script = ExtResource("1_lavuu")
+checkpoint_1 = NodePath("CheckPoint_1")
+checkpoint_2 = NodePath("CheckPoint_2")
+player = NodePath("Player")
 
 [node name="TileMap" type="TileMap" parent="."]
 position = Vector2(1618, 480)
@@ -715,3 +726,73 @@ camera_path = NodePath("../Camera2D")
 z_index = 6
 position = Vector2(1480, 496)
 mass = 19.2
+
+[node name="Kill_platform" type="StaticBody2D" parent="." groups=["kills"]]
+z_index = 5
+position = Vector2(1727, 516)
+
+[node name="Sprite2D" type="Sprite2D" parent="Kill_platform"]
+texture = ExtResource("3_f8666")
+region_enabled = true
+region_rect = Rect2(231.832, 67.4446, 32.0149, 8.99295)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Kill_platform"]
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_7wtow")
+
+[node name="Label" type="Label" parent="."]
+z_index = 5
+offset_left = 1694.0
+offset_top = 487.0
+offset_right = 1760.0
+offset_bottom = 510.0
+text = "This kills"
+
+[node name="CheckPoint_1" type="Area2D" parent="."]
+z_index = 5
+position = Vector2(2383, 500)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CheckPoint_1"]
+shape = SubResource("RectangleShape2D_76qg1")
+
+[node name="Sprite2D" type="Sprite2D" parent="CheckPoint_1"]
+texture = ExtResource("2_sgh3h")
+region_enabled = true
+region_rect = Rect2(50.0952, 97.8912, 11.937, 12.0996)
+
+[node name="CheckPoint_2" type="Area2D" parent="."]
+z_index = 5
+position = Vector2(2549, 500)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CheckPoint_2"]
+shape = SubResource("RectangleShape2D_76qg1")
+
+[node name="Sprite2D" type="Sprite2D" parent="CheckPoint_2"]
+texture = ExtResource("2_sgh3h")
+region_enabled = true
+region_rect = Rect2(50.0952, 97.8912, 11.937, 12.0996)
+
+[node name="Label2" type="Label" parent="."]
+z_index = 5
+offset_left = 2336.0
+offset_top = 462.0
+offset_right = 2435.0
+offset_bottom = 485.0
+text = "checkpoint 1"
+
+[node name="Label3" type="Label" parent="."]
+z_index = 5
+offset_left = 2499.0
+offset_top = 462.0
+offset_right = 2598.0
+offset_bottom = 485.0
+text = "checkpoint 2 
+"
+
+[node name="Label4" type="Label" parent="."]
+z_index = 5
+offset_left = 2421.0
+offset_top = 437.0
+offset_right = 2520.0
+offset_bottom = 460.0
+text = "press escape"
