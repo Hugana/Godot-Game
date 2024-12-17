@@ -977,8 +977,7 @@ size = Vector2(96, 9)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ovtvp"]
 size = Vector2(128, 9)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ivm1l"]
-size = Vector2(206.88, 15.5)
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_y08fp"]
 
 [node name="Game" type="Node2D"]
 
@@ -1126,14 +1125,7 @@ shape = SubResource("RectangleShape2D_ovtvp")
 z_index = 100
 position = Vector2(2710, 1107)
 
-[node name="Sprite2D" type="Sprite2D" parent="Kill_Zone"]
-position = Vector2(601.5, 3)
-scale = Vector2(161.531, 1.75)
-texture = ExtResource("3_8fxtu")
-region_enabled = true
-region_rect = Rect2(231.832, 67.4446, 32.0149, 8.99295)
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Kill_Zone"]
 position = Vector2(601, 3.25)
 scale = Vector2(25, 1)
-shape = SubResource("RectangleShape2D_ivm1l")
+shape = SubResource("WorldBoundaryShape2D_y08fp")

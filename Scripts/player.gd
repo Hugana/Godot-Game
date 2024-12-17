@@ -136,7 +136,7 @@ func _physics_process(delta: float) -> void:
 	
 	#push_elements()
 	
-	if can_wrap:
+	if can_wrap and not death_bool:
 		if camera_perspective == camera_perspectives.NORMAL:
 			screen_wrap_normal()
 		elif camera_perspective == camera_perspectives.INVERTED:
@@ -150,7 +150,8 @@ func _physics_process(delta: float) -> void:
 
 	if(!death_bool):
 		animations(direction)
-		move_and_slide()
+		
+	move_and_slide()
 
 	
 	if is_dashing:
