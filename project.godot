@@ -19,6 +19,14 @@ config/icon="res://icon.svg"
 
 SceneHandler="*res://Scripts/Scene_Handler.gd"
 
+[display]
+
+window/size/mode=2
+
+[global_group]
+
+player=""
+
 [input]
 
 jump={

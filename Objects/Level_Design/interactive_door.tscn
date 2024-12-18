@@ -1,7 +1,10 @@
 [gd_scene load_steps=22 format=3 uid="uid://tu2ugte7svm8"]
 
 [ext_resource type="Texture2D" uid="uid://cltbqrtqwgu45" path="res://Assets/Tiles/Industrial Tileset/4 Animated objects/Entry.png" id="1_mji8s"]
-[ext_resource type="Script" path="res://interactive_door.gd" id="2_r2nvg"]
+[ext_resource type="Script" path="res://Scripts/interactive_door.gd" id="2_r2nvg"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_a6qkj"]
+size = Vector2(30, 62)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pbrlr"]
 atlas = ExtResource("1_mji8s")
@@ -88,7 +91,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"Close",
-"speed": 5.0
+"speed": 3.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -108,7 +111,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"Open",
-"speed": 5.0
+"speed": 3.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -140,15 +143,14 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_a6qkj"]
-size = Vector2(30, 62)
-
-[node name="InteractiveDoor" type="AnimatedSprite2D"]
-sprite_frames = SubResource("SpriteFrames_frptq")
-animation = &"OpenAndClose"
+[node name="InteractiveDoor" type="StaticBody2D"]
 script = ExtResource("2_r2nvg")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_a6qkj")
 
-[connection signal="toggle_door" from="." to="." method="_on_toggle_door"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_frptq")
+animation = &"Open"
+frame = 4
+frame_progress = 1.0
