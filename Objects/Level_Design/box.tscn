@@ -1,11 +1,12 @@
 [gd_scene load_steps=3 format=3 uid="uid://dcp0tqp5ganyh"]
 
-[ext_resource type="Texture2D" uid="uid://5p3phyi35ssr" path="res://Assets/sprites/Buildings.png" id="1_ov4w8"]
+[ext_resource type="Texture2D" uid="uid://5p3phyi35ssr" path="res://Assets/Tiles/Cyberpunk-Sprite/Buildings.png" id="1_ov4w8"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_c12sn"]
 size = Vector2(30, 28)
 
 [node name="Sprite2D" type="RigidBody2D" groups=["movable"]]
+scale = Vector2(2, 2)
 mass = 16.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

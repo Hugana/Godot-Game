@@ -3,7 +3,7 @@ extends TileMap
 # Signal whether X-Ray mode is active
 var x_ray_active = false
 var tangible_layer = 0  # Replace with your tangible layer index
-
+#@onready var player = get_tree().get_first_node_in_group("player")
 # Add a reference to the player's collision (assuming player is a CharacterBody2D)
 @export var player: CharacterBody2D  # Make sure this is the correct node type
 

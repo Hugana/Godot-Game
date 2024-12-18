@@ -553,13 +553,11 @@ script = ExtResource("1_3a4ae")
 collision_checker_path = NodePath("Area2D/CollisionShapeChecker")
 camera_node_path = NodePath("CollisionShape2D")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." groups=["player"]]
 position = Vector2(0, -10)
 sprite_frames = SubResource("SpriteFrames_sqakd")
-animation = &"death"
+animation = &"idle"
 autoplay = "idle"
-frame = 9
-frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false

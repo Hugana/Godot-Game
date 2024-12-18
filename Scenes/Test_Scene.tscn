@@ -1,6 +1,6 @@
 [gd_scene load_steps=17 format=3 uid="uid://cdkjxgcebppc7"]
 
-[ext_resource type="Script" path="res://Scenes/LevelHandle.gd" id="1_lavuu"]
+[ext_resource type="Script" path="res://LevelHandle.gd" id="1_lavuu"]
 [ext_resource type="Texture2D" uid="uid://dm8dlkoorq7fy" path="res://Assets/Tiles/Cyberpunk-Sprite/Tiles.png" id="1_mj2cp"]
 [ext_resource type="Texture2D" uid="uid://cfdoeo4xdt24m" path="res://Assets/Tiles/Cyberpunk-Sprite/Props-01.png" id="2_sgh3h"]
 [ext_resource type="Texture2D" uid="uid://5p3phyi35ssr" path="res://Assets/Tiles/Cyberpunk-Sprite/Buildings.png" id="3_f8666"]
