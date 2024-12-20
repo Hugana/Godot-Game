@@ -131,16 +131,8 @@ func _physics_process(delta: float) -> void:
 				animated_sprite.flip_h = true
 				animated_sprite.play("push")
 				collider.apply_impulse(Vector2(320, 0)) 
-	
-	
-	
-	#push_elements()
-	
-	if can_wrap and not death_bool:
-		if camera_perspective == camera_perspectives.NORMAL:
-			screen_wrap_normal()
-		elif camera_perspective == camera_perspectives.INVERTED:
-			screen_wrap_inverted()
+
+	screen_wrap(camera_perspective == camera_perspectives.INVERTED)
 
 	if not is_sliding and not is_dashing:
 		if direction:
@@ -235,57 +227,42 @@ func animations(direction: float) -> void:
 	if Input.is_action_just_pressed("camera_2"):
 		camera_perspective = camera_perspectives.INVERTED
 		
-func screen_wrap_inverted():
+func screen_wrap(is_inverted: bool) -> void:
 	var camera_pos = camera.global_position
-	var camera_zoom = camera.zoom  
+	var camera_zoom = camera.zoom
 	var visible_width = screen_size.x / camera_zoom.x
 	var visible_height = screen_size.y / camera_zoom.y
 
-	var left_edge = camera_pos.x - visible_width / 2 
+	var left_edge = camera_pos.x - visible_width / 2
 	var right_edge = camera_pos.x + visible_width / 2
 	var top_edge = camera_pos.y - visible_height / 2
 	var bottom_edge = camera_pos.y + visible_height / 2
 
+	if is_inverted:
+		var center_x = (left_edge + right_edge) / 2
+		var center_y = (top_edge + bottom_edge) / 2
+		if global_position.x > right_edge:
+			global_position.x = left_edge
+			global_position.y = center_y - (global_position.y - center_y)
+		elif global_position.x < left_edge:
+			global_position.x = right_edge
+			global_position.y = center_y - (global_position.y - center_y)
+		if global_position.y > bottom_edge:
+			global_position.y = top_edge
+			global_position.x = center_x - (global_position.x - center_x)
+		elif global_position.y < top_edge:
+			global_position.y = bottom_edge
+			global_position.x = center_x - (global_position.x - center_x)
+	else:
+		if global_position.x > right_edge:
+			global_position.x = left_edge
+		elif global_position.x < left_edge:
+			global_position.x = right_edge
+		if global_position.y > bottom_edge:
+			global_position.y = top_edge
+		elif global_position.y < top_edge:
+			global_position.y = bottom_edge
 
-	var center_x = (left_edge + right_edge) / 2
-	var center_y = (top_edge + bottom_edge) / 2
-
-	
-	if global_position.x > right_edge:
-		global_position.x = left_edge
-		global_position.y = center_y - (global_position.y - center_y)
-	elif global_position.x < left_edge:
-		global_position.x = right_edge
-		global_position.y = center_y - (global_position.y - center_y)
-
-	if global_position.y > bottom_edge:
-		global_position.y = top_edge
-		global_position.x = center_x - (global_position.x - center_x)
-	elif global_position.y < top_edge:
-		global_position.y = bottom_edge
-		global_position.x = center_x - (global_position.x - center_x)
-
-
-func screen_wrap_normal():
-	var camera_pos = camera.global_position
-	var camera_zoom = camera.zoom  
-	var visible_width = screen_size.x / camera_zoom.x
-	var visible_height = screen_size.y / camera_zoom.y
-
-	var left_edge = camera_pos.x - visible_width / 2 
-	var right_edge = camera_pos.x + visible_width / 2
-	var top_edge = camera_pos.y - visible_height / 2
-	var bottom_edge = camera_pos.y + visible_height / 2
-	
-	if global_position.x > right_edge:
-		global_position.x = left_edge
-	elif global_position.x < left_edge:
-		global_position.x = right_edge
-
-	if global_position.y > bottom_edge:
-		global_position.y = top_edge
-	elif global_position.y < top_edge:
-		global_position.y = bottom_edge
 		
 func adjust_collision_height(new_height: float) -> void:
 	
