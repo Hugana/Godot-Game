@@ -33,6 +33,7 @@ var is_pulling = false
 var slide_timer = 0.0
 var is_movable 
 var collider
+var inversion = 1
 
 enum camera_perspectives {
 	NORMAL,
@@ -42,6 +43,8 @@ var camera_perspective = camera_perspectives.NORMAL
 var camera_focus_bool = true 
 
 func _ready() -> void:
+	
+	
 	camera = get_node(camera_node_path)
 	collision_checker = get_node(collision_checker_path)
 	
@@ -58,20 +61,24 @@ func rayCastHandleMovables() -> Array:
 	return [false, null, Vector2(0, 0)]
 
 func _physics_process(delta: float) -> void:
+	
 	var player_local_pos = camera.to_local(global_position)
 	var direction = Input.get_axis("move_left", "move_right")
 	var result = rayCastHandleMovables()
 	screen_size = get_viewport_rect().size
 	
-	move_and_slide()
+	
 	set_collision_checker_pos(player_local_pos)
+	
+	
 	
 	
 	is_movable = result[0]
 	collider = result[1]
 	
-	if not is_on_floor():
-		velocity.y = min(velocity.y + GRAVITY * delta, MAX_FALL_SPEED)
+	if not is_on_floor() or not is_on_ceiling():
+		velocity.y += GRAVITY * delta * inversion
+		velocity.y = clamp(velocity.y, -MAX_FALL_SPEED, MAX_FALL_SPEED)
 
 	handle_inputs(direction,delta)
 	
@@ -90,6 +97,7 @@ func _physics_process(delta: float) -> void:
 			velocity.x = move_toward(velocity.x, 0, SPEED)
 			
 	if(!death_bool):
+		move_and_slide()
 		animations(direction)
 		
 	if is_dashing:
@@ -132,7 +140,7 @@ func handle_dash(delta: float) -> void:
 		is_dashing = false 
 		GRAVITY = 600
 		velocity.x = 0  
-		if not is_on_floor():
+		if not is_on_floor() or not is_on_ceiling():
 			animated_sprite.play("jump")
 
 func start_slide(direction: float) -> void:
@@ -149,16 +157,15 @@ func start_slide(direction: float) -> void:
 
 func handle_slide(delta: float) -> void:
 	slide_timer -= delta
-	if slide_timer <= 0 or not is_on_floor():
+	if slide_timer <= 0 or (not is_on_floor() and is_on_ceiling()):
 		adjust_collision_height(rect.size.y + 10)
 		is_sliding = false
 		velocity.x = 0
-		if not is_on_floor():
+		if not is_on_floor() and is_on_ceiling():
 			animated_sprite.play("jump")
 
 func animations(direction: float) -> void:
-	if not is_on_floor() and not is_sliding and not is_dashing:
-		if velocity.y < 0:
+	if (not is_on_floor() and not is_on_ceiling()) and not is_sliding and not is_dashing :
 			animated_sprite.play("jump")
 	elif is_sliding:
 		animated_sprite.play("slide")
@@ -227,6 +234,10 @@ func _on_area_2d_body_exited(body: Node2D) -> void:
 	pass 
 
 func handle_inputs(direction,delta):
+	if Input.is_action_just_pressed("gravity_toggle"):
+		inversion *= -1
+		animated_sprite.scale.y = abs(animated_sprite.scale.y) * inversion
+		
 	if Input.is_action_just_pressed("camera_1"):
 		camera_perspective = camera_perspectives.NORMAL
 		
@@ -245,14 +256,14 @@ func handle_inputs(direction,delta):
 	if Input.is_action_just_pressed("x_ray_camera_toggle"):
 		toggle_xray()
 		
-	if Input.is_action_just_pressed("jump") and is_on_floor():
-		velocity.y = JUMP_VELOCITY
+	if Input.is_action_just_pressed("jump") and (is_on_floor() or is_on_ceiling()):
+		velocity.y = JUMP_VELOCITY * inversion
 		
 	if Input.is_action_just_pressed("dash") and not is_dashing:
 		start_dash(direction)
 		GRAVITY = 0
 		
-	if Input.is_action_just_pressed("slide") and is_on_floor() and not is_sliding and (velocity.x != 0):
+	if Input.is_action_just_pressed("slide") and (is_on_floor() or is_on_ceiling()) and not is_sliding and (velocity.x != 0):
 		start_slide(direction)
 		
 	if is_sliding:
