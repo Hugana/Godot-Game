@@ -125,14 +125,14 @@ func handle_movable_interaction(direction: float, result: Array) -> void:
 			animated_sprite.flip_h = false
 			collider.apply_impulse(Vector2(-350, 0))
 	else:
-		SPEED = 80
+		SPEED = 75
 		animated_sprite.play("push")
 		if result[2] == Vector2(-1, 0):  
 			animated_sprite.flip_h = false
-			collider.apply_impulse(Vector2(-320, 0))
+			collider.apply_impulse(Vector2(-318, 0))
 		elif result[2] == Vector2(1, 0): 
 			animated_sprite.flip_h = true
-			collider.apply_impulse(Vector2(320, 0))
+			collider.apply_impulse(Vector2(318, 0))
 
 func handle_dash(delta: float) -> void:
 	dash_timer -= delta  
@@ -279,6 +279,10 @@ func toggle_xray() -> void:
 func _on_check_collision_body_entered(body: Node2D) -> void:
 
 	if body.is_in_group("kills"):
+		if(inversion == -1):
+			inversion *= -1
+			animated_sprite.scale.y = abs(animated_sprite.scale.y) * inversion
+			
 		death_bool = true
 		animated_sprite.stop()
 		animated_sprite.play("death")
