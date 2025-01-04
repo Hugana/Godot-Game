@@ -10,7 +10,6 @@ var is_in_checkpoint_2 = false
 
 var position_checkpoint: Vector2 = Vector2.ZERO 
 
-
 func _process(delta: float) -> void:
 	if checkpoint_1:
 		for body in checkpoint_1.get_overlapping_bodies():
