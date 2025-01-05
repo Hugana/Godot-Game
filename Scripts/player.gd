@@ -12,6 +12,11 @@ const DASH_SPEED = 700.0
 const DASH_DURATION = 0.2
 var is_dashing = false
 var dash_timer = 0.0 
+
+const DASH_COOLDOWN = 1.5
+@export var is_dash_on_cooldown = false  
+@export var dash_cooldown_timer = Timer.new()
+
 @export var camera_node_path: NodePath
 @export var collision_checker_path : NodePath
 @onready var RayCastRight = $RayCastRight
@@ -22,6 +27,7 @@ var dash_timer = 0.0
 @onready var raycasts = [$RayCastLeft, $RayCastRight]
 @onready var collision_shape = $CollisionShape2D
 
+var gravity_toggle = false
 var can_wrap = true
 var is_xray_toggled = false
 var death_bool = false
@@ -43,6 +49,10 @@ var camera_perspective = camera_perspectives.NORMAL
 var camera_focus_bool = true 
 
 func _ready() -> void:
+	add_child(dash_cooldown_timer)
+	dash_cooldown_timer.wait_time = DASH_COOLDOWN
+	dash_cooldown_timer.one_shot = true
+	dash_cooldown_timer.connect("timeout", Callable(self, "_on_dash_cooldown_timeout"))
 	
 	
 	camera = get_node(camera_node_path)
@@ -67,11 +77,7 @@ func _physics_process(delta: float) -> void:
 	var result = rayCastHandleMovables()
 	screen_size = get_viewport_rect().size
 	
-	
 	set_collision_checker_pos(player_local_pos)
-	
-	
-	
 	
 	is_movable = result[0]
 	collider = result[1]
@@ -81,7 +87,6 @@ func _physics_process(delta: float) -> void:
 		velocity.y = clamp(velocity.y, -MAX_FALL_SPEED, MAX_FALL_SPEED)
 
 	handle_inputs(direction,delta)
-	
 	
 	SPEED = 180
 	if direction and is_movable:
@@ -104,8 +109,13 @@ func _physics_process(delta: float) -> void:
 		handle_dash(delta)
 
 func start_dash(direction: float) -> void:
+	
+	if is_dash_on_cooldown:
+		return  
 	is_dashing = true
 	dash_timer = DASH_DURATION 
+	
+	GRAVITY = 0
 	
 	if direction != 0:
 		velocity.x = DASH_SPEED * direction
@@ -114,6 +124,17 @@ func start_dash(direction: float) -> void:
 	else:
 		velocity.x = DASH_SPEED * (1 if not animated_sprite.flip_h else -1)
 		
+	GRAVITY = 600
+		
+	is_dash_on_cooldown = true
+	dash_cooldown_timer.start()
+		
+func _on_dash_cooldown_timeout() -> void:
+	is_dash_on_cooldown = false  
+	
+func get_dash_cooldown_time_left() -> float:
+	return dash_cooldown_timer.time_left if is_dash_on_cooldown else 0.0
+	
 func handle_movable_interaction(direction: float, result: Array) -> void:
 	if is_pulling:
 		SPEED = 15
@@ -198,25 +219,33 @@ func screen_wrap(is_inverted: bool) -> void:
 			var center_x = (left_edge + right_edge) / 2
 			var center_y = (top_edge + bottom_edge) / 2
 			if global_position.x > right_edge:
+				toogle_gravity()
 				global_position.x = left_edge
 				global_position.y = center_y - (global_position.y - center_y)
 			elif global_position.x < left_edge:
+				toogle_gravity()
 				global_position.x = right_edge
 				global_position.y = center_y - (global_position.y - center_y)
 			if global_position.y > bottom_edge:
+				toogle_gravity()
 				global_position.y = top_edge
 				global_position.x = center_x - (global_position.x - center_x)
 			elif global_position.y < top_edge:
+				toogle_gravity()
 				global_position.y = bottom_edge
 				global_position.x = center_x - (global_position.x - center_x)
 		else:
 			if global_position.x > right_edge:
+				toogle_gravity()
 				global_position.x = left_edge
 			elif global_position.x < left_edge:
+				toogle_gravity()
 				global_position.x = right_edge
 			if global_position.y > bottom_edge:
+				toogle_gravity()
 				global_position.y = top_edge
 			elif global_position.y < top_edge:
+				toogle_gravity()
 				global_position.y = bottom_edge
 
 func adjust_collision_height(new_height: float) -> void:
@@ -232,11 +261,18 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 func _on_area_2d_body_exited(body: Node2D) -> void:
 	can_wrap = true
 	pass 
+	
+func toogle_gravity():
+	if gravity_toggle:
+		inversion *= -1
+		animated_sprite.scale.y = abs(animated_sprite.scale.y) * inversion
+		
 
 func handle_inputs(direction,delta):
 	if Input.is_action_just_pressed("gravity_toggle"):
-		inversion *= -1
-		animated_sprite.scale.y = abs(animated_sprite.scale.y) * inversion
+		gravity_toggle = !gravity_toggle
+		#inversion *= -1
+		#animated_sprite.scale.y = abs(animated_sprite.scale.y) * inversion
 		
 	if Input.is_action_just_pressed("camera_1"):
 		camera_perspective = camera_perspectives.NORMAL
@@ -261,7 +297,7 @@ func handle_inputs(direction,delta):
 		
 	if Input.is_action_just_pressed("dash") and not is_dashing:
 		start_dash(direction)
-		GRAVITY = 0
+		
 		
 	if Input.is_action_just_pressed("slide") and (is_on_floor() or is_on_ceiling()) and not is_sliding and (velocity.x != 0):
 		start_slide(direction)

@@ -11,7 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://b6sbuswitaoef" path="res://Objects/Level_Design/TipLabel.tscn" id="8_g3qnm"]
 [ext_resource type="PackedScene" uid="uid://tu2ugte7svm8" path="res://Objects/Level_Design/interactive_door.tscn" id="9_em7cv"]
 [ext_resource type="PackedScene" uid="uid://dcp0tqp5ganyh" path="res://Objects/Level_Design/box.tscn" id="10_aidjj"]
-[ext_resource type="PackedScene" uid="uid://c4ocfwt3sjkdh" path="res://Scenes/trigger_platform.tscn" id="11_u0cfa"]
+[ext_resource type="PackedScene" path="res://Scenes/trigger_platform.tscn" id="11_u0cfa"]
 [ext_resource type="PackedScene" uid="uid://ofnhi07achoo" path="res://Objects/Level_Design/interactable.tscn" id="12_tnpum"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_uf2iv"]
