@@ -51,6 +51,10 @@ func _process(delta: float) -> void:
 	
 	if Input.is_action_just_pressed("focus_Camera"):
 		camera_focus_bool = !camera_focus_bool
+	
+	if Input.is_action_just_pressed("gravity_toggle"):
+		camera_focus_bool = !camera_focus_bool
+		
 		
 	if camera_focus_bool:
 		global_position = lerp(global_position, player_pos, delta * 80)
