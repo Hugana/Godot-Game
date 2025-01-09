@@ -19,10 +19,11 @@ func interact():
 	if is_one_shot and is_used:
 		return
 	is_used = true if is_one_shot else is_used
-	emit_signal(signal_name, is_one_shot or !is_used)
+	emit_signal(signal_name, is_one_shot or !is_used, name)
 
 func is_player_in_area() -> bool:
 	for body in get_overlapping_bodies():
+		print(body)
 		if body.name == "Player":  # Adjust to your player's node name
 			return true
 	return false

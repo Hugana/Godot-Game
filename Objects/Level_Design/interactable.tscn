@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Scripts/interactable.gd" id="1_v0qug"]
 
-[node name="Interactable" type="Area2D"]
+[node name="Interactable" type="Area2D" groups=["interactable"]]
 script = ExtResource("1_v0qug")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
