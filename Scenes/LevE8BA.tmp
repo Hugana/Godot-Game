@@ -1233,44 +1233,38 @@ position = Vector2(601, 3.25)
 scale = Vector2(25, 1)
 shape = SubResource("WorldBoundaryShape2D_y08fp")
 
-[node name="Button1" parent="." groups=["puzzle1"] instance=ExtResource("11_4rtme")]
+[node name="Interactable" parent="." groups=["puzzle1"] instance=ExtResource("11_4rtme")]
 z_index = 20
 position = Vector2(826, -24)
-collision_layer = 7
-collision_mask = 7
 
-[node name="Sprite2D" parent="Button1" index="0"]
+[node name="Sprite2D" parent="Interactable" index="0"]
 texture = SubResource("AtlasTexture_efvow")
 
-[node name="CollisionShape2D" parent="Button1" index="1"]
+[node name="CollisionShape2D" parent="Interactable" index="1"]
 position = Vector2(1.5, -11)
 shape = SubResource("RectangleShape2D_omfny")
 
-[node name="Button2" parent="." groups=["puzzle1"] instance=ExtResource("11_4rtme")]
+[node name="Interactable2" parent="." groups=["puzzle1"] instance=ExtResource("11_4rtme")]
 z_index = 20
 position = Vector2(675, -145)
-collision_layer = 7
-collision_mask = 7
 
-[node name="Sprite2D" parent="Button2" index="0"]
+[node name="Sprite2D" parent="Interactable2" index="0"]
 position = Vector2(1, -7)
 rotation = 3.14159
 texture = SubResource("AtlasTexture_efvow")
 
-[node name="CollisionShape2D" parent="Button2" index="1"]
+[node name="CollisionShape2D" parent="Interactable2" index="1"]
 position = Vector2(1, 2)
 shape = SubResource("RectangleShape2D_qjti0")
 
-[node name="Button3" parent="." groups=["puzzle1"] instance=ExtResource("11_4rtme")]
+[node name="Interactable3" parent="." groups=["puzzle1"] instance=ExtResource("11_4rtme")]
 z_index = 20
 position = Vector2(697, -183)
-collision_layer = 7
-collision_mask = 7
 
-[node name="Sprite2D" parent="Button3" index="0"]
+[node name="Sprite2D" parent="Interactable3" index="0"]
 texture = SubResource("AtlasTexture_efvow")
 
-[node name="CollisionShape2D" parent="Button3" index="1"]
+[node name="CollisionShape2D" parent="Interactable3" index="1"]
 position = Vector2(-0.5, -11.875)
 shape = SubResource("RectangleShape2D_rkf54")
 
@@ -1298,6 +1292,6 @@ offset_right = 704.0
 offset_bottom = -211.0
 text = "3"
 
-[editable path="Button1"]
-[editable path="Button2"]
-[editable path="Button3"]
+[editable path="Interactable"]
+[editable path="Interactable2"]
+[editable path="Interactable3"]
