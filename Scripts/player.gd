@@ -246,11 +246,9 @@ func screen_wrap(is_inverted: bool) -> void:
 				global_position.x = left_edge
 				global_position.y = center_y - (global_position.y - center_y)
 			elif global_position.x < left_edge:
-				toogle_gravity()
 				global_position.x = right_edge
 				global_position.y = center_y - (global_position.y - center_y)
 			if global_position.y > bottom_edge:
-				toogle_gravity()
 				global_position.y = top_edge
 				global_position.x = center_x - (global_position.x - center_x)
 			elif global_position.y < top_edge:
