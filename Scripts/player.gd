@@ -41,6 +41,19 @@ var is_movable
 var collider
 var inversion = 1
 
+# X-ray battery values
+@export var max_battery = 60.0 # Maximum battery life in seconds
+var current_battery = max_battery
+var xray_active = false
+
+# X-ray timer node
+@onready var xray_timer = Timer.new()
+@onready var battery: TextureProgressBar = $"../UI/Battery"
+
+# X-ray signal
+signal xray_toggled(xray_active)  # Emit this signal when toggling X-ray
+
+
 enum camera_perspectives {
 	NORMAL,
 	INVERTED
@@ -49,11 +62,21 @@ var camera_perspective = camera_perspectives.NORMAL
 var camera_focus_bool = true 
 
 func _ready() -> void:
+	# Dash timer
 	add_child(dash_cooldown_timer)
 	dash_cooldown_timer.wait_time = DASH_COOLDOWN
 	dash_cooldown_timer.one_shot = true
 	dash_cooldown_timer.connect("timeout", Callable(self, "_on_dash_cooldown_timeout"))
 	
+	# X-ray timer
+	add_child(xray_timer)
+	xray_timer.one_shot = false
+	xray_timer.wait_time = 1.0 # Reduce battery every second
+	xray_timer.connect("timeout", Callable(self, "_on_xray_timer_timeout"))
+
+	# Initialize the progress bar
+	battery.value = current_battery
+	battery.max_value = max_battery
 	
 	camera = get_node(camera_node_path)
 	collision_checker = get_node(collision_checker_path)
@@ -307,10 +330,36 @@ func handle_inputs(direction,delta):
 		
 	if (Input.is_action_just_pressed("focus_Camera")):
 		camera_focus_bool = !camera_focus_bool
-		
+	
+#|-----------------------|
+#|----- X-ray Logic------|
+#|-----------------------|
 func toggle_xray() -> void:
-	is_xray_toggled = !is_xray_toggled
-	x_ray_shadder.visible = is_xray_toggled
+	if current_battery <= 0:
+		xray_active = false
+		x_ray_shadder.visible = false
+		emit_signal("xray_toggled", xray_active)
+		return
+		
+	else:
+		xray_active = !xray_active
+		x_ray_shadder.visible = xray_active
+		
+		if xray_active:
+			xray_timer.start()
+		else:
+			xray_timer.stop()
+			
+		emit_signal("xray_toggled", xray_active)
+	
+func _on_xray_timer_timeout() -> void:
+	if xray_active:
+		current_battery -= xray_timer.wait_time
+		current_battery = clamp(current_battery, 0, max_battery)
+		battery.value = current_battery
+
+		if current_battery <= 0:
+			toggle_xray()
 	
 func _on_check_collision_body_entered(body: Node2D) -> void:
 
