@@ -1086,13 +1086,13 @@ player = NodePath("../Player")
 
 [node name="Player" parent="." groups=["player"] instance=ExtResource("1_glsjn")]
 z_index = 100
-position = Vector2(7308, 555)
+position = Vector2(1450, 516)
 collision_layer = 6
 collision_mask = 6
 camera_node_path = NodePath("../Camera2D")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(7308, 547)
+position = Vector2(1450, 508)
 zoom = Vector2(1.5, 1.5)
 limit_left = -5000000
 limit_top = -5000000

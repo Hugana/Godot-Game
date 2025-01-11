@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://ck5drhb0g6lyq"]
+[gd_scene load_steps=25 format=3 uid="uid://ck5drhb0g6lyq"]
 
 [ext_resource type="Script" path="res://Scripts/level_1.gd" id="1_i1xno"]
 [ext_resource type="Texture2D" uid="uid://dm8dlkoorq7fy" path="res://Assets/Tiles/Cyberpunk-Sprite/Tiles.png" id="2_01n2c"]
@@ -11,11 +11,6 @@
 [ext_resource type="PackedScene" uid="uid://k87tmg5y1swd" path="res://Objects/Player_Based/player.tscn" id="7_wyajr"]
 [ext_resource type="Script" path="res://Scripts/camera_2d.gd" id="8_31cug"]
 [ext_resource type="PackedScene" uid="uid://ofnhi07achoo" path="res://Objects/Level_Design/interactable.tscn" id="11_4rtme"]
-[ext_resource type="FontFile" uid="uid://8kqas1157155" path="res://Assets/fonts/PixelOperator8.ttf" id="12_ba77r"]
-[ext_resource type="Script" path="res://Scripts/UI/PlayerUI.gd" id="12_xtto2"]
-[ext_resource type="Script" path="res://Scripts/UI/timer_display.gd" id="13_4ugo1"]
-[ext_resource type="Texture2D" uid="uid://b00uud4cfrbc1" path="res://Assets/UI/Pixel UI pack 3/ProgressBars.png" id="14_otav3"]
-[ext_resource type="Texture2D" uid="uid://5jns804ecwfw" path="res://Assets/UI/Pixel UI pack 3/Bars&Buttons.png" id="16_im1c3"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_uf2iv"]
 texture = ExtResource("2_01n2c")
@@ -1119,26 +1114,6 @@ size = Vector2(60, 34)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rkf54"]
 size = Vector2(41, 38.25)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_uufpg"]
-atlas = ExtResource("14_otav3")
-region = Rect2(-0.000989676, 19.0093, 47.9961, 10.9714)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_vheah"]
-atlas = ExtResource("14_otav3")
-region = Rect2(51.0009, 53.9985, 42.0147, 4.9732)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ud0xw"]
-atlas = ExtResource("16_im1c3")
-region = Rect2(192.037, 68.0007, 15.9875, 8.01249)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_654h6"]
-atlas = ExtResource("16_im1c3")
-region = Rect2(208.027, 83.9771, 16.0096, 8.05438)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_w32d1"]
-atlas = ExtResource("16_im1c3")
-region = Rect2(223.933, 67.9882, 16.0485, 8.02729)
-
 [node name="Level1" type="Node2D"]
 script = ExtResource("1_i1xno")
 
@@ -1151,10 +1126,10 @@ offset_bottom = 40.0
 [node name="SkyBox" type="TextureRect" parent="Background"]
 z_index = -10
 layout_mode = 0
-offset_left = -850.0
-offset_top = -756.0
-offset_right = 2766.0
-offset_bottom = 773.0
+offset_left = -930.0
+offset_top = -783.0
+offset_right = 2686.0
+offset_bottom = 746.0
 texture = ExtResource("2_j47cp")
 
 [node name="FarBuildings2" type="TextureRect" parent="Background"]
@@ -1258,52 +1233,42 @@ position = Vector2(601, 3.25)
 scale = Vector2(25, 1)
 shape = SubResource("WorldBoundaryShape2D_y08fp")
 
-[node name="Buttons_Puzzle1" type="Node" parent="."]
-
-[node name="Button1" parent="Buttons_Puzzle1" groups=["puzzle1"] instance=ExtResource("11_4rtme")]
+[node name="Interactable" parent="." groups=["puzzle1"] instance=ExtResource("11_4rtme")]
 z_index = 20
 position = Vector2(826, -24)
-collision_layer = 7
-collision_mask = 7
 
-[node name="Sprite2D" parent="Buttons_Puzzle1/Button1" index="0"]
+[node name="Sprite2D" parent="Interactable" index="0"]
 texture = SubResource("AtlasTexture_efvow")
 
-[node name="CollisionShape2D" parent="Buttons_Puzzle1/Button1" index="1"]
+[node name="CollisionShape2D" parent="Interactable" index="1"]
 position = Vector2(1.5, -11)
 shape = SubResource("RectangleShape2D_omfny")
 
-[node name="Button2" parent="Buttons_Puzzle1" groups=["puzzle1"] instance=ExtResource("11_4rtme")]
+[node name="Interactable2" parent="." groups=["puzzle1"] instance=ExtResource("11_4rtme")]
 z_index = 20
 position = Vector2(675, -145)
-collision_layer = 7
-collision_mask = 7
 
-[node name="Sprite2D" parent="Buttons_Puzzle1/Button2" index="0"]
+[node name="Sprite2D" parent="Interactable2" index="0"]
 position = Vector2(1, -7)
 rotation = 3.14159
 texture = SubResource("AtlasTexture_efvow")
 
-[node name="CollisionShape2D" parent="Buttons_Puzzle1/Button2" index="1"]
+[node name="CollisionShape2D" parent="Interactable2" index="1"]
 position = Vector2(1, 2)
 shape = SubResource("RectangleShape2D_qjti0")
 
-[node name="Button3" parent="Buttons_Puzzle1" groups=["puzzle1"] instance=ExtResource("11_4rtme")]
+[node name="Interactable3" parent="." groups=["puzzle1"] instance=ExtResource("11_4rtme")]
 z_index = 20
 position = Vector2(697, -183)
-collision_layer = 7
-collision_mask = 7
 
-[node name="Sprite2D" parent="Buttons_Puzzle1/Button3" index="0"]
+[node name="Sprite2D" parent="Interactable3" index="0"]
 texture = SubResource("AtlasTexture_efvow")
 
-[node name="CollisionShape2D" parent="Buttons_Puzzle1/Button3" index="1"]
+[node name="CollisionShape2D" parent="Interactable3" index="1"]
 position = Vector2(-0.5, -11.875)
 shape = SubResource("RectangleShape2D_rkf54")
 
-[node name="Labels" type="Node" parent="."]
-
-[node name="Interact" type="Label" parent="Labels"]
+[node name="Interact" type="Label" parent="."]
 z_index = 20
 offset_left = 822.0
 offset_top = -78.0
@@ -1311,7 +1276,7 @@ offset_right = 832.0
 offset_bottom = -55.0
 text = "1"
 
-[node name="Interact2" type="Label" parent="Labels"]
+[node name="Interact2" type="Label" parent="."]
 z_index = 20
 offset_left = 709.0
 offset_top = -156.0
@@ -1319,7 +1284,7 @@ offset_right = 719.0
 offset_bottom = -133.0
 text = "2"
 
-[node name="Interact3" type="Label" parent="Labels"]
+[node name="Interact3" type="Label" parent="."]
 z_index = 20
 offset_left = 694.0
 offset_top = -234.0
@@ -1327,71 +1292,6 @@ offset_right = 704.0
 offset_bottom = -211.0
 text = "3"
 
-[node name="UI" type="CanvasLayer" parent="."]
-script = ExtResource("12_xtto2")
-
-[node name="Timer" type="Timer" parent="UI"]
-
-[node name="TimerDisplay" type="Label" parent="UI"]
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -111.0
-offset_top = 17.0
-offset_right = -28.0
-offset_bottom = 40.0
-grow_horizontal = 0
-theme_override_fonts/font = ExtResource("12_ba77r")
-theme_override_font_sizes/font_size = 20
-script = ExtResource("13_4ugo1")
-
-[node name="Battery" type="TextureProgressBar" parent="UI"]
-z_index = 20
-offset_left = 21.0
-offset_top = 16.0
-offset_right = 69.0
-offset_bottom = 29.0
-scale = Vector2(2.5, 2.5)
-value = 100.0
-texture_under = SubResource("AtlasTexture_uufpg")
-texture_progress = SubResource("AtlasTexture_vheah")
-texture_progress_offset = Vector2(3.01, 3.02)
-
-[node name="CameraIcons" type="HBoxContainer" parent="UI"]
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -64.0
-offset_top = -65.0
-offset_right = 64.0
-offset_bottom = -25.0
-grow_horizontal = 2
-grow_vertical = 0
-size_flags_vertical = 4
-
-[node name="FocusIcon" type="TextureRect" parent="UI/CameraIcons"]
-layout_mode = 2
-size_flags_horizontal = 0
-texture = SubResource("AtlasTexture_ud0xw")
-expand_mode = 2
-stretch_mode = 5
-
-[node name="GravIcon" type="TextureRect" parent="UI/CameraIcons"]
-layout_mode = 2
-size_flags_horizontal = 4
-texture = SubResource("AtlasTexture_654h6")
-expand_mode = 2
-stretch_mode = 5
-
-[node name="AxialIcon" type="TextureRect" parent="UI/CameraIcons"]
-layout_mode = 2
-size_flags_horizontal = 8
-texture = SubResource("AtlasTexture_w32d1")
-expand_mode = 2
-stretch_mode = 5
-
-[editable path="Buttons_Puzzle1/Button1"]
-[editable path="Buttons_Puzzle1/Button2"]
-[editable path="Buttons_Puzzle1/Button3"]
+[editable path="Interactable"]
+[editable path="Interactable2"]
+[editable path="Interactable3"]

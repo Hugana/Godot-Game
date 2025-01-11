@@ -8,21 +8,19 @@ uniform sampler2D SCREEN_TEXTURE: hint_screen_texture;
 
 uniform vec2 resolution = vec2(320.0, 180.0);
 
-// Reduced effect parameters
-uniform float scan_line_amount :hint_range(0.0, 1.0) = 0.2; // Subtle scanlines
-uniform float warp_amount :hint_range(0.0, 5.0) = 0.01;    // Minimal warping
-uniform float noise_amount :hint_range(0.0, 0.3) = 0.005; // Minimal noise
-uniform float grille_amount :hint_range(0.0, 1.0) = 0.02; // Subtle grille
-uniform float vignette_amount :hint_range(0.0, 2.0) = 0.2; // Subtle vignette
-uniform float vignette_intensity :hint_range(0.0, 1.0) = 0.2;
-uniform float aberation_amount :hint_range(0.0, 1.0) = 0.1; // Very subtle aberration
-uniform float roll_line_amount :hint_range(0.0, 1.0) = 0.05; // Barely visible rolling lines
-uniform float roll_speed :hint_range(-8.0, 8.0) = 0.5;       // Slower roll
-uniform float scan_line_strength :hint_range(-12.0, -1.0) = -5.0;
-uniform float pixel_strength :hint_range(-4.0, 0.0) = -1.0;
+uniform float scan_line_amount :hint_range(0.0, 1.0) = 0.1;
+uniform float scan_line_strength :hint_range(-12.0, -1.0) = -2.0;
+uniform float warp_amount :hint_range(0.0, 5.0) = 0.005;
+uniform float noise_amount :hint_range(0.0, 0.3) = 0.002;
+uniform float grille_amount :hint_range(0.0, 1.0) = 0.01;
+uniform float vignette_amount :hint_range(0.0, 2.0) = 0.1;
+uniform float vignette_intensity :hint_range(0.0, 1.0) = 0.1;
+uniform float aberation_amount :hint_range(0.0, 1.0) = 0.05;
+uniform float roll_line_amount :hint_range(0.0, 1.0) = 0.02;
+uniform float roll_speed :hint_range(-8.0, 8.0) = 0.3;
 
 float random(vec2 uv) {
-    return fract(cos(uv.x * 83.4827 + uv.y * 92.2842) * 43758.5453123);
+	return fract(cos(uv.x * 83.4827 + uv.y * 92.2842) * 43758.5453123);
 }
 
 vec3 fetch_pixel(vec2 uv, vec2 off) {

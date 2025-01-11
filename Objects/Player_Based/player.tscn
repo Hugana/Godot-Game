@@ -534,6 +534,7 @@ size = Vector2(24.3125, 30)
 shader = ExtResource("8_k1bkt")
 shader_parameter/resolution = Vector2(320, 180)
 shader_parameter/scan_line_amount = 1.0
+shader_parameter/scan_line_strength = -8.0
 shader_parameter/warp_amount = 0.1
 shader_parameter/noise_amount = 0.03
 shader_parameter/grille_amount = 0.1
@@ -542,8 +543,6 @@ shader_parameter/vignette_intensity = 0.4
 shader_parameter/aberation_amount = 0.5
 shader_parameter/roll_line_amount = 0.3
 shader_parameter/roll_speed = 1.0
-shader_parameter/scan_line_strength = -8.0
-shader_parameter/pixel_strength = -2.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h6y57"]
 size = Vector2(10, 32)
