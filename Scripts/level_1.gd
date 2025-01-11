@@ -1,10 +1,10 @@
 extends Node
 
-@export var correct_sequence: Array = ["Button1", "Button2", "Button3"]  # Order to solve the puzzle
+@export var correct_sequence: Array = ["Button1", "Button3", "Button2"]  # Order to solve the puzzle
 var current_sequence: Array = []  # Track the player's toggling order
 var interactables: Array = []  # Holds the interactable nodes
 
-signal puzzle_solved  # Emitted when the puzzle is solved
+signal puzzle_solved  # Emitted when the puzzle is solvedd
 
 func _ready():
 	# Populate the interactables array using the "puzzle1" group
@@ -14,7 +14,6 @@ func _ready():
 			interactable.connect("interacted", Callable(self, "_on_interactable_toggled"))
 
 func _on_interactable_toggled(state: bool, button_name: String):
-	print("Button name:", button_name)  # Debugging to confirm the button name is correct
 	if state:  # Record toggling only when turned "on"
 		current_sequence.append(button_name)
 		print("Current sequence:", current_sequence)
