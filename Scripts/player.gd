@@ -12,6 +12,7 @@ const DASH_SPEED = 700.0
 const DASH_DURATION = 0.2
 var is_dashing = false
 var dash_timer = 0.0 
+var mirrored_pos
 
 const DASH_COOLDOWN = 1.5
 @export var is_dash_on_cooldown = false  
@@ -63,6 +64,7 @@ var camera_perspective = camera_perspectives.NORMAL
 var camera_focus_bool = true 
 
 func _ready() -> void:
+	
 	# Dash timer
 	add_child(dash_cooldown_timer)
 	dash_cooldown_timer.wait_time = DASH_COOLDOWN
@@ -101,6 +103,7 @@ func _physics_process(delta: float) -> void:
 	var direction = Input.get_axis("move_left", "move_right")
 	var result = rayCastHandleMovables()
 	screen_size = get_viewport_rect().size
+	
 	
 	
 	is_movable = result[0]
@@ -260,12 +263,12 @@ func screen_wrap(camera_perpective) -> void:
 			if global_position.x > right_edge:
 				global_position.x = left_edge
 				global_position.y = center_y - (global_position.y - center_y)
-				
+				camera_focus_bool = !camera_focus_bool
 				toogle_gravity()
 			elif global_position.x < left_edge:
 				global_position.x = right_edge
 				global_position.y = center_y - (global_position.y - center_y)
-
+				camera_focus_bool = !camera_focus_bool
 				toogle_gravity()
 			if global_position.y > bottom_edge:
 				print("Gravity nao faz")
@@ -302,6 +305,7 @@ func toogle_gravity():
 	if gravity_toggle:
 		inversion *= -1
 		animated_sprite.scale.y = abs(animated_sprite.scale.y) * inversion
+		
 		
 
 func handle_inputs(direction,delta):
@@ -387,7 +391,13 @@ func _on_check_collision_body_entered(body: Node2D) -> void:
 		velocity = Vector2.ZERO 
 		
 func set_collision_checker_pos(player_local_pos) -> void:
-	# Mirror the player's local position
-	var mirrored_pos = Vector2(-player_local_pos.x, player_local_pos.y -15)
+	
+	
+	if camera_perspective == camera_perspectives.INVERTED:
+		mirrored_pos = Vector2(-player_local_pos.x, -player_local_pos.y -15)
+	if(camera_perspective == camera_perspectives.NORMAL):
+		mirrored_pos = Vector2(-player_local_pos.x, player_local_pos.y -15)
+
+	
 	collision_checker.global_position = camera.to_global(mirrored_pos)
 	
