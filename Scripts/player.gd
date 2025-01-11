@@ -300,7 +300,7 @@ func handle_inputs(direction,delta):
 	if Input.is_action_just_pressed("camera_1"):
 		camera_perspective = camera_perspectives.NORMAL
 		
-	if Input.is_action_just_pressed("camera_2"):
+	if Input.is_action_just_pressed("axial_toggle"):
 		camera_perspective = camera_perspectives.INVERTED
 	
 	if Input.is_action_just_pressed("checkpoint"):
