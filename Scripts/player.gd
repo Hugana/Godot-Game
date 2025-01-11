@@ -4,7 +4,7 @@ var SPEED = 180.0
 const SLIDE_SPEED = 350.0
 const JUMP_VELOCITY = -250.0
 var GRAVITY = 600
-const MAX_FALL_SPEED = 800
+const MAX_FALL_SPEED = 600
 const SLIDE_DURATION = 0.5
 const PUSH_FORCE = 20
 
@@ -56,7 +56,8 @@ signal xray_toggled(xray_active)  # Emit this signal when toggling X-ray
 
 enum camera_perspectives {
 	NORMAL,
-	INVERTED
+	INVERTED,
+	GRAVITY
 }
 var camera_perspective = camera_perspectives.NORMAL
 var camera_focus_bool = true 
@@ -96,11 +97,11 @@ func rayCastHandleMovables() -> Array:
 func _physics_process(delta: float) -> void:
 	
 	var player_local_pos = camera.to_local(global_position)
+	set_collision_checker_pos(player_local_pos)
 	var direction = Input.get_axis("move_left", "move_right")
 	var result = rayCastHandleMovables()
 	screen_size = get_viewport_rect().size
 	
-	set_collision_checker_pos(player_local_pos)
 	
 	is_movable = result[0]
 	collider = result[1]
@@ -116,7 +117,7 @@ func _physics_process(delta: float) -> void:
 		handle_movable_interaction(direction, result)
 
 	if can_wrap:
-		screen_wrap(camera_perspective == camera_perspectives.INVERTED)
+		screen_wrap(camera_perspective)
 
 	if not is_sliding and not is_dashing:
 		if direction:
@@ -226,7 +227,7 @@ func animations(direction: float) -> void:
 	elif direction < 0 and !is_pulling:
 		animated_sprite.flip_h = true
 
-func screen_wrap(is_inverted: bool) -> void:
+func screen_wrap(camera_perpective) -> void:
 	var camera_pos = camera.global_position
 	var camera_zoom = camera.zoom
 	var visible_width = screen_size.x / camera_zoom.x
@@ -238,11 +239,10 @@ func screen_wrap(is_inverted: bool) -> void:
 	var bottom_edge = camera_pos.y + visible_height / 2
 	
 	if can_wrap:
-		if is_inverted:
+		if camera_perpective == camera_perspectives.INVERTED:
 			var center_x = (left_edge + right_edge) / 2
 			var center_y = (top_edge + bottom_edge) / 2
 			if global_position.x > right_edge:
-				toogle_gravity()
 				global_position.x = left_edge
 				global_position.y = center_y - (global_position.y - center_y)
 			elif global_position.x < left_edge:
@@ -252,21 +252,34 @@ func screen_wrap(is_inverted: bool) -> void:
 				global_position.y = top_edge
 				global_position.x = center_x - (global_position.x - center_x)
 			elif global_position.y < top_edge:
-				toogle_gravity()
 				global_position.y = bottom_edge
 				global_position.x = center_x - (global_position.x - center_x)
+		elif camera_perspective == camera_perspectives.GRAVITY:
+			var center_x = (left_edge + right_edge) / 2
+			var center_y = (top_edge + bottom_edge) / 2
+			if global_position.x > right_edge:
+				global_position.x = left_edge
+				global_position.y = center_y - (global_position.y - center_y)
+				
+				toogle_gravity()
+			elif global_position.x < left_edge:
+				global_position.x = right_edge
+				global_position.y = center_y - (global_position.y - center_y)
+
+				toogle_gravity()
+			if global_position.y > bottom_edge:
+				print("Gravity nao faz")
+			elif global_position.y < top_edge:
+				print("Gravity nao faz")
+			
 		else:
 			if global_position.x > right_edge:
-				toogle_gravity()
 				global_position.x = left_edge
 			elif global_position.x < left_edge:
-				toogle_gravity()
 				global_position.x = right_edge
 			if global_position.y > bottom_edge:
-				toogle_gravity()
 				global_position.y = top_edge
 			elif global_position.y < top_edge:
-				toogle_gravity()
 				global_position.y = bottom_edge
 
 func adjust_collision_height(new_height: float) -> void:
@@ -276,10 +289,12 @@ func adjust_collision_height(new_height: float) -> void:
 	collision_shape.position.y += height_difference / 2
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
+	print("NAO PODE")
 	can_wrap = false
 	pass 
 
 func _on_area_2d_body_exited(body: Node2D) -> void:
+	print("PODE")
 	can_wrap = true
 	pass 
 	
@@ -292,8 +307,7 @@ func toogle_gravity():
 func handle_inputs(direction,delta):
 	if Input.is_action_just_pressed("gravity_toggle"):
 		gravity_toggle = !gravity_toggle
-		#inversion *= -1
-		#animated_sprite.scale.y = abs(animated_sprite.scale.y) * inversion
+		camera_perspective = camera_perspectives.GRAVITY
 		
 	if Input.is_action_just_pressed("camera_1"):
 		camera_perspective = camera_perspectives.NORMAL
@@ -373,5 +387,7 @@ func _on_check_collision_body_entered(body: Node2D) -> void:
 		velocity = Vector2.ZERO 
 		
 func set_collision_checker_pos(player_local_pos) -> void:
-	collision_checker.position.x = -player_local_pos.x * 2
-	collision_checker.position.y = player_local_pos.y - 15
+	# Mirror the player's local position
+	var mirrored_pos = Vector2(-player_local_pos.x, player_local_pos.y -15)
+	collision_checker.global_position = camera.to_global(mirrored_pos)
+	
