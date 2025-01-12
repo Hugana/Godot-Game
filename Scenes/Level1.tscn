@@ -1099,8 +1099,7 @@ texture = ExtResource("2_01n2c")
 5:8/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_xs34k"]
-physics_layer_0/collision_layer = 2
-physics_layer_0/collision_mask = 2
+physics_layer_0/collision_layer = 1
 sources/1 = SubResource("TileSetAtlasSource_e3bel")
 sources/0 = SubResource("TileSetAtlasSource_ak6ij")
 
@@ -1226,15 +1225,15 @@ layer_2/tile_data = PackedInt32Array(-393213, 1245186, 6, -393212, 1310722, 6, -
 tile_set = SubResource("TileSet_xs34k")
 format = 2
 layer_0/z_index = 150
-layer_0/tile_data = PackedInt32Array(-786391, 196608, 1342177289, -851927, 196608, 1342177289, -917463, 196608, 1342177289, -982999, 196608, 1342177289, -786387, 196608, 1342177289, -851923, 196608, 1342177289, -917459, 196608, 1342177289, -982995, 196608, 1342177289, -1048535, 131072, 1342177289, -1048534, 131072, 1342177289, -1048533, 131072, 1342177289, -1048532, 131072, 1342177289, -1048531, 131072, 1342177289)
+layer_0/tile_data = PackedInt32Array(-786391, 196608, 1342177289, -851927, 196608, 1342177289, -917463, 196608, 1342177289, -982999, 196608, 1342177289, -786387, 196608, 1342177289, -851923, 196608, 1342177289, -917459, 196608, 1342177289, -982995, 196608, 1342177289, -1048535, 131072, 1342177289, -1048534, 131072, 1342177289, -1048533, 131072, 1342177289, -1048532, 131072, 1342177289, -1048531, 131072, 1342177289, -131054, 589824, 5, -196590, 589824, 5, -262126, 589824, 5, -327662, 589824, 5)
 script = ExtResource("6_oeq6o")
 player = NodePath("../Player")
 
 [node name="Player" parent="." groups=["player"] instance=ExtResource("7_wyajr")]
 z_index = 100
 position = Vector2(74, -23)
-collision_layer = 6
-collision_mask = 6
+collision_layer = 7
+collision_mask = 7
 camera_node_path = NodePath("../Camera2D")
 
 [node name="Camera2D" type="Camera2D" parent="."]
