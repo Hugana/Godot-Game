@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://barbo3y3aan5t"]
+[gd_scene load_steps=39 format=3 uid="uid://barbo3y3aan5t"]
 
 [ext_resource type="Script" path="res://Scripts/tutorial.gd" id="1_8qq37"]
 [ext_resource type="Texture2D" uid="uid://dm8dlkoorq7fy" path="res://Assets/Tiles/Cyberpunk-Sprite/Tiles.png" id="1_bu5ru"]
@@ -13,6 +13,11 @@
 [ext_resource type="PackedScene" uid="uid://dcp0tqp5ganyh" path="res://Objects/Level_Design/box.tscn" id="10_aidjj"]
 [ext_resource type="PackedScene" uid="uid://c4ocfwt3sjkdh" path="res://Scenes/trigger_platform.tscn" id="11_u0cfa"]
 [ext_resource type="PackedScene" uid="uid://ofnhi07achoo" path="res://Objects/Level_Design/interactable.tscn" id="12_tnpum"]
+[ext_resource type="Script" path="res://Scripts/UI/PlayerUI.gd" id="14_y4fx4"]
+[ext_resource type="FontFile" uid="uid://8kqas1157155" path="res://Assets/fonts/PixelOperator8.ttf" id="15_3c1lj"]
+[ext_resource type="Script" path="res://Scripts/UI/timer_display.gd" id="16_y4egy"]
+[ext_resource type="Texture2D" uid="uid://b00uud4cfrbc1" path="res://Assets/UI/Pixel UI pack 3/ProgressBars.png" id="17_s4aay"]
+[ext_resource type="Texture2D" uid="uid://5jns804ecwfw" path="res://Assets/UI/Pixel UI pack 3/Bars&Buttons.png" id="18_4a4fl"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_uf2iv"]
 texture = ExtResource("1_bu5ru")
@@ -1030,8 +1035,7 @@ texture = ExtResource("1_bu5ru")
 5:8/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_xs34k"]
-physics_layer_0/collision_layer = 2
-physics_layer_0/collision_mask = 2
+physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_ak6ij")
 sources/1 = SubResource("TileSetAtlasSource_e3bel")
 
@@ -1055,6 +1059,26 @@ region = Rect2(162.995, 95.9343, 8.94014, 15.1868)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h6t81"]
 size = Vector2(33.5, 72.5)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_njmf8"]
+atlas = ExtResource("17_s4aay")
+region = Rect2(-0.000989676, 19.0093, 47.9961, 10.9714)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7osva"]
+atlas = ExtResource("17_s4aay")
+region = Rect2(51.0009, 53.9985, 42.0147, 4.9732)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lv3rj"]
+atlas = ExtResource("18_4a4fl")
+region = Rect2(192.037, 68.0007, 15.9875, 8.01249)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g8qye"]
+atlas = ExtResource("18_4a4fl")
+region = Rect2(208.027, 83.9771, 16.0096, 8.05438)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cjisv"]
+atlas = ExtResource("18_4a4fl")
+region = Rect2(223.933, 67.9882, 16.0485, 8.02729)
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_8qq37")
@@ -1291,6 +1315,71 @@ texture = SubResource("AtlasTexture_3tq0i")
 z_index = 50
 position = Vector2(29.25, 3)
 shape = SubResource("RectangleShape2D_h6t81")
+
+[node name="UI" type="CanvasLayer" parent="."]
+script = ExtResource("14_y4fx4")
+
+[node name="Timer" type="Timer" parent="UI"]
+
+[node name="TimerDisplay" type="Label" parent="UI"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -111.0
+offset_top = 17.0
+offset_right = -28.0
+offset_bottom = 40.0
+grow_horizontal = 0
+theme_override_fonts/font = ExtResource("15_3c1lj")
+theme_override_font_sizes/font_size = 20
+script = ExtResource("16_y4egy")
+
+[node name="Battery" type="TextureProgressBar" parent="UI"]
+z_index = 20
+offset_left = 21.0
+offset_top = 16.0
+offset_right = 69.0
+offset_bottom = 29.0
+scale = Vector2(2.5, 2.5)
+value = 100.0
+texture_under = SubResource("AtlasTexture_njmf8")
+texture_progress = SubResource("AtlasTexture_7osva")
+texture_progress_offset = Vector2(3.01, 3.02)
+
+[node name="CameraIcons" type="HBoxContainer" parent="UI"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -64.0
+offset_top = -65.0
+offset_right = 64.0
+offset_bottom = -25.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_vertical = 4
+
+[node name="FocusIcon" type="TextureRect" parent="UI/CameraIcons"]
+layout_mode = 2
+size_flags_horizontal = 0
+texture = SubResource("AtlasTexture_lv3rj")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="GravIcon" type="TextureRect" parent="UI/CameraIcons"]
+layout_mode = 2
+size_flags_horizontal = 4
+texture = SubResource("AtlasTexture_g8qye")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="AxialIcon" type="TextureRect" parent="UI/CameraIcons"]
+layout_mode = 2
+size_flags_horizontal = 8
+texture = SubResource("AtlasTexture_cjisv")
+expand_mode = 2
+stretch_mode = 5
 
 [connection signal="activated" from="Trigger_Platform" to="InteractiveDoor" method="_on_trigger_platform_activated"]
 [connection signal="deactivated" from="Trigger_Platform" to="InteractiveDoor" method="_on_trigger_platform_deactivated"]
