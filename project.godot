@@ -21,7 +21,6 @@ SceneHandler="*res://Scripts/Scene_Handler.gd"
 
 [display]
 
-window/size/mode=3
 window/stretch/mode="viewport"
 
 [global_group]
