@@ -55,14 +55,14 @@ func _process(delta: float) -> void:
 	
 	if player_on_top:
 		should_disable_collider = false
-		print("Estou em cima da plataforma")
+		#print("Estou em cima da plataforma")
 	else:
 		if near_edge:
 			should_disable_collider = true
-			print("Não estou em cima da plataforma e na borda")
+			#print("Não estou em cima da plataforma e na borda")
 		else:
 			should_disable_collider = false
-			print("Não estou em cima da plataforma nem na borda")
+			#print("Não estou em cima da plataforma nem na borda")
 
 	# Apply the logic to disable or enable the collider and adjust opacity
 	collider.disabled = should_disable_collider

@@ -549,8 +549,10 @@ size = Vector2(10, 32)
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 script = ExtResource("1_3a4ae")
+is_dash_on_cooldown = null
 camera_node_path = NodePath("CollisionShape2D")
 collision_checker_path = NodePath("Area2D/CollisionShapeChecker")
+max_battery = null
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." groups=["player"]]
 position = Vector2(0, -10)
