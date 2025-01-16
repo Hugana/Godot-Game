@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://co27fdo776atx"
+path="res://.godot/imported/Dash Sound Effect.mp3-1fc62287571a6a62ee0bc3ab631b1c57.mp3str"
+
+[deps]
+
+source_file="res://Assets/sounds/Dash Sound Effect.mp3"
+dest_files=["res://.godot/imported/Dash Sound Effect.mp3-1fc62287571a6a62ee0bc3ab631b1c57.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

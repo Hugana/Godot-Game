@@ -528,7 +528,7 @@ animations = [{
 size = Vector2(9, 30)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dlhcx"]
-size = Vector2(25.6446, 29)
+size = Vector2(55.2891, 40)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_usw5w"]
 shader = ExtResource("8_k1bkt")
@@ -547,7 +547,7 @@ shader_parameter/roll_speed = 1.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h6y57"]
 size = Vector2(10, 32)
 
-[node name="Player" type="CharacterBody2D" groups=["player"]]
+[node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_3a4ae")
 camera_node_path = NodePath("CollisionShape2D")
 collision_checker_path = NodePath("Area2D/CollisionShapeChecker")
@@ -556,10 +556,11 @@ audio_player_node = NodePath("AudioStreamPlayer")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." groups=["player"]]
 position = Vector2(0, -10)
 sprite_frames = SubResource("SpriteFrames_sqakd")
-animation = &"jump"
+animation = &"idle"
 autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(0, -9)
 shape = SubResource("RectangleShape2D_1yrtt")
 
@@ -573,8 +574,8 @@ position = Vector2(0, -8)
 shape = SubResource("RectangleShape2D_dlhcx")
 
 [node name="Sprite2D" type="Sprite2D" parent="Area2D/CollisionShapeChecker"]
-position = Vector2(-2.86102e-06, -1)
-scale = Vector2(1.08333, 1.03333)
+position = Vector2(4.76837e-07, -1.43051e-06)
+scale = Vector2(2.25, 1.33333)
 texture = ExtResource("7_mrdbn")
 region_enabled = true
 region_rect = Rect2(2.7031, 10.7457, 24.6807, 30.4252)
@@ -602,7 +603,6 @@ rotation = -4.71239
 target_position = Vector2(-7.62939e-06, 9)
 
 [node name="Check_collision" type="Area2D" parent="."]
-visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Check_collision"]
 position = Vector2(0, -8)
