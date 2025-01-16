@@ -1,5 +1,6 @@
 extends CharacterBody2D
 
+# Movement variables
 var SPEED = 180.0
 const SLIDE_SPEED = 350.0
 const JUMP_VELOCITY = -250.0
@@ -7,7 +8,6 @@ var GRAVITY = 600
 const MAX_FALL_SPEED = 600
 const SLIDE_DURATION = 0.5
 const PUSH_FORCE = 20
-
 const DASH_SPEED = 700.0
 const DASH_DURATION = 0.2
 var is_dashing = false
@@ -18,8 +18,11 @@ var was_in_air = false
 var step_timer = 0.0  
 const STEP_INTERVAL = 0.3
 
+
 const DASH_COOLDOWN = 1.5
 var rng = RandomNumberGenerator.new()
+
+
 
 @export var is_dash_on_cooldown = false  
 @export var dash_cooldown_timer = Timer.new()
@@ -69,12 +72,12 @@ var xray_active = false
 # X-ray signal
 signal xray_toggled(xray_active)  # Emit this signal when toggling X-ray
 
-
 enum camera_perspectives {
 	NORMAL,
 	INVERTED,
 	GRAVITY
 }
+
 var camera_perspective = camera_perspectives.NORMAL
 var camera_focus_bool = true 
 
@@ -114,13 +117,15 @@ func rayCastHandleMovables() -> Array:
 
 func _physics_process(delta: float) -> void:
 	
+	# Set camera pos
 	var player_local_pos = camera.to_local(global_position)
+	
+	# Set collision checker pos
 	set_collision_checker_pos(player_local_pos)
+	
 	var direction = Input.get_axis("move_left", "move_right")
 	var result = rayCastHandleMovables()
 	screen_size = get_viewport_rect().size
-	
-	
 	
 	is_movable = result[0]
 	collider = result[1]
@@ -152,6 +157,7 @@ func _physics_process(delta: float) -> void:
 	if is_dashing:
 		handle_dash(delta)
 		
+
 	
 	
 	
@@ -167,6 +173,20 @@ func _physics_process(delta: float) -> void:
 		play_sound("landing")  
 
 	was_in_air = not is_on_floor()  
+
+	if not can_wrap and (not camera_perspective == camera_perspectives.NORMAL or camera_focus_bool == false):
+		constrain_to_screen()
+
+		
+#|-------------------------------------------------------------------------|
+#|------------------------------- Actions ---------------------------------|
+#|-------------------------------------------------------------------------|
+
+
+#|-------------------------------------------------------------------------|
+#|-------------------------------- Dash -----------------------------------|
+#|-------------------------------------------------------------------------|
+
 
 func start_dash(direction: float) -> void:
 	
@@ -196,6 +216,19 @@ func _on_dash_cooldown_timeout() -> void:
 func get_dash_cooldown_time_left() -> float:
 	return dash_cooldown_timer.time_left if is_dash_on_cooldown else 0.0
 	
+func handle_dash(delta: float) -> void:
+	dash_timer -= delta  
+	if dash_timer <= 0:
+		is_dashing = false 
+		GRAVITY = 600
+		velocity.x = 0  
+		if not is_on_floor() or not is_on_ceiling():
+			animated_sprite.play("jump")
+	
+#|-------------------------------------------------------------------------|
+#|------------------------- Pulling and Pushing ---------------------------|
+#|-------------------------------------------------------------------------|
+	
 func handle_movable_interaction(direction: float, result: Array) -> void:
 	if is_pulling:
 		SPEED = 15
@@ -216,14 +249,9 @@ func handle_movable_interaction(direction: float, result: Array) -> void:
 			animated_sprite.flip_h = true
 			collider.apply_impulse(Vector2(318, 0))
 
-func handle_dash(delta: float) -> void:
-	dash_timer -= delta  
-	if dash_timer <= 0:
-		is_dashing = false 
-		GRAVITY = 600
-		velocity.x = 0  
-		if not is_on_floor() or not is_on_ceiling():
-			animated_sprite.play("jump")
+#|-------------------------------------------------------------------------|
+#|-------------------------------- Slide ----------------------------------|
+#|-------------------------------------------------------------------------|
 
 func start_slide(direction: float) -> void:
 	is_sliding = true
@@ -245,6 +273,10 @@ func handle_slide(delta: float) -> void:
 		velocity.x = 0
 		if not is_on_floor() and is_on_ceiling():
 			animated_sprite.play("jump")
+
+#|-------------------------------------------------------------------------|
+#|----------------------------- Animations --------------------------------|
+#|-------------------------------------------------------------------------|
 
 func animations(direction: float) -> void:
 	if (not is_on_floor() and not is_on_ceiling()) and not is_sliding and not is_dashing :
@@ -268,6 +300,18 @@ func animations(direction: float) -> void:
 	elif direction < 0 and !is_pulling:
 		animated_sprite.flip_h = true
 
+
+func adjust_collision_height(new_height: float) -> void:
+	
+	var height_difference = rect.size.y - new_height
+	rect.size.y = new_height
+	collision_shape.position.y += height_difference / 2
+	
+	
+#|-------------------------------------------------------------------------|
+#|----------------------------Wrapping Logic ------------------------------|
+#|-------------------------------------------------------------------------|
+
 func screen_wrap(camera_perpective) -> void:
 	var camera_pos = camera.global_position
 	var camera_zoom = camera.zoom
@@ -286,58 +330,110 @@ func screen_wrap(camera_perpective) -> void:
 			if global_position.x > right_edge:
 				global_position.x = left_edge
 				global_position.y = center_y - (global_position.y - center_y)
+				reset_axial()
 			elif global_position.x < left_edge:
 				global_position.x = right_edge
 				global_position.y = center_y - (global_position.y - center_y)
+				reset_axial()
 			if global_position.y > bottom_edge:
 				global_position.y = top_edge
 				global_position.x = center_x - (global_position.x - center_x)
+				reset_axial()
 			elif global_position.y < top_edge:
 				global_position.y = bottom_edge
 				global_position.x = center_x - (global_position.x - center_x)
+				reset_axial()
+				
 		elif camera_perspective == camera_perspectives.GRAVITY:
 			var center_x = (left_edge + right_edge) / 2
 			var center_y = (top_edge + bottom_edge) / 2
 			if global_position.x > right_edge:
 				global_position.x = left_edge
-				global_position.y = center_y - (global_position.y - center_y)
+				global_position.y = global_position.y
 				camera_focus_bool = !camera_focus_bool
 				toogle_gravity()
+				reset_gravity()
 			elif global_position.x < left_edge:
 				global_position.x = right_edge
 				global_position.y = center_y - (global_position.y - center_y)
 				camera_focus_bool = !camera_focus_bool
 				toogle_gravity()
+				reset_gravity()
 			if global_position.y > bottom_edge:
 				print("Gravity nao faz")
+				reset_gravity()
 			elif global_position.y < top_edge:
 				print("Gravity nao faz")
+				reset_gravity()
 			
 		else:
 			if global_position.x > right_edge:
 				global_position.x = left_edge
+				reset_focus()
 			elif global_position.x < left_edge:
 				global_position.x = right_edge
+				reset_focus()
 			if global_position.y > bottom_edge:
 				global_position.y = top_edge
+				reset_focus()
 			elif global_position.y < top_edge:
 				global_position.y = bottom_edge
+				reset_focus()
 
-func adjust_collision_height(new_height: float) -> void:
+				
+func reset_focus() -> void:
+	Input.action_press("focus_Camera")
 	
-	var height_difference = rect.size.y - new_height
-	rect.size.y = new_height
-	collision_shape.position.y += height_difference / 2
+func reset_gravity() -> void:
+	Input.action_press("gravity_toggle")
+	
+func reset_axial() -> void:
+	Input.action_press("axial_toggle")
+
+#|-------------------------------------------------------------------------|
+#|---------------------- Camera Collision Checker -------------------------|
+#|-------------------------------------------------------------------------|
+
+func set_collision_checker_pos(player_local_pos) -> void:
+	if camera_perspective == camera_perspectives.INVERTED:
+		mirrored_pos = Vector2(-player_local_pos.x, -player_local_pos.y -15)
+	elif(camera_perspective == camera_perspectives.NORMAL):
+		mirrored_pos = Vector2(-player_local_pos.x, player_local_pos.y -15)
+	elif(camera_perspective == camera_perspectives.GRAVITY):
+		mirrored_pos = Vector2(-player_local_pos.x, player_local_pos.y - 15)
+	
+	collision_checker.global_position = camera.to_global(mirrored_pos)
+
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
-	print("NAO PODE")
-	can_wrap = false
-	pass 
+	if not body.is_in_group("player"): #Para a box não colidir com o proprio player
+		#print("NAO PODE")
+		can_wrap = false
+		pass 
 
 func _on_area_2d_body_exited(body: Node2D) -> void:
-	print("PODE")
-	can_wrap = true
-	pass 
+	if not body.is_in_group("player"):
+		#print("PODE")
+		can_wrap = true
+		pass 
+	
+func constrain_to_screen() -> void: # Impossibilita o player de sair das bordas do ecrã
+	var camera_pos = camera.global_position
+	var camera_zoom = camera.zoom
+	var visible_width = screen_size.x / camera_zoom.x
+	var visible_height = screen_size.y / camera_zoom.y
+
+	var left_edge = camera_pos.x - visible_width / 2
+	var right_edge = camera_pos.x + visible_width / 2
+	var top_edge = camera_pos.y - visible_height / 2
+	var bottom_edge = camera_pos.y + visible_height / 2
+
+	global_position.x = clamp(global_position.x, left_edge + 15, right_edge -15)
+	global_position.y = clamp(global_position.y, top_edge - 15, bottom_edge + 15)
+
+#|-------------------------------------------------------------------------|
+#|------------------------------ Gravity Logic ----------------------------|
+#|-------------------------------------------------------------------------|
 	
 func toogle_gravity():
 	if gravity_toggle:
@@ -345,51 +441,68 @@ func toogle_gravity():
 		animated_sprite.scale.y = abs(animated_sprite.scale.y) * inversion
 		
 		
+#|-------------------------------------------------------------------------|
+#|----------------------------- Input Binds -------------------------------|
+#|-------------------------------------------------------------------------|
 
 func handle_inputs(direction,delta):
-	if Input.is_action_just_pressed("gravity_toggle"):
-		gravity_toggle = !gravity_toggle
-		camera_perspective = camera_perspectives.GRAVITY
-		
-	if Input.is_action_just_pressed("camera_1"):
-		camera_perspective = camera_perspectives.NORMAL
-		
-	if Input.is_action_just_pressed("axial_toggle"):
-		camera_perspective = camera_perspectives.INVERTED
 	
+	# Checkpoints (ESC)
 	if Input.is_action_just_pressed("checkpoint"):
 		death_bool = false
 	
+	# Pulling (C)
 	if Input.is_action_just_pressed("pull"):
 		is_pulling = true
 	
 	if Input.is_action_just_released("pull"):
 		is_pulling = false
 
+	# X-ray (X)
 	if Input.is_action_just_pressed("x_ray_camera_toggle"):
 		toggle_xray()
 		
+	# Jump (Space)
 	if Input.is_action_just_pressed("jump") and (is_on_floor() or is_on_ceiling()):
 		play_sound("jump")
 		velocity.y = JUMP_VELOCITY * inversion
 		
+	# Dash (shift)
 	if Input.is_action_just_pressed("dash") and not is_dashing:
 		
 		start_dash(direction)
 		
-		
+	# Slide (ctrl)
 	if Input.is_action_just_pressed("slide") and (is_on_floor() or is_on_ceiling()) and not is_sliding and (velocity.x != 0):
 		start_slide(direction)
-		
+	
 	if is_sliding:
 		handle_slide(delta)
 		
+	# Cameras
+	# Focus Camera (F)
 	if (Input.is_action_just_pressed("focus_Camera")):
 		camera_focus_bool = !camera_focus_bool
+		gravity_toggle = false
+		print("camera focus bool state: ", camera_focus_bool)
+		
+	# Gravity Camera (G)
+	if Input.is_action_just_pressed("gravity_toggle"):
+		gravity_toggle = !gravity_toggle
+		camera_focus_bool = true
+		#print("camera focus bool state: ", camera_focus_bool)
+		camera_perspective = camera_perspectives.GRAVITY
 	
-#|-----------------------|
-#|----- X-ray Logic------|
-#|-----------------------|
+	# Axial Camera (H)
+	if Input.is_action_just_pressed("axial_toggle"):
+		camera_perspective = camera_perspectives.INVERTED
+		
+	if Input.is_action_just_pressed("camera_1"):
+		camera_perspective = camera_perspectives.NORMAL
+	
+#|-------------------------------------------------------------------------|
+#|------------------------------ X-ray Logic ------------------------------|
+#|-------------------------------------------------------------------------|
 func toggle_xray() -> void:
 	if current_battery <= 0:
 		xray_active = false
@@ -416,7 +529,11 @@ func _on_xray_timer_timeout() -> void:
 
 		if current_battery <= 0:
 			toggle_xray()
-	
+			
+#|-------------------------------------------------------------------------|
+#|----------------------------- Death Logic -------------------------------|
+#|-------------------------------------------------------------------------|
+
 func _on_check_collision_body_entered(body: Node2D) -> void:
 
 	if body.is_in_group("kills"):
@@ -429,17 +546,6 @@ func _on_check_collision_body_entered(body: Node2D) -> void:
 		animated_sprite.play("death")
 		set_process_input(false)
 		velocity = Vector2.ZERO 
-		
-func set_collision_checker_pos(player_local_pos) -> void:
-	
-	
-	if camera_perspective == camera_perspectives.INVERTED:
-		mirrored_pos = Vector2(-player_local_pos.x, -player_local_pos.y -15)
-	if(camera_perspective == camera_perspectives.NORMAL):
-		mirrored_pos = Vector2(-player_local_pos.x, player_local_pos.y -15)
-
-	
-	collision_checker.global_position = camera.to_global(mirrored_pos)
 	
 func play_sound(sound_name: String):
 	if sound_name in sound_dict:

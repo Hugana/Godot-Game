@@ -4,6 +4,9 @@ extends CanvasLayer  # Handles UI for displaying camera icons
 @onready var focus_icon: TextureRect = $CameraIcons/FocusIcon
 @onready var grav_icon: TextureRect = $CameraIcons/GravIcon
 @onready var axial_icon: TextureRect = $CameraIcons/AxialIcon
+@onready var dash_cooldown: TextureProgressBar = $DashCooldown
+
+@export var player: Node
 
 # Camera states
 var is_focus_active: bool = false
@@ -15,8 +18,9 @@ const ACTIVE_OPACITY: float = 1.0
 const INACTIVE_OPACITY: float = 0.3
 
 func _ready():
-	# Initialize default state (all inactive)
 	_update_icon_opacity(null)
+	
+	dash_cooldown.visible = false
 
 func _process(delta):
 	# Handle key inputs for toggling cameras
@@ -26,6 +30,19 @@ func _process(delta):
 		_toggle_camera("gravity")
 	elif Input.is_action_just_pressed("axial_toggle"):
 		_toggle_camera("axial")
+		
+	if dash_cooldown.visible and player and player.has_method("get_dash_cooldown_time_left"):
+		var cooldown_time_left = player.get_dash_cooldown_time_left()
+		dash_cooldown.max_value = 2.0
+		dash_cooldown.value = cooldown_time_left
+
+		if cooldown_time_left <= 0.0:
+			dash_cooldown.visible = false
+
+	# Check for dash input and handle cooldown
+	if Input.is_action_just_pressed("dash"):
+		#print("reconheceu dash")
+		_handle_dash_input()
 
 func _toggle_camera(camera_type: String):
 	# Logic to toggle cameras
@@ -65,3 +82,12 @@ func _update_icon_opacity(active_icon: TextureRect):
 	# Set the active icon to full opacity if applicable
 	if active_icon:
 		active_icon.modulate.a = ACTIVE_OPACITY
+
+func _handle_dash_input():
+	if player and player.has_method("get_dash_cooldown_time_left"):
+		var cooldown_time = player.get_dash_cooldown_time_left()
+
+		if cooldown_time >= 0.0:
+			dash_cooldown.visible = true
+			dash_cooldown.max_value = 2.0
+			dash_cooldown.value = cooldown_time

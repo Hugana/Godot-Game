@@ -549,14 +549,15 @@ size = Vector2(10, 32)
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 script = ExtResource("1_3a4ae")
+is_dash_on_cooldown = null
 camera_node_path = NodePath("CollisionShape2D")
 collision_checker_path = NodePath("Area2D/CollisionShapeChecker")
-audio_player_node = NodePath("AudioStreamPlayer")
+max_battery = null
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." groups=["player"]]
 position = Vector2(0, -10)
 sprite_frames = SubResource("SpriteFrames_sqakd")
-animation = &"jump"
+animation = &"idle"
 autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -607,8 +608,6 @@ visible = false
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Check_collision"]
 position = Vector2(0, -8)
 shape = SubResource("RectangleShape2D_h6y57")
-
-[node name="AudioStreamPlayer" type="AudioStreamPlayer2D" parent="."]
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
