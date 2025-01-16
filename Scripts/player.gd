@@ -13,13 +13,21 @@ const DASH_DURATION = 0.2
 var is_dashing = false
 var dash_timer = 0.0 
 var mirrored_pos
+var was_in_air = false
+
+var step_timer = 0.0  
+const STEP_INTERVAL = 0.3
 
 const DASH_COOLDOWN = 1.5
+var rng = RandomNumberGenerator.new()
+
 @export var is_dash_on_cooldown = false  
 @export var dash_cooldown_timer = Timer.new()
 
 @export var camera_node_path: NodePath
 @export var collision_checker_path : NodePath
+@export var  audio_player_node: NodePath
+@onready var  audio_player = $AudioStreamPlayer
 @onready var RayCastRight = $RayCastRight
 @onready var RayCastLeft = $RayCastLeft
 @onready var animated_sprite = $AnimatedSprite2D
@@ -41,6 +49,13 @@ var slide_timer = 0.0
 var is_movable 
 var collider
 var inversion = 1
+
+var sound_dict = {
+	"jump": preload("res://Assets/sounds/Jump sound effect.mp3"),
+	"landing": preload("res://Assets/sounds/Landing Effect.mp3"),
+	"step": preload("res://Assets/sounds/footsteps-sound-effect.mp3"),
+	"dash": preload("res://Assets/sounds/Dash Sound Effect.mp3")
+}
 
 # X-ray battery values
 @export var max_battery = 60.0 # Maximum battery life in seconds
@@ -81,6 +96,7 @@ func _ready() -> void:
 	battery.value = current_battery
 	battery.max_value = max_battery
 	
+	audio_player = get_node(audio_player_node)
 	camera = get_node(camera_node_path)
 	collision_checker = get_node(collision_checker_path)
 	
@@ -124,6 +140,7 @@ func _physics_process(delta: float) -> void:
 
 	if not is_sliding and not is_dashing:
 		if direction:
+			
 			velocity.x = direction * SPEED
 		else:
 			velocity.x = move_toward(velocity.x, 0, SPEED)
@@ -134,6 +151,22 @@ func _physics_process(delta: float) -> void:
 		
 	if is_dashing:
 		handle_dash(delta)
+		
+	
+	
+	
+
+	if is_on_floor() and direction != 0 and not is_sliding and not is_dashing:
+		step_timer -= delta
+		if step_timer <= 0:
+			play_step_sound()
+			step_timer = STEP_INTERVAL  # Reset timer
+	
+	
+	if is_on_floor() and was_in_air:
+		play_sound("landing")  
+
+	was_in_air = not is_on_floor()  
 
 func start_dash(direction: float) -> void:
 	
@@ -141,6 +174,7 @@ func start_dash(direction: float) -> void:
 		return  
 	is_dashing = true
 	dash_timer = DASH_DURATION 
+	play_sound("dash")
 	
 	GRAVITY = 0
 	
@@ -214,7 +248,11 @@ func handle_slide(delta: float) -> void:
 
 func animations(direction: float) -> void:
 	if (not is_on_floor() and not is_on_ceiling()) and not is_sliding and not is_dashing :
+		if animated_sprite.animation != "jump": 
 			animated_sprite.play("jump")
+			
+		
+		
 	elif is_sliding:
 		animated_sprite.play("slide")
 	elif is_dashing:
@@ -332,9 +370,11 @@ func handle_inputs(direction,delta):
 		toggle_xray()
 		
 	if Input.is_action_just_pressed("jump") and (is_on_floor() or is_on_ceiling()):
+		play_sound("jump")
 		velocity.y = JUMP_VELOCITY * inversion
 		
 	if Input.is_action_just_pressed("dash") and not is_dashing:
+		
 		start_dash(direction)
 		
 		
@@ -400,4 +440,26 @@ func set_collision_checker_pos(player_local_pos) -> void:
 
 	
 	collision_checker.global_position = camera.to_global(mirrored_pos)
+	
+func play_sound(sound_name: String):
+	if sound_name in sound_dict:
+		audio_player.stream = sound_dict[sound_name]
+		audio_player.play()
+	else:
+		print("Sound not found: " + sound_name)
+		
+func play_step_sound() -> void:
+	if not audio_player:
+		print("Error: audio_player node is not available.")
+		return
+
+	if "step" in sound_dict:  # Check if step sound exists in dictionary
+		audio_player.stream = sound_dict["step"]
+
+		# Randomize pitch
+		audio_player.pitch_scale = rng.randf_range(0.9, 1.1)  # Adjust pitch randomness
+
+		audio_player.play()
+	else:
+		print("Error: Step sound not found in sound_dict")
 	

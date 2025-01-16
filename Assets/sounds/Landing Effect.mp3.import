@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://pj3yaa6yh4aw"
+path="res://.godot/imported/Landing Effect.mp3-c431bb12847bc095b0609e6a700b4c87.mp3str"
+
+[deps]
+
+source_file="res://Assets/sounds/Landing Effect.mp3"
+dest_files=["res://.godot/imported/Landing Effect.mp3-c431bb12847bc095b0609e6a700b4c87.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
