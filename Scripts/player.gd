@@ -72,14 +72,15 @@ var xray_active = false
 # X-ray signal
 signal xray_toggled(xray_active)  # Emit this signal when toggling X-ray
 
+# Camera perspectives
 enum camera_perspectives {
 	NORMAL,
 	INVERTED,
 	GRAVITY
 }
-
 var camera_perspective = camera_perspectives.NORMAL
 var camera_focus_bool = true 
+
 
 func _ready() -> void:
 	
@@ -430,6 +431,7 @@ func constrain_to_screen() -> void: # Impossibilita o player de sair das bordas 
 
 	global_position.x = clamp(global_position.x, left_edge + 15, right_edge -15)
 	global_position.y = clamp(global_position.y, top_edge - 15, bottom_edge + 15)
+
 
 #|-------------------------------------------------------------------------|
 #|------------------------------ Gravity Logic ----------------------------|
