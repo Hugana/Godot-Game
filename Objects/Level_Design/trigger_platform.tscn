@@ -6,7 +6,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uyybt"]
 size = Vector2(48, 75)
 
-[node name="Trigger_Platform" type="Area2D"]
+[node name="Trigger_Platform" type="Area2D" groups=["trigger_platforms"]]
 z_index = 20
 script = ExtResource("1_5hubr")
 

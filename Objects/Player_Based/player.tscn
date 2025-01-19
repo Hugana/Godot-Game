@@ -528,7 +528,7 @@ animations = [{
 size = Vector2(9, 30)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dlhcx"]
-size = Vector2(25.6446, 29)
+size = Vector2(25.6446, 18.5)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_usw5w"]
 shader = ExtResource("8_k1bkt")
@@ -565,16 +565,17 @@ shape = SubResource("RectangleShape2D_1yrtt")
 
 [node name="Area2D" type="Area2D" parent="."]
 visible = false
+position = Vector2(0, 7)
 collision_layer = 7
 collision_mask = 7
 
 [node name="CollisionShapeChecker" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(0, -8)
+position = Vector2(0, -13.25)
 shape = SubResource("RectangleShape2D_dlhcx")
 
 [node name="Sprite2D" type="Sprite2D" parent="Area2D/CollisionShapeChecker"]
-position = Vector2(-2.86102e-06, -1)
-scale = Vector2(1.08333, 1.03333)
+position = Vector2(-2.04245e-05, -1.875)
+scale = Vector2(1.08333, 0.741667)
 texture = ExtResource("7_mrdbn")
 region_enabled = true
 region_rect = Rect2(2.7031, 10.7457, 24.6807, 30.4252)
