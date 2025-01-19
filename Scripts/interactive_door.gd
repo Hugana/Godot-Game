@@ -4,12 +4,18 @@ extends StaticBody2D
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 
 @export var isOpen = false
+@export var trigger_name : String
 
-signal toggle_door # Pode ser usado por outros nodes, funciona como um trigger
+signal toggle_door
 
 func _ready() -> void:
-	# Verifica que a porta é inicializada com o valor certo
-	update_door_state()
+	open_or_close()
+	
+	var trigger_platforms = get_tree().get_nodes_in_group("trigger_platforms")
+
+	for trigger_platform in trigger_platforms:
+		trigger_platform.connect("activated", Callable(self, "_on_trigger_platform_activated"))
+		trigger_platform.connect("deactivated", Callable(self, "_on_trigger_platform_deactivated"))
 	
 func open():
 	if !isOpen:
@@ -28,25 +34,24 @@ func close():
 func open_or_close():
 	if isOpen:
 		animated_sprite.play("Open")
+		isOpen = true
 	else:
 		animated_sprite.play("Close")
-
-	# define a colisão conforme o valor da variável
+		isOpen = false
+		
 	collision_shape_2d.set_deferred("disabled", isOpen)
 
 
 func _on_toggle_door() -> void:
-	# Muda o estado da variável e atualiza o valor da porta
 	isOpen = !isOpen
-	update_door_state()
-
-func update_door_state():
-	# Chama a função que abre ou fecha a porta
 	open_or_close()
 
 
-func _on_trigger_platform_activated() -> void:
-	open()
+func _on_trigger_platform_activated(name) -> void:
+	if name == trigger_name:
+		_on_toggle_door()
 	
-func _on_trigger_platform_deactivated() -> void:
-	close()
+func _on_trigger_platform_deactivated(name) -> void:
+	if name == trigger_name:
+		_on_toggle_door()
+		

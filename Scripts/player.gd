@@ -403,11 +403,11 @@ func reset_axial() -> void:
 
 func set_collision_checker_pos(player_local_pos) -> void:
 	if camera_perspective == camera_perspectives.INVERTED:
-		mirrored_pos = Vector2(-player_local_pos.x, -player_local_pos.y -15)
+		mirrored_pos = Vector2(-player_local_pos.x, -player_local_pos.y -5)
 	elif(camera_perspective == camera_perspectives.NORMAL):
-		mirrored_pos = Vector2(-player_local_pos.x, player_local_pos.y -15)
+		mirrored_pos = Vector2(-player_local_pos.x, player_local_pos.y -5)
 	elif(camera_perspective == camera_perspectives.GRAVITY):
-		mirrored_pos = Vector2(-player_local_pos.x, player_local_pos.y - 15)
+		mirrored_pos = Vector2(-player_local_pos.x, player_local_pos.y -5)
 	
 	collision_checker.global_position = camera.to_global(mirrored_pos)
 

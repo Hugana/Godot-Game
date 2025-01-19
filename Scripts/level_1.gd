@@ -38,5 +38,6 @@ func _reset_sequence():
 	current_sequence.clear()
 
 func _on_puzzle_solved():
-	# Handle puzzle solved logic (e.g., unlock a door, enable a passage, etc.)
+	# Increase time by 2 mins
 	print("Unlocking the passage!")
+	

@@ -52,7 +52,7 @@ func _process(delta: float) -> void:
 	var player_local_pos = to_local(player.global_position)
 	result = check_player_is_near_edges(player_local_pos, screen_size, edge_offset)
 	
-	print(camera_mode)
+	#print(camera_mode)
 	# Handle Camera Mode Selection (Each mode toggles back to FOCUS when pressed again)
 	if Input.is_action_just_pressed("focus_Camera"):
 		if camera_mode == CameraMode.FOCUS:
