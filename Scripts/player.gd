@@ -79,7 +79,7 @@ enum camera_perspectives {
 	GRAVITY
 }
 var camera_perspective = camera_perspectives.NORMAL
-var camera_focus_bool = true 
+var camera_focus_bool = false
 
 
 func _ready() -> void:
@@ -107,6 +107,8 @@ func _ready() -> void:
 	rect = collision_shape.shape as RectangleShape2D
 	screen_size = get_viewport().size  
 	
+	reset_focus()
+	
 func rayCastHandleMovables() -> Array:
 	for raycast in raycasts:
 		if raycast.is_colliding():
@@ -117,6 +119,8 @@ func rayCastHandleMovables() -> Array:
 	return [false, null, Vector2(0, 0)]
 
 func _physics_process(delta: float) -> void:
+	
+	
 	
 	# Set camera pos
 	var player_local_pos = camera.to_local(global_position)
@@ -130,6 +134,19 @@ func _physics_process(delta: float) -> void:
 	
 	is_movable = result[0]
 	collider = result[1]
+	
+	var camera_pos = camera.global_position
+	var camera_zoom = camera.zoom
+	var visible_width = screen_size.x / camera_zoom.x
+	var visible_height = screen_size.y / camera_zoom.y
+
+	var top_edge = camera_pos.y - visible_height / 2
+	var bottom_edge = camera_pos.y + visible_height / 2
+	
+	if global_position.y > bottom_edge:
+		can_wrap = true
+	elif global_position.y < top_edge:
+		can_wrap = true
 	
 	if not is_on_floor() or not is_on_ceiling():
 		velocity.y += GRAVITY * delta * inversion
@@ -158,11 +175,6 @@ func _physics_process(delta: float) -> void:
 	if is_dashing:
 		handle_dash(delta)
 		
-
-	
-	
-	
-
 	if is_on_floor() and direction != 0 and not is_sliding and not is_dashing:
 		step_timer -= delta
 		if step_timer <= 0:
@@ -337,13 +349,10 @@ func screen_wrap(camera_perpective) -> void:
 				global_position.y = center_y - (global_position.y - center_y)
 				reset_axial()
 			if global_position.y > bottom_edge:
-				global_position.y = top_edge
-				global_position.x = center_x - (global_position.x - center_x)
 				reset_axial()
 			elif global_position.y < top_edge:
-				global_position.y = bottom_edge
-				global_position.x = center_x - (global_position.x - center_x)
 				reset_axial()
+			
 				
 		elif camera_perspective == camera_perspectives.GRAVITY:
 			var center_x = (left_edge + right_edge) / 2
@@ -360,13 +369,11 @@ func screen_wrap(camera_perpective) -> void:
 				camera_focus_bool = !camera_focus_bool
 				toogle_gravity()
 				reset_gravity()
+				
 			if global_position.y > bottom_edge:
-				print("Gravity nao faz")
 				reset_gravity()
 			elif global_position.y < top_edge:
-				print("Gravity nao faz")
 				reset_gravity()
-			
 		else:
 			if global_position.x > right_edge:
 				global_position.x = left_edge
@@ -375,11 +382,10 @@ func screen_wrap(camera_perpective) -> void:
 				global_position.x = right_edge
 				reset_focus()
 			if global_position.y > bottom_edge:
-				global_position.y = top_edge
 				reset_focus()
 			elif global_position.y < top_edge:
-				global_position.y = bottom_edge
 				reset_focus()
+			
 
 				
 func reset_focus() -> void:
