@@ -79,7 +79,7 @@ enum camera_perspectives {
 	GRAVITY
 }
 var camera_perspective = camera_perspectives.NORMAL
-var camera_focus_bool = false
+var camera_focus_bool = true
 
 
 func _ready() -> void:
@@ -107,7 +107,7 @@ func _ready() -> void:
 	rect = collision_shape.shape as RectangleShape2D
 	screen_size = get_viewport().size  
 	
-	reset_focus()
+	
 	
 func rayCastHandleMovables() -> Array:
 	for raycast in raycasts:
@@ -497,15 +497,17 @@ func handle_inputs(direction,delta):
 	# Gravity Camera (G)
 	if Input.is_action_just_pressed("gravity_toggle"):
 		gravity_toggle = !gravity_toggle
-		camera_focus_bool = true
+		#camera_focus_bool = true
 		#print("camera focus bool state: ", camera_focus_bool)
 		camera_perspective = camera_perspectives.GRAVITY
 	
 	# Axial Camera (H)
 	if Input.is_action_just_pressed("axial_toggle"):
+		gravity_toggle = false
 		camera_perspective = camera_perspectives.INVERTED
 		
 	if Input.is_action_just_pressed("camera_1"):
+		gravity_toggle = false
 		camera_perspective = camera_perspectives.NORMAL
 	
 #|-------------------------------------------------------------------------|

@@ -5,16 +5,11 @@ extends Camera2D
 @export var camera_node_path: NodePath 
 @export var player_path: NodePath  
 
-
 @onready var viewport_center = get_viewport().size / 2
 @onready var screen_size = get_viewport_rect().size
 
-
 var player: Node2D 
 var camera: Camera2D
-var camera_focus_bool = true
-
-
 
 const edge_offset = 50
 var target_offset: Vector2 = Vector2.ZERO
@@ -33,6 +28,15 @@ const opposing_edges = {
 	Edge.RIGHT: Edge.LEFT
 }
 
+enum CameraMode {
+	FOCUS,     # Camera follows player tightly
+	GRAVITY,   # Gravity-influenced mode
+	AXIAL,     # Axial inversion mode
+	NORMAL,    # Default camera mode
+	UNFOCUSED  # Player can move camera freely
+}
+
+var camera_mode = CameraMode.FOCUS  # Start in FOCUS mode
 var mouse_edge = Edge.NONE
 var result = {"is_near_edge": false, "edges": []}
 
@@ -45,22 +49,40 @@ func _process(delta: float) -> void:
 	var mouse_pos = get_viewport().get_mouse_position()
 	mouse_edge = detect_mouse_edge(mouse_pos)
 	var player_pos = player.position
-
 	var player_local_pos = to_local(player.global_position)
 	result = check_player_is_near_edges(player_local_pos, screen_size, edge_offset)
 	
+	print(camera_mode)
+	# Handle Camera Mode Selection (Each mode toggles back to FOCUS when pressed again)
 	if Input.is_action_just_pressed("focus_Camera"):
-		camera_focus_bool = !camera_focus_bool
+		if camera_mode == CameraMode.FOCUS:
+			camera_mode = CameraMode.UNFOCUSED  # Toggle to unfocus mode
+		else:
+			camera_mode = CameraMode.FOCUS
+
+	elif Input.is_action_just_pressed("gravity_toggle"):
+		camera_mode = CameraMode.FOCUS if camera_mode == CameraMode.GRAVITY else CameraMode.GRAVITY
+
+	elif Input.is_action_just_pressed("axial_toggle"):
+		camera_mode = CameraMode.FOCUS if camera_mode == CameraMode.AXIAL else CameraMode.AXIAL
+
+	elif Input.is_action_just_pressed("camera_1"):
+		camera_mode = CameraMode.FOCUS if camera_mode == CameraMode.NORMAL else CameraMode.NORMAL
+
 	
-	if Input.is_action_just_pressed("gravity_toggle"):
-		camera_focus_bool = !camera_focus_bool
-		
-		
-	if camera_focus_bool:
-		global_position = lerp(global_position, player_pos, delta * 80)
-	else:
-		if mouse_edge != Edge.NONE and not camera_focus_bool:
-			move_camera_if_needed(delta)
+
+	# Apply Camera Behavior Based on Mode
+	match camera_mode:
+		CameraMode.FOCUS:
+			global_position = lerp(global_position, player_pos, delta * 80)
+		CameraMode.UNFOCUSED:
+			move_camera_if_needed(delta)  # Allow free movement
+		CameraMode.GRAVITY:
+			move_camera_if_needed(delta)  # Allow free movement
+		CameraMode.AXIAL:
+			move_camera_if_needed(delta)  # Allow free movement
+		CameraMode.NORMAL:
+			global_position = lerp(global_position, player_pos, delta * 50)  # Smoother follow
 
 func detect_mouse_edge(mouse_pos: Vector2) -> Edge:
 	if mouse_pos.y <= deadzone_radius: 
