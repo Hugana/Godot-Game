@@ -11,7 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://b6sbuswitaoef" path="res://Objects/Level_Design/TipLabel.tscn" id="8_g3qnm"]
 [ext_resource type="PackedScene" uid="uid://tu2ugte7svm8" path="res://Objects/Level_Design/interactive_door.tscn" id="9_em7cv"]
 [ext_resource type="PackedScene" uid="uid://dcp0tqp5ganyh" path="res://Objects/Level_Design/box.tscn" id="10_aidjj"]
-[ext_resource type="PackedScene" path="res://Scenes/trigger_platform.tscn" id="11_u0cfa"]
+[ext_resource type="PackedScene" uid="uid://c4ocfwt3sjkdh" path="res://Objects/Level_Design/trigger_platform.tscn" id="11_u0cfa"]
 [ext_resource type="PackedScene" uid="uid://ofnhi07achoo" path="res://Objects/Level_Design/interactable.tscn" id="12_tnpum"]
 [ext_resource type="Script" path="res://Scripts/UI/PlayerUI.gd" id="14_y4fx4"]
 [ext_resource type="FontFile" uid="uid://8kqas1157155" path="res://Assets/fonts/PixelOperator8.ttf" id="15_3c1lj"]
@@ -1108,7 +1108,7 @@ layer_0/tile_data = PackedInt32Array(2097336, 327680, 3, 1966264, 327680, 2, 203
 script = ExtResource("5_nk2g5")
 player = NodePath("../Player")
 
-[node name="Player" parent="." groups=["player"] instance=ExtResource("1_glsjn")]
+[node name="Player" parent="." instance=ExtResource("1_glsjn")]
 z_index = 100
 position = Vector2(1450, 516)
 collision_layer = 6
@@ -1297,7 +1297,6 @@ scale = Vector2(1.5, 1.5)
 scale = Vector2(1.5, 1.5)
 
 [node name="Trigger_Platform" parent="." instance=ExtResource("11_u0cfa")]
-z_index = 20
 position = Vector2(7084, 579)
 collision_layer = 7
 collision_mask = 7
