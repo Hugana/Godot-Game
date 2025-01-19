@@ -6,6 +6,7 @@
 size = Vector2(30, 28)
 
 [node name="Sprite2D" type="RigidBody2D" groups=["movable"]]
+z_index = 20
 scale = Vector2(2, 2)
 mass = 16.0
 
