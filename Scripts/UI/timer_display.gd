@@ -1,6 +1,6 @@
 extends Label
 
-@export var start_time: int = 300
+@export var start_time: int = 180
 var remaining_time: int
 
 @onready var timer: Timer = $"../Timer"
