@@ -32,43 +32,41 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("2_ctsni")
 
-[node name="Background" type="Sprite2D" parent="."]
-visible = false
-position = Vector2(577, -0.500021)
-scale = Vector2(0.500868, 0.500772)
-texture = ExtResource("2_ctsni")
-
 [node name="Main Menu" type="VBoxContainer" parent="."]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
+anchors_preset = -1
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -148.0
-offset_top = -92.5
+offset_top = 158.0
 offset_right = 148.0
-offset_bottom = 92.5
+offset_bottom = 343.0
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Start" type="Button" parent="Main Menu"]
 layout_mode = 2
+theme_type_variation = &"FlatButton"
+theme_override_colors/font_hover_color = Color(2.11775e-06, 0.56107, 0.878477, 1)
 theme_override_fonts/font = ExtResource("1_4iq5k")
 theme_override_font_sizes/font_size = 50
 text = "Start"
 
 [node name="Options" type="Button" parent="Main Menu"]
 layout_mode = 2
+theme_type_variation = &"FlatButton"
+theme_override_colors/font_hover_color = Color(0, 0.560784, 0.878431, 1)
 theme_override_fonts/font = ExtResource("1_4iq5k")
-theme_override_font_sizes/font_size = 50
+theme_override_font_sizes/font_size = 35
 text = "Options
 "
 
 [node name="Quit" type="Button" parent="Main Menu"]
 layout_mode = 2
+theme_type_variation = &"FlatButton"
+theme_override_colors/font_hover_color = Color(1, 0, 0, 1)
 theme_override_fonts/font = ExtResource("1_4iq5k")
-theme_override_font_sizes/font_size = 50
+theme_override_font_sizes/font_size = 30
 text = "Quit
 "
 
@@ -80,35 +78,43 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -241.5
-offset_top = -124.0
-offset_right = 241.5
-offset_bottom = 124.0
+offset_left = -241.0
+offset_top = 220.0
+offset_right = 242.0
+offset_bottom = 468.0
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="TestGame" type="Button" parent="Start"]
+visible = false
 layout_mode = 2
+theme_type_variation = &"FlatButton"
 theme_override_fonts/font = ExtResource("1_4iq5k")
 theme_override_font_sizes/font_size = 50
 text = "Teste"
 
 [node name="Game" type="Button" parent="Start"]
+visible = false
 layout_mode = 2
+theme_type_variation = &"FlatButton"
 theme_override_fonts/font = ExtResource("1_4iq5k")
 theme_override_font_sizes/font_size = 50
 text = "Game"
 
 [node name="Select Level" type="Button" parent="Start"]
 layout_mode = 2
+theme_type_variation = &"FlatButton"
+theme_override_colors/font_hover_color = Color(0, 0.560784, 0.878431, 1)
 theme_override_fonts/font = ExtResource("1_4iq5k")
-theme_override_font_sizes/font_size = 50
+theme_override_font_sizes/font_size = 35
 text = "Select Level"
 
 [node name="Back" type="Button" parent="Start"]
 layout_mode = 2
+theme_type_variation = &"FlatButton"
+theme_override_colors/font_hover_color = Color(1, 0, 0, 1)
 theme_override_fonts/font = ExtResource("1_4iq5k")
-theme_override_font_sizes/font_size = 50
+theme_override_font_sizes/font_size = 30
 text = "Back"
 
 [node name="Select Level" type="VBoxContainer" parent="."]
@@ -119,35 +125,43 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -241.5
-offset_top = -124.0
-offset_right = 241.5
-offset_bottom = 124.0
+offset_left = -241.0
+offset_top = 134.0
+offset_right = 242.0
+offset_bottom = 382.0
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Level" type="Button" parent="Select Level"]
 layout_mode = 2
+theme_type_variation = &"FlatButton"
+theme_override_colors/font_hover_color = Color(0, 0.560784, 0.878431, 1)
 theme_override_fonts/font = ExtResource("1_4iq5k")
-theme_override_font_sizes/font_size = 50
+theme_override_font_sizes/font_size = 35
 text = "Level 1"
 
 [node name="Level2" type="Button" parent="Select Level"]
 layout_mode = 2
+theme_type_variation = &"FlatButton"
+theme_override_colors/font_hover_color = Color(0, 0.560784, 0.878431, 1)
 theme_override_fonts/font = ExtResource("1_4iq5k")
-theme_override_font_sizes/font_size = 50
+theme_override_font_sizes/font_size = 35
 text = "Level 2"
 
 [node name="Level3" type="Button" parent="Select Level"]
 layout_mode = 2
+theme_type_variation = &"FlatButton"
+theme_override_colors/font_hover_color = Color(0, 0.560784, 0.878431, 1)
 theme_override_fonts/font = ExtResource("1_4iq5k")
-theme_override_font_sizes/font_size = 50
+theme_override_font_sizes/font_size = 35
 text = "Level 3"
 
 [node name="Back" type="Button" parent="Select Level"]
 layout_mode = 2
+theme_type_variation = &"FlatButton"
+theme_override_colors/font_hover_color = Color(1, 0, 0, 1)
 theme_override_fonts/font = ExtResource("1_4iq5k")
-theme_override_font_sizes/font_size = 50
+theme_override_font_sizes/font_size = 30
 text = "Back"
 
 [node name="Options" type="VBoxContainer" parent="."]
@@ -159,16 +173,18 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -148.0
-offset_top = -92.5
+offset_top = 130.0
 offset_right = 148.0
-offset_bottom = 92.5
+offset_bottom = 315.0
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Back" type="Button" parent="Options"]
 layout_mode = 2
+theme_type_variation = &"FlatButton"
+theme_override_colors/font_hover_color = Color(1, 0, 0, 1)
 theme_override_fonts/font = ExtResource("1_4iq5k")
-theme_override_font_sizes/font_size = 50
+theme_override_font_sizes/font_size = 30
 text = "Back"
 
 [connection signal="pressed" from="Main Menu/Start" to="." method="_on_start_pressed"]
