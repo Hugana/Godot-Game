@@ -365,7 +365,7 @@ func screen_wrap(camera_perpective) -> void:
 				reset_gravity()
 			elif global_position.x < left_edge:
 				global_position.x = right_edge
-				global_position.y = center_y - (global_position.y - center_y)
+				global_position.y = global_position.y
 				camera_focus_bool = !camera_focus_bool
 				toogle_gravity()
 				reset_gravity()
