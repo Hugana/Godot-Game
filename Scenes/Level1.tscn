@@ -1,11 +1,13 @@
-[gd_scene load_steps=45 format=3 uid="uid://ck5drhb0g6lyq"]
+[gd_scene load_steps=49 format=3 uid="uid://ck5drhb0g6lyq"]
 
 [ext_resource type="Script" path="res://Scripts/level_1.gd" id="1_i1xno"]
 [ext_resource type="Texture2D" uid="uid://dm8dlkoorq7fy" path="res://Assets/Tiles/Cyberpunk-Sprite/Tiles.png" id="2_01n2c"]
 [ext_resource type="Texture2D" uid="uid://75bx34l2phx4" path="res://Assets/Tiles/Cyberpunk-Sprite/Backgrounds/free-city-backgrounds-pixel-art/city 1/1.png" id="2_j47cp"]
+[ext_resource type="PackedScene" uid="uid://6ufelpc31unk" path="res://Objects/Level_Design/x_ray_text.tscn" id="2_qxna0"]
 [ext_resource type="Texture2D" uid="uid://cfqb41hsyrjm0" path="res://Assets/Tiles/Cyberpunk-Sprite/Backgrounds/free-city-backgrounds-pixel-art/city 1/3.png" id="3_0ed47"]
 [ext_resource type="Texture2D" uid="uid://cfdoeo4xdt24m" path="res://Assets/Tiles/Cyberpunk-Sprite/Props-01.png" id="3_tnnva"]
 [ext_resource type="Texture2D" uid="uid://5p3phyi35ssr" path="res://Assets/Tiles/Cyberpunk-Sprite/Buildings.png" id="4_204s7"]
+[ext_resource type="PackedScene" uid="uid://b6sbuswitaoef" path="res://Objects/Level_Design/TipLabel.tscn" id="4_nusjo"]
 [ext_resource type="Texture2D" uid="uid://b1l2en2hpywqs" path="res://Assets/Tiles/Cyberpunk-Sprite/Backgrounds/Background Props.png" id="5_psj32"]
 [ext_resource type="Script" path="res://Scripts/tile_map.gd" id="6_oeq6o"]
 [ext_resource type="PackedScene" uid="uid://k87tmg5y1swd" path="res://Objects/Player_Based/player.tscn" id="7_wyajr"]
@@ -20,6 +22,7 @@
 [ext_resource type="PackedScene" uid="uid://0gm11xapo7xo" path="res://Objects/Level_Design/kill_platform.tscn" id="18_7sgn5"]
 [ext_resource type="PackedScene" uid="uid://dcp0tqp5ganyh" path="res://Objects/Level_Design/box.tscn" id="20_gi4hf"]
 [ext_resource type="PackedScene" uid="uid://tu2ugte7svm8" path="res://Objects/Level_Design/interactive_door.tscn" id="21_3pnpo"]
+[ext_resource type="PackedScene" uid="uid://3xtcnema66ag" path="res://Objects/Level_Design/pub.tscn" id="22_40fsw"]
 [ext_resource type="PackedScene" uid="uid://c4ocfwt3sjkdh" path="res://Objects/Level_Design/trigger_platform.tscn" id="22_p56ve"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_uf2iv"]
@@ -468,6 +471,7 @@ texture = ExtResource("4_204s7")
 12:7/0 = 0
 13:7/0 = 0
 14:7/0 = 0
+14:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 15:7/0 = 0
 16:7/0 = 0
 16:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
@@ -497,6 +501,7 @@ texture = ExtResource("4_204s7")
 12:8/0 = 0
 13:8/0 = 0
 14:8/0 = 0
+14:8/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 15:8/0 = 0
 16:8/0 = 0
 16:8/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
@@ -528,6 +533,7 @@ texture = ExtResource("4_204s7")
 12:9/0 = 0
 13:9/0 = 0
 14:9/0 = 0
+14:9/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 16:9/0 = 0
 16:9/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 17:9/0 = 0
@@ -554,6 +560,7 @@ texture = ExtResource("4_204s7")
 9:10/0 = 0
 10:10/0 = 0
 11:10/0 = 0
+11:10/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 12:10/0 = 0
 13:10/0 = 0
 16:10/0 = 0
@@ -1490,8 +1497,12 @@ size = Vector2(60, 34)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rkf54"]
 size = Vector2(41, 38.25)
 
-[node name="Level1" type="Node2D"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_4ty3s"]
+radius = 97.0464
+
+[node name="Level1" type="Node2D" node_paths=PackedStringArray("timer_display")]
 script = ExtResource("1_i1xno")
+timer_display = NodePath("UI/TimerDisplay")
 
 [node name="Background" type="Control" parent="."]
 layout_mode = 3
@@ -1595,13 +1606,13 @@ player = NodePath("../Player")
 
 [node name="Player" parent="." instance=ExtResource("7_wyajr")]
 z_index = 100
-position = Vector2(57, -31)
+position = Vector2(172, -23)
 collision_layer = 7
 collision_mask = 7
 camera_node_path = NodePath("../Camera2D")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(57, -39)
+position = Vector2(172, -31)
 zoom = Vector2(2, 2)
 limit_left = -5000000
 limit_top = -5000000
@@ -1632,33 +1643,6 @@ texture = SubResource("AtlasTexture_rxihp")
 [node name="CollisionShape2D" parent="Exit_Level" index="1"]
 position = Vector2(-24, 15.5)
 shape = SubResource("RectangleShape2D_ubro0")
-
-[node name="TempLabels" type="Node" parent="."]
-
-[node name="Interact" type="Label" parent="TempLabels"]
-z_index = 20
-offset_left = 6199.0
-offset_top = -77.0
-offset_right = 6209.0
-offset_bottom = -54.0
-text = "1"
-metadata/_edit_use_anchors_ = true
-
-[node name="Interact2" type="Label" parent="TempLabels"]
-z_index = 20
-offset_left = 6086.0
-offset_top = -155.0
-offset_right = 6096.0
-offset_bottom = -132.0
-text = "2"
-
-[node name="Interact3" type="Label" parent="TempLabels"]
-z_index = 20
-offset_left = 6071.0
-offset_top = -233.0
-offset_right = 6081.0
-offset_bottom = -210.0
-text = "3"
 
 [node name="UI" type="CanvasLayer" parent="." node_paths=PackedStringArray("player")]
 script = ExtResource("12_xtto2")
@@ -1803,6 +1787,7 @@ position = Vector2(3552, -23)
 position = Vector2(3582, -23)
 
 [node name="Kill_Platform18" parent="Kill_Platforms" instance=ExtResource("18_7sgn5")]
+z_index = 20
 position = Vector2(4917, -166)
 
 [node name="Kill_Platform19" parent="Kill_Platforms" instance=ExtResource("18_7sgn5")]
@@ -1912,54 +1897,116 @@ position = Vector2(3656, -23)
 
 [node name="Puzzle1" type="Node" parent="."]
 
-[node name="Box1" parent="Puzzle1" groups=["puzzle2"] instance=ExtResource("20_gi4hf")]
-position = Vector2(471, -134)
+[node name="Box1" parent="Puzzle1" groups=["puzzle1"] instance=ExtResource("20_gi4hf")]
+position = Vector2(494, -134)
 scale = Vector2(1.5, 1.5)
 collision_layer = 7
 collision_mask = 7
 
-[node name="Box2" parent="Puzzle1" groups=["puzzle2"] instance=ExtResource("20_gi4hf")]
+[node name="Box2" parent="Puzzle1" groups=["puzzle1"] instance=ExtResource("20_gi4hf")]
 position = Vector2(742, -134)
 scale = Vector2(1.5, 1.5)
 
-[node name="Box3" parent="Puzzle1" groups=["puzzle2"] instance=ExtResource("20_gi4hf")]
+[node name="Box3" parent="Puzzle1" groups=["puzzle1"] instance=ExtResource("20_gi4hf")]
 position = Vector2(742, -230)
 scale = Vector2(1.5, 1.5)
 
-[node name="Door_1" parent="Puzzle1" groups=["puzzle2"] instance=ExtResource("21_3pnpo")]
+[node name="Door_1" parent="Puzzle1" groups=["puzzle1"] instance=ExtResource("21_3pnpo")]
 z_index = 20
 position = Vector2(908, -152)
 scale = Vector2(1.25, 1.25)
 trigger_name = "Pressure_1"
 
-[node name="Door_2" parent="Puzzle1" groups=["puzzle2"] instance=ExtResource("21_3pnpo")]
+[node name="Door_2" parent="Puzzle1" groups=["puzzle1"] instance=ExtResource("21_3pnpo")]
 z_index = 20
 position = Vector2(908, -248)
 scale = Vector2(1.25, 1.25)
 isOpen = true
 trigger_name = "Pressure_1"
 
-[node name="Door_3" parent="Puzzle1" groups=["puzzle2"] instance=ExtResource("21_3pnpo")]
+[node name="Door_3" parent="Puzzle1" groups=["puzzle1"] instance=ExtResource("21_3pnpo")]
 z_index = 20
 position = Vector2(1096, -92)
 rotation = -1.5708
 scale = Vector2(1.25, 1.25)
 trigger_name = "Pressure_3"
 
-[node name="Pressure_1" parent="Puzzle1" groups=["puzzle2"] instance=ExtResource("22_p56ve")]
+[node name="Pressure_1" parent="Puzzle1" groups=["platform", "puzzle1"] instance=ExtResource("22_p56ve")]
 position = Vector2(872, -13)
 collision_layer = 7
 collision_mask = 7
 
-[node name="Pressure_2" parent="Puzzle1" groups=["puzzle2"] instance=ExtResource("22_p56ve")]
+[node name="Pressure_2" parent="Puzzle1" groups=["platform", "puzzle1"] instance=ExtResource("22_p56ve")]
 position = Vector2(960, -13)
 
-[node name="Pressure_3" parent="Puzzle1" groups=["puzzle2"] instance=ExtResource("22_p56ve")]
+[node name="Pressure_3" parent="Puzzle1" groups=["platform", "puzzle1"] instance=ExtResource("22_p56ve")]
 position = Vector2(1293, -108)
+
+[node name="Go up" parent="Puzzle1" node_paths=PackedStringArray("player") instance=ExtResource("2_qxna0")]
+offset_left = 1574.0
+offset_top = -94.0
+offset_right = 1649.0
+offset_bottom = -49.0
+text = "Go up!"
+player = NodePath("../../Player")
+
+[node name="Puzzle2" type="Node" parent="."]
+
+[node name="Placard" parent="Puzzle2" instance=ExtResource("22_40fsw")]
+position = Vector2(3240, -699)
+scale = Vector2(1.235, 1.235)
+
+[node name="Placard2" parent="Puzzle2" instance=ExtResource("22_40fsw")]
+position = Vector2(3656, -875)
+scale = Vector2(1.235, 1.235)
+
+[node name="Placard3" parent="Puzzle2" instance=ExtResource("22_40fsw")]
+position = Vector2(3928, -443)
+scale = Vector2(1.235, 1.235)
+
+[node name="Placard4" parent="Puzzle2" instance=ExtResource("22_40fsw")]
+position = Vector2(4296, -603)
+scale = Vector2(1.235, 1.235)
+
+[node name="Use" parent="Puzzle2" node_paths=PackedStringArray("player") instance=ExtResource("2_qxna0")]
+offset_left = 3130.0
+offset_top = -738.0
+offset_right = 3357.0
+offset_bottom = -657.0
+text = "Use"
+player = NodePath("../../Player")
+
+[node name="Lower" parent="Puzzle2" node_paths=PackedStringArray("player") instance=ExtResource("2_qxna0")]
+offset_left = 3544.0
+offset_top = -917.0
+offset_right = 3771.0
+offset_bottom = -836.0
+text = "Lower"
+player = NodePath("../../Player")
+
+[node name="Exit" parent="Puzzle2" node_paths=PackedStringArray("player") instance=ExtResource("2_qxna0")]
+offset_left = 3817.0
+offset_top = -483.0
+offset_right = 4044.0
+offset_bottom = -402.0
+text = "Exit"
+player = NodePath("../../Player")
+
+[node name="Go Down" type="Label" parent="Puzzle2"]
+z_index = 20
+offset_left = 4942.0
+offset_top = -944.0
+offset_right = 5062.0
+offset_bottom = -921.0
+theme_override_fonts/font = ExtResource("12_ba77r")
+theme_override_font_sizes/font_size = 20
+text = "Go Down!"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Puzzle3" type="Node" parent="."]
 
-[node name="Button1" parent="Puzzle3" groups=["puzzle1"] instance=ExtResource("11_4rtme")]
+[node name="Button1" parent="Puzzle3" groups=["puzzle3"] instance=ExtResource("11_4rtme")]
 z_index = 20
 position = Vector2(6203, -23)
 collision_layer = 7
@@ -1972,7 +2019,7 @@ texture = SubResource("AtlasTexture_efvow")
 position = Vector2(1.5, -11)
 shape = SubResource("RectangleShape2D_omfny")
 
-[node name="Button2" parent="Puzzle3" groups=["puzzle1"] instance=ExtResource("11_4rtme")]
+[node name="Button2" parent="Puzzle3" groups=["puzzle3"] instance=ExtResource("11_4rtme")]
 z_index = 20
 position = Vector2(6052, -144)
 collision_layer = 7
@@ -1987,7 +2034,7 @@ texture = SubResource("AtlasTexture_efvow")
 position = Vector2(1, 2)
 shape = SubResource("RectangleShape2D_qjti0")
 
-[node name="Button3" parent="Puzzle3" groups=["puzzle1"] instance=ExtResource("11_4rtme")]
+[node name="Button3" parent="Puzzle3" groups=["puzzle3"] instance=ExtResource("11_4rtme")]
 z_index = 20
 position = Vector2(6074, -182)
 collision_layer = 7
@@ -2000,7 +2047,58 @@ texture = SubResource("AtlasTexture_efvow")
 position = Vector2(-0.5, -11.875)
 shape = SubResource("RectangleShape2D_rkf54")
 
+[node name="1" parent="Puzzle3" node_paths=PackedStringArray("player") instance=ExtResource("2_qxna0")]
+offset_left = 6198.0
+offset_top = -78.0
+offset_right = 6208.0
+offset_bottom = -56.0
+text = "1"
+player = NodePath("../../Player")
+
+[node name="2" parent="Puzzle3" node_paths=PackedStringArray("player") instance=ExtResource("2_qxna0")]
+offset_left = 6094.0
+offset_top = -151.0
+offset_right = 6112.0
+offset_bottom = -129.0
+text = "2"
+player = NodePath("../../Player")
+
+[node name="3" parent="Puzzle3" node_paths=PackedStringArray("player") instance=ExtResource("2_qxna0")]
+offset_left = 6066.0
+offset_top = -236.0
+offset_right = 6084.0
+offset_bottom = -214.0
+text = "3"
+player = NodePath("../../Player")
+
+[node name="Order" parent="Puzzle3" node_paths=PackedStringArray("player") instance=ExtResource("2_qxna0")]
+offset_left = 7203.0
+offset_top = -120.0
+offset_right = 7287.0
+offset_bottom = -98.0
+text = "1-3-2"
+player = NodePath("../../Player")
+
+[node name="escape" parent="Puzzle3" instance=ExtResource("4_nusjo")]
+offset_left = 7075.0
+offset_top = 5.0
+offset_right = 7203.0
+offset_bottom = 59.0
+text = "Press [E] to escape this level"
+horizontal_alignment = 1
+vertical_alignment = 1
+input1 = "interact"
+input2 = "interact"
+
+[node name="CollisionShape2D" parent="Puzzle3/escape/Area2D" index="0"]
+position = Vector2(59, -55)
+shape = SubResource("CircleShape2D_4ty3s")
+
+[connection signal="puzzle_solved" from="." to="." method="_on_puzzle_solved"]
+
+[editable path="Player"]
 [editable path="Exit_Level"]
 [editable path="Puzzle3/Button1"]
 [editable path="Puzzle3/Button2"]
 [editable path="Puzzle3/Button3"]
+[editable path="Puzzle3/escape"]

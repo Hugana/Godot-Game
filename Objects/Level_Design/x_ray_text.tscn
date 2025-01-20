@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://6ufelpc31unk"]
+
+[ext_resource type="FontFile" uid="uid://8kqas1157155" path="res://Assets/fonts/PixelOperator8.ttf" id="1_4rinr"]
+[ext_resource type="Script" path="res://Scripts/x_ray_text.gd" id="2_wdvx6"]
+
+[node name="X-Ray Text" type="Label"]
+visible = false
+z_index = 20
+offset_right = 227.0
+offset_bottom = 81.0
+theme_override_colors/font_color = Color(0.0562671, 0.738191, 0.0470029, 1)
+theme_override_fonts/font = ExtResource("1_4rinr")
+theme_override_font_sizes/font_size = 20
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+script = ExtResource("2_wdvx6")

@@ -28,3 +28,8 @@ func _update_label():
 
 func _on_time_up():
 	print("Time's up!")
+	
+func _on_puzzle_solved():
+	print("Puzzle solved! Adding 120 seconds to the timer.")
+	remaining_time += 120
+	_update_label()
