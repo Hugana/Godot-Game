@@ -545,7 +545,6 @@ func _on_xray_timer_timeout() -> void:
 #|-------------------------------------------------------------------------|
 
 func _on_check_collision_body_entered(body: Node2D) -> void:
-
 	if body.is_in_group("kills"):
 		if(inversion == -1):
 			inversion *= -1
@@ -556,7 +555,9 @@ func _on_check_collision_body_entered(body: Node2D) -> void:
 		animated_sprite.play("death")
 		set_process_input(false)
 		velocity = Vector2.ZERO 
-	
+		
+
+		
 func play_sound(sound_name: String):
 	if sound_name in sound_dict:
 		audio_player.stream = sound_dict[sound_name]

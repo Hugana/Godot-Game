@@ -9,7 +9,8 @@ size = Vector2(30, 15)
 atlas = ExtResource("1_x7mhm")
 region = Rect2(129.003, 2.01426, 30.5042, 15.9768)
 
-[node name="Kill_Platform" type="Area2D" groups=["kills"]]
+[node name="Kill_Platform" type="StaticBody2D" groups=["kills"]]
+z_index = 50
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -0.5)

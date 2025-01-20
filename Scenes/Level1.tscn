@@ -1606,13 +1606,13 @@ player = NodePath("../Player")
 
 [node name="Player" parent="." instance=ExtResource("7_wyajr")]
 z_index = 100
-position = Vector2(6133, -218)
+position = Vector2(172, -23)
 collision_layer = 7
 collision_mask = 7
 camera_node_path = NodePath("../Camera2D")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(6133, -226)
+position = Vector2(172, -31)
 zoom = Vector2(2, 2)
 limit_left = -5000000
 limit_top = -5000000
@@ -1787,6 +1787,7 @@ position = Vector2(3552, -23)
 position = Vector2(3582, -23)
 
 [node name="Kill_Platform18" parent="Kill_Platforms" instance=ExtResource("18_7sgn5")]
+z_index = 20
 position = Vector2(4917, -166)
 
 [node name="Kill_Platform19" parent="Kill_Platforms" instance=ExtResource("18_7sgn5")]
@@ -1896,49 +1897,49 @@ position = Vector2(3656, -23)
 
 [node name="Puzzle1" type="Node" parent="."]
 
-[node name="Box1" parent="Puzzle1" groups=["puzzle2"] instance=ExtResource("20_gi4hf")]
+[node name="Box1" parent="Puzzle1" groups=["puzzle1"] instance=ExtResource("20_gi4hf")]
 position = Vector2(494, -134)
 scale = Vector2(1.5, 1.5)
 collision_layer = 7
 collision_mask = 7
 
-[node name="Box2" parent="Puzzle1" groups=["puzzle2"] instance=ExtResource("20_gi4hf")]
+[node name="Box2" parent="Puzzle1" groups=["puzzle1"] instance=ExtResource("20_gi4hf")]
 position = Vector2(742, -134)
 scale = Vector2(1.5, 1.5)
 
-[node name="Box3" parent="Puzzle1" groups=["puzzle2"] instance=ExtResource("20_gi4hf")]
+[node name="Box3" parent="Puzzle1" groups=["puzzle1"] instance=ExtResource("20_gi4hf")]
 position = Vector2(742, -230)
 scale = Vector2(1.5, 1.5)
 
-[node name="Door_1" parent="Puzzle1" groups=["puzzle2"] instance=ExtResource("21_3pnpo")]
+[node name="Door_1" parent="Puzzle1" groups=["puzzle1"] instance=ExtResource("21_3pnpo")]
 z_index = 20
 position = Vector2(908, -152)
 scale = Vector2(1.25, 1.25)
 trigger_name = "Pressure_1"
 
-[node name="Door_2" parent="Puzzle1" groups=["puzzle2"] instance=ExtResource("21_3pnpo")]
+[node name="Door_2" parent="Puzzle1" groups=["puzzle1"] instance=ExtResource("21_3pnpo")]
 z_index = 20
 position = Vector2(908, -248)
 scale = Vector2(1.25, 1.25)
 isOpen = true
 trigger_name = "Pressure_1"
 
-[node name="Door_3" parent="Puzzle1" groups=["puzzle2"] instance=ExtResource("21_3pnpo")]
+[node name="Door_3" parent="Puzzle1" groups=["puzzle1"] instance=ExtResource("21_3pnpo")]
 z_index = 20
 position = Vector2(1096, -92)
 rotation = -1.5708
 scale = Vector2(1.25, 1.25)
 trigger_name = "Pressure_3"
 
-[node name="Pressure_1" parent="Puzzle1" groups=["puzzle2"] instance=ExtResource("22_p56ve")]
+[node name="Pressure_1" parent="Puzzle1" groups=["platform", "puzzle1"] instance=ExtResource("22_p56ve")]
 position = Vector2(872, -13)
 collision_layer = 7
 collision_mask = 7
 
-[node name="Pressure_2" parent="Puzzle1" groups=["puzzle2"] instance=ExtResource("22_p56ve")]
+[node name="Pressure_2" parent="Puzzle1" groups=["platform", "puzzle1"] instance=ExtResource("22_p56ve")]
 position = Vector2(960, -13)
 
-[node name="Pressure_3" parent="Puzzle1" groups=["puzzle2"] instance=ExtResource("22_p56ve")]
+[node name="Pressure_3" parent="Puzzle1" groups=["platform", "puzzle1"] instance=ExtResource("22_p56ve")]
 position = Vector2(1293, -108)
 
 [node name="Go up" parent="Puzzle1" node_paths=PackedStringArray("player") instance=ExtResource("2_qxna0")]
@@ -2005,7 +2006,7 @@ vertical_alignment = 1
 
 [node name="Puzzle3" type="Node" parent="."]
 
-[node name="Button1" parent="Puzzle3" groups=["puzzle1"] instance=ExtResource("11_4rtme")]
+[node name="Button1" parent="Puzzle3" groups=["puzzle3"] instance=ExtResource("11_4rtme")]
 z_index = 20
 position = Vector2(6203, -23)
 collision_layer = 7
@@ -2018,7 +2019,7 @@ texture = SubResource("AtlasTexture_efvow")
 position = Vector2(1.5, -11)
 shape = SubResource("RectangleShape2D_omfny")
 
-[node name="Button2" parent="Puzzle3" groups=["puzzle1"] instance=ExtResource("11_4rtme")]
+[node name="Button2" parent="Puzzle3" groups=["puzzle3"] instance=ExtResource("11_4rtme")]
 z_index = 20
 position = Vector2(6052, -144)
 collision_layer = 7
@@ -2033,7 +2034,7 @@ texture = SubResource("AtlasTexture_efvow")
 position = Vector2(1, 2)
 shape = SubResource("RectangleShape2D_qjti0")
 
-[node name="Button3" parent="Puzzle3" groups=["puzzle1"] instance=ExtResource("11_4rtme")]
+[node name="Button3" parent="Puzzle3" groups=["puzzle3"] instance=ExtResource("11_4rtme")]
 z_index = 20
 position = Vector2(6074, -182)
 collision_layer = 7
@@ -2093,6 +2094,9 @@ input2 = "interact"
 position = Vector2(59, -55)
 shape = SubResource("CircleShape2D_4ty3s")
 
+[connection signal="puzzle_solved" from="." to="." method="_on_puzzle_solved"]
+
+[editable path="Player"]
 [editable path="Exit_Level"]
 [editable path="Puzzle3/Button1"]
 [editable path="Puzzle3/Button2"]
