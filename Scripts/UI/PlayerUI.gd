@@ -6,6 +6,7 @@ extends CanvasLayer  # Handles UI for displaying camera icons
 @onready var axial_icon: TextureRect = $CameraIcons/AxialIcon
 @onready var dash_cooldown: TextureProgressBar = $DashCooldown
 @onready var current_objective: Label = $CurrentObjective
+@onready var camera_2d: Camera2D = $"../Camera2D"
 
 @export var player: Node
 
@@ -18,20 +19,34 @@ var is_axial_active: bool = false
 const ACTIVE_OPACITY: float = 1.0
 const INACTIVE_OPACITY: float = 0.3
 
+# Camera mode states
+var last_camera_mode: int = -1  # Initialize to an invalid state
+
+
 func _ready():
 	_update_icon_opacity(null)
 	
 	dash_cooldown.visible = false
 
 func _process(delta):
-	# Handle key inputs for toggling cameras
-	if Input.is_action_just_pressed("focus_Camera"):
-		_toggle_camera("focus")
-	elif Input.is_action_just_pressed("gravity_toggle"):
-		_toggle_camera("gravity")
-	elif Input.is_action_just_pressed("axial_toggle"):
-		_toggle_camera("axial")
+	# Check for a change in camera mode
+	if camera_2d.camera_mode != last_camera_mode:
+		# Update the active camera only if the mode has changed
+		match camera_2d.camera_mode:
+			camera_2d.CameraMode.UNFOCUSED:
+				_toggle_camera("focus")
+			camera_2d.CameraMode.GRAVITY:
+				_toggle_camera("gravity")
+			camera_2d.CameraMode.AXIAL:
+				_toggle_camera("axial")
+			_:
+				# Handle the "no camera selected" case
+				_toggle_camera("none")
 		
+		# Update the last known camera mode
+		last_camera_mode = camera_2d.camera_mode
+	
+	# Handle dash cooldown visibility
 	if dash_cooldown.visible and player and player.has_method("get_dash_cooldown_time_left"):
 		var cooldown_time_left = player.get_dash_cooldown_time_left()
 		dash_cooldown.max_value = 2.0
@@ -42,27 +57,27 @@ func _process(delta):
 
 	# Check for dash input and handle cooldown
 	if Input.is_action_just_pressed("dash"):
-		#print("reconheceu dash")
 		_handle_dash_input()
 
 func _toggle_camera(camera_type: String):
 	# Logic to toggle cameras
 	match camera_type:
 		"focus":
-			is_focus_active = not is_focus_active
-			if is_focus_active:
-				is_gravity_active = false
-				is_axial_active = false
+			is_focus_active = true
+			is_gravity_active = false
+			is_axial_active = false
 		"gravity":
-			is_gravity_active = not is_gravity_active
-			if is_gravity_active:
-				is_focus_active = false
-				is_axial_active = false
+			is_focus_active = false
+			is_gravity_active = true
+			is_axial_active = false
 		"axial":
-			is_axial_active = not is_axial_active
-			if is_axial_active:
-				is_focus_active = false
-				is_gravity_active = false
+			is_focus_active = false
+			is_gravity_active = false
+			is_axial_active = true
+		"none":
+			is_focus_active = false
+			is_gravity_active = false
+			is_axial_active = false
 
 	# Update the icon opacity based on the new states
 	if is_focus_active:
