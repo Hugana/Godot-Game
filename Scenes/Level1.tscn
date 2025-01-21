@@ -1471,7 +1471,7 @@ region = Rect2(192.037, 68.0007, 16.1088, 8.01249)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_654h6"]
 atlas = ExtResource("16_im1c3")
-region = Rect2(208.027, 83.9771, 16.0096, 8.05438)
+region = Rect2(208.027, 83.9771, 16.0096, 8.06705)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_w32d1"]
 atlas = ExtResource("16_im1c3")
