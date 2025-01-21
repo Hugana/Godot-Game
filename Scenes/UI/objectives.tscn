@@ -1,0 +1,63 @@
+[gd_scene load_steps=3 format=3 uid="uid://ddtsw04dt58bu"]
+
+[ext_resource type="Texture2D" uid="uid://0cluwgf15dtu" path="res://Assets/UI/Pixel UI pack 3/Borders.png" id="1_chk57"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_isnqo"]
+atlas = ExtResource("1_chk57")
+region = Rect2(191.882, 128.024, 32.0996, 32.074)
+
+[node name="Objectives" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 307.0
+offset_top = 101.0
+offset_right = -303.0
+offset_bottom = -117.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -231.5
+offset_top = -221.0
+offset_right = 231.5
+offset_bottom = 221.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -248.0
+offset_top = -246.0
+offset_right = 252.0
+offset_bottom = 246.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.203922, 0.12549, 0.282353, 1)
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -267.0
+offset_top = -262.5
+offset_right = 267.0
+offset_bottom = 262.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_isnqo")
