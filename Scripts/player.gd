@@ -375,7 +375,7 @@ func screen_wrap(camera_perpective) -> void:
 				reset_gravity()
 			elif global_position.y < top_edge:
 				reset_gravity()
-		else:
+		elif camera_focus_bool == false:
 			if global_position.x > right_edge:
 				global_position.x = left_edge
 				reset_focus()
@@ -493,6 +493,7 @@ func handle_inputs(direction,delta):
 		camera_focus_bool = !camera_focus_bool
 		gravity_toggle = false
 		print("camera focus bool state: ", camera_focus_bool)
+		camera_perspective = camera_perspectives.NORMAL
 		
 	# Gravity Camera (G)
 	if Input.is_action_just_pressed("gravity_toggle"):
