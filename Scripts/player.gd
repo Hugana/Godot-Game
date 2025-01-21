@@ -57,7 +57,9 @@ var sound_dict = {
 	"jump": preload("res://Assets/sounds/Jump sound effect.mp3"),
 	"landing": preload("res://Assets/sounds/Landing Effect.mp3"),
 	"step": preload("res://Assets/sounds/footsteps-sound-effect.mp3"),
-	"dash": preload("res://Assets/sounds/Dash Sound Effect.mp3")
+	"dash": preload("res://Assets/sounds/Dash Sound Effect.mp3"),
+	"x-ray":preload("res://Assets/sounds/x-ray_sound_effect.mp3"),
+	"sliding": preload("res://Assets/sounds/Sliding_sound_effect.mp3")
 }
 
 # X-ray battery values
@@ -469,6 +471,7 @@ func handle_inputs(direction,delta):
 
 	# X-ray (X)
 	if Input.is_action_just_pressed("x_ray_camera_toggle"):
+		play_sound("x-ray")
 		toggle_xray()
 		
 	# Jump (Space)
@@ -482,6 +485,7 @@ func handle_inputs(direction,delta):
 		
 	# Slide (ctrl)
 	if Input.is_action_just_pressed("slide") and (is_on_floor() or is_on_ceiling()) and not is_sliding and (velocity.x != 0):
+		play_sound("sliding")
 		start_slide(direction)
 	
 	if is_sliding:

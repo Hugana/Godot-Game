@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://chqlmm2ac72ux"]
+[gd_scene load_steps=5 format=3 uid="uid://chqlmm2ac72ux"]
 
 [ext_resource type="FontFile" uid="uid://8kqas1157155" path="res://Assets/fonts/PixelOperator8.ttf" id="1_4iq5k"]
 [ext_resource type="Script" path="res://Scripts/UI/menu.gd" id="1_k7hwd"]
 [ext_resource type="Texture2D" uid="uid://ok0iyoohirr" path="res://Scenes/wpsc.png" id="2_ilgp3"]
+[ext_resource type="AudioStream" uid="uid://cu18qpc07cabx" path="res://Assets/sounds/theme_sound.mp3" id="4_m1lpe"]
 
 [node name="Menu" type="Control"]
 layout_mode = 3
@@ -179,6 +180,11 @@ theme_override_colors/font_hover_color = Color(1, 0, 0, 1)
 theme_override_fonts/font = ExtResource("1_4iq5k")
 theme_override_font_sizes/font_size = 15
 text = "Back"
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_m1lpe")
+volume_db = -26.252
+autoplay = true
 
 [connection signal="pressed" from="Main Menu/Start" to="." method="_on_start_pressed"]
 [connection signal="pressed" from="Main Menu/Options" to="." method="_on_options_pressed"]
