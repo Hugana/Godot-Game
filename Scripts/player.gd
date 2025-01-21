@@ -100,6 +100,7 @@ func _ready() -> void:
 	battery.value = current_battery
 	battery.max_value = max_battery
 	
+	# Audio camara e collision
 	audio_player = get_node(audio_player_node)
 	camera = get_node(camera_node_path)
 	collision_checker = get_node(collision_checker_path)
@@ -477,7 +478,6 @@ func handle_inputs(direction,delta):
 		
 	# Dash (shift)
 	if Input.is_action_just_pressed("dash") and not is_dashing:
-		
 		start_dash(direction)
 		
 	# Slide (ctrl)

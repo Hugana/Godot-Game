@@ -5,6 +5,7 @@ extends CanvasLayer  # Handles UI for displaying camera icons
 @onready var grav_icon: TextureRect = $CameraIcons/GravIcon
 @onready var axial_icon: TextureRect = $CameraIcons/AxialIcon
 @onready var dash_cooldown: TextureProgressBar = $DashCooldown
+@onready var current_objective: Label = $CurrentObjective
 
 @export var player: Node
 
@@ -91,3 +92,22 @@ func _handle_dash_input():
 			dash_cooldown.visible = true
 			dash_cooldown.max_value = 2.0
 			dash_cooldown.value = cooldown_time
+
+
+func _on_level_1_obj_update(objective, progress) -> void:
+	var obj_text : String
+	
+	if objective == "boxes":
+		obj_text = "Activate all of the platforms"
+		current_objective.text = obj_text
+	if objective == "traverse":
+		obj_text = "Find a way to keep moving"
+		current_objective.text = obj_text
+	if objective == "levers":
+		obj_text = "Activate all of the devices in the correct order"
+		current_objective.text = obj_text
+	if objective == "escape":
+		obj_text = "Find a way out"
+		current_objective.text = obj_text
+	if progress:
+		current_objective.text += "(" + str(progress) + "/3)"

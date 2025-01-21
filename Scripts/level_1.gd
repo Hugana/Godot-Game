@@ -3,10 +3,11 @@ extends Node
 @export var timer_display: Node
 
 # Boxes
+var boxes_solved = false
 var platform_states: Array = [false, false, false]
 
 # Levers
-
+var levers_solved = false
 @export var correct_sequence: Array = ["Button1", "Button3", "Button2"]
 var current_sequence: Array = []
 var interactables: Array = []
@@ -14,25 +15,33 @@ var interactables: Array = []
 var level_puzzles: Array = ["boxes", "levers"]
 var puzzles_solved: Array = []
 
+var objectives: Array = ["boxes", "traverse", "levers", "escape"]
+
 signal puzzle_solved(puzzle_name)
 signal level_complete
+signal obj_update
 
 func _ready():
+	#boxes
 	var box_puzzle_elements = get_tree().get_nodes_in_group("puzzle1")
+	
 	for element in box_puzzle_elements:
 		if element.is_in_group("platform"):
 			print("recognized platform")
 			element.connect("activated", Callable(self, "_on_platform_activated"))
 			element.connect("deactivated", Callable(self, "_on_platform_deactivated"))
 	
-	
+	#levers
 	interactables = get_tree().get_nodes_in_group("puzzle3")
+	
 	for interactable in interactables:
 		if interactable.is_in_group("interactable"):
 			interactable.connect("interacted", Callable(self, "_on_interactable_toggled"))
 	
 	if timer_display:
 		connect("puzzle_solved", Callable(timer_display, "_on_puzzle_solved"))
+		
+	update_objective("boxes", "0")
 
 #receber os sinais das plataformas
 func _on_platform_activated(platform_name):
@@ -57,30 +66,39 @@ func _on_platform_deactivated(platform_name):
 
 #formular uma lista que verifica se todas as plataformas estão pressionadas ao mesmo tempo
 func check_platforms():
-	print("platform states: ", platform_states)
-	if not false in platform_states:
-		puzzle_solved.emit("boxes")
+	if !boxes_solved:
+		print("platform states: ", platform_states)
+		if not false in platform_states:
+			puzzle_solved.emit("boxes")
+			update_objective("traverse")
+		else:
+			update_objective("boxes", str(platform_states.count(true)))
 
 
 func _on_interactable_toggled(state: bool, button_name: String):
 	if state:
-		if button_name in correct_sequence:
+		if button_name in correct_sequence and button_name not in current_sequence:
 			current_sequence.append(button_name)
 			print("Current sequence:", current_sequence)
 			_check_sequence()
-		else:
-			pass # logica de outros botões
+		elif button_name == "Exit_Level":
+			exit_level()
 			
 func _check_sequence():
-	for i in range(min(len(current_sequence), len(correct_sequence))):
-		if current_sequence[i] != correct_sequence[i]:
-			print("Wrong sequence!")
-			_reset_sequence()
-			return
-		
-	if len(current_sequence) == len(correct_sequence):
-		print("Levers puzzle solved!")
-		puzzle_solved.emit("levers")
+	if !levers_solved:
+		for i in range(min(len(current_sequence), len(correct_sequence))):
+			if current_sequence[i] != correct_sequence[i]:
+				print("Wrong sequence!")
+				_reset_sequence()
+				return
+			
+		if len(current_sequence) == len(correct_sequence):
+			print("Levers puzzle solved!")
+			puzzle_solved.emit("levers")
+			update_objective("escape")
+		else:
+			print("Progres: ", len(current_sequence))
+			update_objective("levers", len(current_sequence))
 
 func _reset_sequence():
 	print("Resetting sequence.")
@@ -96,4 +114,17 @@ func _check_level_complete():
 	if len(puzzles_solved) == len(level_puzzles):
 		level_complete.emit()
 	
-#coiso
+func update_objective(objective, progress = false):
+	#print("updating obj: ", objective, "progress: ", progress)
+	if objective in objectives:
+		if progress:
+			#print("with progress")
+			obj_update.emit(objective, progress)
+		#print("without progress")
+		obj_update.emit(objective, progress)
+	else:
+		print("Objective not set")
+
+func exit_level():
+	if puzzles_solved and levers_solved:
+		pass #adicionar a label de escape e processar a ida para o menu
