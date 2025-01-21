@@ -1,0 +1,86 @@
+[gd_scene load_steps=6 format=3 uid="uid://ber7uyca8ptfp"]
+
+[ext_resource type="Script" path="res://Scripts/UI/menu.gd" id="1_akfho"]
+[ext_resource type="FontFile" uid="uid://c0hpm1xj735hl" path="res://Assets/fonts/Cyber Alert.ttf" id="2_xk8h8"]
+[ext_resource type="FontFile" uid="uid://8kqas1157155" path="res://Assets/fonts/PixelOperator8.ttf" id="4_l3a8q"]
+[ext_resource type="AudioStream" uid="uid://cu18qpc07cabx" path="res://Assets/sounds/theme_sound.mp3" id="5_48rgu"]
+[ext_resource type="FontFile" uid="uid://dl7e3f1mqb8fr" path="res://Assets/fonts/PixelOperator8-Bold.ttf" id="5_l1pil"]
+
+[node name="Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("1_akfho")
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 2
+offset_left = -286.0
+offset_top = -80.0
+offset_right = 286.0
+offset_bottom = -29.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.788235, 0.952941, 0, 1)
+theme_override_colors/font_shadow_color = Color(1, 0, 0.717647, 1)
+theme_override_fonts/font = ExtResource("2_xk8h8")
+theme_override_font_sizes/font_size = 56
+text = "Second To Zer0"
+
+[node name="BackToMenu" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -148.0
+offset_top = 209.0
+offset_right = 148.0
+offset_bottom = 394.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MainMenu" type="Button" parent="BackToMenu"]
+layout_mode = 2
+theme_type_variation = &"FlatButton"
+theme_override_colors/font_hover_color = Color(0, 0.560784, 0.878431, 1)
+theme_override_fonts/font = ExtResource("4_l3a8q")
+theme_override_font_sizes/font_size = 30
+text = "Main Menu"
+
+[node name="Quit" type="Button" parent="BackToMenu"]
+layout_mode = 2
+theme_type_variation = &"FlatButton"
+theme_override_colors/font_hover_color = Color(1, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_l3a8q")
+theme_override_font_sizes/font_size = 30
+text = "Quit
+"
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_48rgu")
+volume_db = -26.252
+autoplay = true
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -74.0
+offset_top = -192.0
+offset_right = 74.0
+offset_bottom = -169.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("5_l1pil")
+theme_override_font_sizes/font_size = 36
+text = "Thanks for playing..."
+
+[connection signal="pressed" from="BackToMenu/MainMenu" to="." method="_on_main_menu_pressed"]
+[connection signal="pressed" from="BackToMenu/Quit" to="." method="_on_quit_pressed"]

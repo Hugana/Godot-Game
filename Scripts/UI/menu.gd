@@ -62,3 +62,8 @@ func _on_level_select_pressed() -> void:
 	select_level.visible = true
 	options.visible = false
 	pass # Replace with function body.
+
+
+func _on_main_menu_pressed() -> void:
+	SceneHandler.got_to_menu()
+	pass # Replace with function body.
