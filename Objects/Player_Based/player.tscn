@@ -610,6 +610,7 @@ position = Vector2(0, -8)
 shape = SubResource("RectangleShape2D_h6y57")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer2D" parent="."]
+volume_db = -10.097
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
