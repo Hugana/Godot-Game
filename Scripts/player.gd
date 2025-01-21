@@ -59,7 +59,8 @@ var sound_dict = {
 	"step": preload("res://Assets/sounds/footsteps-sound-effect.mp3"),
 	"dash": preload("res://Assets/sounds/Dash Sound Effect.mp3"),
 	"x-ray":preload("res://Assets/sounds/x-ray_sound_effect.mp3"),
-	"sliding": preload("res://Assets/sounds/Sliding_sound_effect.mp3")
+	"sliding": preload("res://Assets/sounds/Sliding_sound_effect.mp3"),
+	"death": preload("res://Assets/sounds/Death.wav")
 }
 
 # X-ray battery values
@@ -553,7 +554,7 @@ func _on_check_collision_body_entered(body: Node2D) -> void:
 		if(inversion == -1):
 			inversion *= -1
 			animated_sprite.scale.y = abs(animated_sprite.scale.y) * inversion
-			
+		play_sound("death")
 		death_bool = true
 		animated_sprite.stop()
 		animated_sprite.play("death")
