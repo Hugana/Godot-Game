@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=3 uid="uid://barbo3y3aan5t"]
+[gd_scene load_steps=46 format=3 uid="uid://barbo3y3aan5t"]
 
 [ext_resource type="Script" path="res://Scripts/tutorial.gd" id="1_8qq37"]
 [ext_resource type="Texture2D" uid="uid://dm8dlkoorq7fy" path="res://Assets/Tiles/Cyberpunk-Sprite/Tiles.png" id="1_bu5ru"]
@@ -20,6 +20,8 @@
 [ext_resource type="Texture2D" uid="uid://5jns804ecwfw" path="res://Assets/UI/Pixel UI pack 3/Bars&Buttons.png" id="18_4a4fl"]
 [ext_resource type="Script" path="res://Scenes/pause_handler.gd" id="19_nbsl0"]
 [ext_resource type="Texture2D" uid="uid://c5n21wje8ye0p" path="res://Assets/UI/back.png" id="20_se8r2"]
+[ext_resource type="Script" path="res://LevelHandle.gd" id="21_3dhjm"]
+[ext_resource type="FontFile" uid="uid://dl7e3f1mqb8fr" path="res://Assets/fonts/PixelOperator8-Bold.ttf" id="22_e80ql"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_uf2iv"]
 texture = ExtResource("1_bu5ru")
@@ -1090,6 +1092,9 @@ region = Rect2(297, 180.992, 32.0034, 5.00067)
 atlas = ExtResource("17_s4aay")
 region = Rect2(57.998, 182.004, 30.004, 3.03122)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oqn0y"]
+size = Vector2(12, 12)
+
 [node name="Game" type="Node2D"]
 script = ExtResource("1_8qq37")
 
@@ -1475,6 +1480,37 @@ theme_override_fonts/font = ExtResource("15_3c1lj")
 theme_override_font_sizes/font_size = 15
 text = "Quit
 "
+
+[node name="LevelHanndler" type="Node" parent="." node_paths=PackedStringArray("checkpoints", "player")]
+script = ExtResource("21_3dhjm")
+checkpoints = [NodePath("../CheckPoint_1")]
+player = NodePath("../Player")
+
+[node name="CheckPoint_1" type="Area2D" parent="."]
+z_index = 27
+position = Vector2(3172, 511)
+collision_layer = 7
+collision_mask = 7
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CheckPoint_1"]
+z_index = 27
+shape = SubResource("RectangleShape2D_oqn0y")
+
+[node name="Sprite2D" type="Sprite2D" parent="CheckPoint_1"]
+z_index = 27
+texture = ExtResource("18_4a4fl")
+region_enabled = true
+region_rect = Rect2(305.082, 3.02167, 13.6359, 27.6403)
+
+[node name="Label" type="Label" parent="CheckPoint_1"]
+z_index = 27
+offset_left = -71.0
+offset_top = -33.0
+offset_right = 83.0
+offset_bottom = -10.0
+theme_override_fonts/font = ExtResource("22_e80ql")
+text = "Checkpoint"
+metadata/_edit_use_anchors_ = true
 
 [connection signal="activated" from="Trigger_Door" to="InteractiveDoor" method="_on_trigger_platform_activated"]
 [connection signal="deactivated" from="Trigger_Door" to="InteractiveDoor" method="_on_trigger_platform_deactivated"]

@@ -49,8 +49,8 @@ func _ready():
 			interactable.connect("interacted", Callable(self, "_on_interactable_toggled"))
 	
 	if timer_display:
-		connect("puzzle_solved", Callable(timer_display, "_on_puzzle_solved"))
-		
+		print("there is timer display")
+		connect("puzzle_solved", Callable(timer_display, "_on_puzzle_solved")) #_on_add_2mins
 	update_objective("boxes", "0")
 	
 	escape_collision.disabled = true
