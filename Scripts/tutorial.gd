@@ -3,13 +3,10 @@ extends Node2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
+	var interactables = get_tree().get_nodes_in_group("interactable")
+	for interactable in interactables:
+		interactable.connect("interacted", Callable(self, "_on_interactable_interacted"))
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-
-
-func _on_interactable_interacted(state: bool) -> void:
+func _on_interactable_interacted(state: bool, button_name : String) -> void:
 	SceneHandler.got_to_level2()

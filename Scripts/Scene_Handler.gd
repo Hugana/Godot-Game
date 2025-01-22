@@ -1,8 +1,10 @@
 extends Node
 
 var menu_scene = "res://Scenes/UI/menu.tscn"
+
 var tutorial = "res://Scenes/Game.tscn"
 var level_1 = "res://Scenes/Level1.tscn"
+
 
 
 func got_to_menu():

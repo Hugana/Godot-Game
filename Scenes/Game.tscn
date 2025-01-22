@@ -1058,7 +1058,7 @@ atlas = ExtResource("3_8fxtu")
 region = Rect2(162.995, 95.9343, 8.94014, 15.1868)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h6t81"]
-size = Vector2(33.5, 72.5)
+size = Vector2(44, 73.25)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_njmf8"]
 atlas = ExtResource("17_s4aay")
@@ -1118,13 +1118,13 @@ player = NodePath("../Player")
 
 [node name="Player" parent="." instance=ExtResource("1_glsjn")]
 z_index = 100
-position = Vector2(7127, 570)
+position = Vector2(1469, 516)
 collision_layer = 6
 collision_mask = 6
 camera_node_path = NodePath("../Camera2D")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(7127, 562)
+position = Vector2(1469, 508)
 zoom = Vector2(1.5, 1.5)
 limit_left = -5000000
 limit_top = -5000000
@@ -1324,11 +1324,12 @@ texture = SubResource("AtlasTexture_3tq0i")
 
 [node name="CollisionShape2D" parent="Interactable" index="1"]
 z_index = 50
-position = Vector2(29.25, 3)
+position = Vector2(30, 3)
 shape = SubResource("RectangleShape2D_h6t81")
 
-[node name="UI" type="CanvasLayer" parent="."]
+[node name="UI" type="CanvasLayer" parent="." node_paths=PackedStringArray("player")]
 script = ExtResource("14_y4fx4")
+player = NodePath("../Player")
 
 [node name="Timer" type="Timer" parent="UI"]
 
@@ -1414,7 +1415,6 @@ texture_progress_offset = Vector2(1, 1)
 
 [connection signal="activated" from="Trigger_Door" to="InteractiveDoor" method="_on_trigger_platform_activated"]
 [connection signal="deactivated" from="Trigger_Door" to="InteractiveDoor" method="_on_trigger_platform_deactivated"]
-[connection signal="interacted" from="Interactable" to="." method="_on_interactable_interacted"]
 
 [editable path="Labels/Interact"]
 [editable path="Labels/GravityCam"]
