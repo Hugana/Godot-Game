@@ -11,7 +11,7 @@ func _process(delta: float) -> void:
 			for body in checkpoint.get_overlapping_bodies():
 				if body == player:
 					current_checkpoint = checkpoint.global_position
-					print("Checkpoint reached at:", current_checkpoint)
+					#print("Checkpoint reached at:", current_checkpoint)
 
 	# Teleport if the player presses the "checkpoint" action
 	if Input.is_action_just_pressed("checkpoint"):

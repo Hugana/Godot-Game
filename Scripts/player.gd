@@ -124,9 +124,6 @@ func rayCastHandleMovables() -> Array:
 	return [false, null, Vector2(0, 0)]
 
 func _physics_process(delta: float) -> void:
-	
-	
-	
 	# Set camera pos
 	var player_local_pos = camera.to_local(global_position)
 	
@@ -387,6 +384,7 @@ func screen_wrap(camera_perpective) -> void:
 			elif global_position.y < top_edge:
 				play_sound("warp")
 				reset_gravity()
+				
 		elif camera_focus_bool == false:
 			if global_position.x > right_edge:
 				play_sound("warp")
@@ -474,6 +472,8 @@ func handle_inputs(direction,delta):
 	
 	# Checkpoints (ESC)
 	if Input.is_action_just_pressed("checkpoint"):
+		inversion = 1
+		animated_sprite.scale.y = abs(animated_sprite.scale.y) * inversion
 		gravity_toggle = false
 		death_bool = false
 	

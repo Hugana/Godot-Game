@@ -30,7 +30,9 @@ signal obj_update
 @onready var escape: Label = $Puzzle3/escape
 @onready var escape_collision: CollisionShape2D = $Puzzle3/escape/Area2D/CollisionShape2D
 
-
+func _process(delta: float) -> void:
+	print("boxes: ", boxes_solved)
+	print("levers: ", levers_solved)
 func _ready():
 	#boxes
 	var box_puzzle_elements = get_tree().get_nodes_in_group("puzzle1")
@@ -80,11 +82,13 @@ func _on_platform_deactivated(platform_name):
 func check_platforms():
 	if !boxes_solved:
 		print("platform states: ", platform_states)
-		if not false in platform_states:
+		if false in platform_states:
+			update_objective("boxes", str(platform_states.count(true)))
+		else:
+			print('entrou a variavel tem qmudar clrrwbeshfjn')
 			puzzle_solved.emit("boxes")
 			update_objective("traverse")
-		else:
-			update_objective("boxes", str(platform_states.count(true)))
+			boxes_solved = true
 
 
 func _on_interactable_toggled(state: bool, button_name: String):
@@ -112,6 +116,7 @@ func _check_sequence():
 		if len(current_sequence) == len(correct_sequence):
 			print("Levers puzzle solved!")
 			puzzle_solved.emit("levers")
+			levers_solved = true
 			update_objective("escape")
 		else:
 			print("Progres: ", len(current_sequence))
@@ -125,12 +130,12 @@ func _reset_sequence():
 
 func _on_puzzle_solved(puzzle):
 	print("puzzle ", puzzle, " complete")
-	puzzle_solved.emit()
 	puzzles_solved.append(puzzle)
 	_check_level_complete()
 	
 func _check_level_complete():
-	if len(puzzles_solved) == len(level_puzzles):
+	print(levers_solved, boxes_solved)
+	if boxes_solved and levers_solved:
 		level_complete.emit()
 	
 func update_objective(objective, progress = false):
