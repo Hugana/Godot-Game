@@ -1423,6 +1423,7 @@ texture_progress_offset = Vector2(1, 1)
 
 [node name="PauseHandler" type="Node" parent="UI"]
 script = ExtResource("19_nbsl0")
+current_lvl = "tutorial"
 
 [node name="TextureRect" type="TextureRect" parent="UI/PauseHandler"]
 visible = false
