@@ -1614,13 +1614,13 @@ player = NodePath("../Player")
 
 [node name="Player" parent="." instance=ExtResource("7_wyajr")]
 z_index = 100
-position = Vector2(149, -22)
+position = Vector2(58, -25)
 collision_layer = 7
 collision_mask = 7
 camera_node_path = NodePath("../Camera2D")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(149, -30)
+position = Vector2(58, -33)
 zoom = Vector2(2, 2)
 limit_left = -5000000
 limit_top = -5000000
@@ -1641,9 +1641,11 @@ position = Vector2(601, 3.25)
 scale = Vector2(25, 1)
 shape = SubResource("WorldBoundaryShape2D_y08fp")
 
-[node name="Exit_Level" parent="." instance=ExtResource("11_4rtme")]
+[node name="Exit_Level" parent="." groups=["puzzle3"] instance=ExtResource("11_4rtme")]
 z_index = 20
 position = Vector2(7160, -68)
+collision_layer = 7
+collision_mask = 7
 
 [node name="Sprite2D" parent="Exit_Level" index="0"]
 texture = SubResource("AtlasTexture_rxihp")
@@ -2048,6 +2050,7 @@ z_index = 20
 position = Vector2(6203, -23)
 collision_layer = 7
 collision_mask = 7
+is_one_shot = false
 
 [node name="Sprite2D" parent="Puzzle3/Button1" index="0"]
 texture = SubResource("AtlasTexture_efvow")
@@ -2061,6 +2064,7 @@ z_index = 20
 position = Vector2(6052, -144)
 collision_layer = 7
 collision_mask = 7
+is_one_shot = false
 
 [node name="Sprite2D" parent="Puzzle3/Button2" index="0"]
 position = Vector2(1, -7)
@@ -2076,6 +2080,7 @@ z_index = 20
 position = Vector2(6074, -182)
 collision_layer = 7
 collision_mask = 7
+is_one_shot = false
 
 [node name="Sprite2D" parent="Puzzle3/Button3" index="0"]
 texture = SubResource("AtlasTexture_efvow")
@@ -2139,6 +2144,9 @@ script = ExtResource("25_3rsd6")
 position = Vector2(145, -162)
 shape = SubResource("RectangleShape2D_fijfn")
 
+[node name="AudioPlayer" type="AudioStreamPlayer" parent="."]
+
+[connection signal="level_complete" from="." to="." method="_on_level_complete"]
 [connection signal="obj_update" from="." to="UI" method="_on_level_1_obj_update"]
 [connection signal="puzzle_solved" from="." to="." method="_on_puzzle_solved"]
 [connection signal="body_entered" from="ObjChecker" to="ObjChecker" method="_on_body_entered"]
