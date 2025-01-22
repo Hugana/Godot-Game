@@ -675,10 +675,9 @@ size = Vector2(32, 9)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_76qg1"]
 size = Vector2(12, 12)
 
-[node name="TestScene" type="Node2D" node_paths=PackedStringArray("checkpoint_1", "checkpoint_2", "player")]
+[node name="TestScene" type="Node2D" node_paths=PackedStringArray("checkpoints", "player")]
 script = ExtResource("1_lavuu")
-checkpoint_1 = NodePath("CheckPoint_1")
-checkpoint_2 = NodePath("CheckPoint_2")
+checkpoints = [NodePath("CheckPoint_1"), NodePath("CheckPoint_2")]
 player = NodePath("Player")
 
 [node name="TileMap" type="TileMap" parent="."]

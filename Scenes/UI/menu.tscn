@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://chqlmm2ac72ux"]
+[gd_scene load_steps=6 format=3 uid="uid://chqlmm2ac72ux"]
 
 [ext_resource type="FontFile" uid="uid://8kqas1157155" path="res://Assets/fonts/PixelOperator8.ttf" id="1_4iq5k"]
 [ext_resource type="Script" path="res://Scripts/UI/menu.gd" id="1_k7hwd"]
 [ext_resource type="Texture2D" uid="uid://ok0iyoohirr" path="res://Scenes/wpsc.png" id="2_ilgp3"]
+[ext_resource type="FontFile" uid="uid://c0hpm1xj735hl" path="res://Assets/fonts/Cyber Alert.ttf" id="3_poloa"]
 [ext_resource type="AudioStream" uid="uid://cu18qpc07cabx" path="res://Assets/sounds/theme_sound.mp3" id="4_m1lpe"]
 
 [node name="Menu" type="Control"]
@@ -18,20 +19,34 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 script = ExtResource("1_k7hwd")
 
+[node name="Title" type="Label" parent="."]
+layout_mode = 2
+offset_left = -286.0
+offset_top = -245.0
+offset_right = 286.0
+offset_bottom = -194.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.788235, 0.952941, 0, 1)
+theme_override_colors/font_shadow_color = Color(1, 0, 0.717647, 1)
+theme_override_fonts/font = ExtResource("3_poloa")
+theme_override_font_sizes/font_size = 56
+text = "Second To Zer0"
+
 [node name="TextureRect" type="TextureRect" parent="."]
+z_index = -55
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -603.0
-offset_top = -366.0
-offset_right = 1701.0
-offset_bottom = 930.0
+offset_left = -613.0
+offset_top = -420.0
+offset_right = 1691.0
+offset_bottom = 876.0
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(0.509087, 0.533094)
+scale = Vector2(0.519059, 0.574688)
 texture = ExtResource("2_ilgp3")
 
 [node name="Main Menu" type="VBoxContainer" parent="."]
@@ -40,19 +55,28 @@ anchors_preset = -1
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -148.0
-offset_top = 235.0
+offset_top = 213.0
 offset_right = 148.0
-offset_bottom = 420.0
+offset_bottom = 398.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Start" type="Button" parent="Main Menu"]
+[node name="New Game" type="Button" parent="Main Menu"]
 layout_mode = 2
 theme_type_variation = &"FlatButton"
 theme_override_colors/font_hover_color = Color(2.11775e-06, 0.56107, 0.878477, 1)
 theme_override_fonts/font = ExtResource("1_4iq5k")
 theme_override_font_sizes/font_size = 20
-text = "Start"
+text = "New Game"
+
+[node name="LevelSelect" type="Button" parent="Main Menu"]
+layout_mode = 2
+theme_type_variation = &"FlatButton"
+theme_override_colors/font_hover_color = Color(0, 0.560784, 0.878431, 1)
+theme_override_fonts/font = ExtResource("1_4iq5k")
+theme_override_font_sizes/font_size = 15
+text = "Level Select
+"
 
 [node name="Options" type="Button" parent="Main Menu"]
 layout_mode = 2
@@ -68,56 +92,9 @@ layout_mode = 2
 theme_type_variation = &"FlatButton"
 theme_override_colors/font_hover_color = Color(1, 0, 0, 1)
 theme_override_fonts/font = ExtResource("1_4iq5k")
-theme_override_font_sizes/font_size = 10
+theme_override_font_sizes/font_size = 15
 text = "Quit
 "
-
-[node name="Start" type="VBoxContainer" parent="."]
-visible = false
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -241.0
-offset_top = 250.0
-offset_right = 242.0
-offset_bottom = 498.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="TestGame" type="Button" parent="Start"]
-visible = false
-layout_mode = 2
-theme_type_variation = &"FlatButton"
-theme_override_fonts/font = ExtResource("1_4iq5k")
-theme_override_font_sizes/font_size = 50
-text = "Teste"
-
-[node name="Game" type="Button" parent="Start"]
-visible = false
-layout_mode = 2
-theme_type_variation = &"FlatButton"
-theme_override_fonts/font = ExtResource("1_4iq5k")
-theme_override_font_sizes/font_size = 50
-text = "Game"
-
-[node name="Select Level" type="Button" parent="Start"]
-layout_mode = 2
-theme_type_variation = &"FlatButton"
-theme_override_colors/font_hover_color = Color(0, 0.560784, 0.878431, 1)
-theme_override_fonts/font = ExtResource("1_4iq5k")
-theme_override_font_sizes/font_size = 20
-text = "Select Level"
-
-[node name="Back" type="Button" parent="Start"]
-layout_mode = 2
-theme_type_variation = &"FlatButton"
-theme_override_colors/font_hover_color = Color(1, 0, 0, 1)
-theme_override_fonts/font = ExtResource("1_4iq5k")
-theme_override_font_sizes/font_size = 15
-text = "Back"
 
 [node name="Select Level" type="VBoxContainer" parent="."]
 visible = false
@@ -134,21 +111,21 @@ offset_bottom = 477.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Level" type="Button" parent="Select Level"]
+[node name="Tutorial" type="Button" parent="Select Level"]
+layout_mode = 2
+theme_type_variation = &"FlatButton"
+theme_override_colors/font_hover_color = Color(0, 0.560784, 0.878431, 1)
+theme_override_fonts/font = ExtResource("1_4iq5k")
+theme_override_font_sizes/font_size = 20
+text = "Tutorial"
+
+[node name="Level 1" type="Button" parent="Select Level"]
 layout_mode = 2
 theme_type_variation = &"FlatButton"
 theme_override_colors/font_hover_color = Color(0, 0.560784, 0.878431, 1)
 theme_override_fonts/font = ExtResource("1_4iq5k")
 theme_override_font_sizes/font_size = 20
 text = "Level 1"
-
-[node name="Level2" type="Button" parent="Select Level"]
-layout_mode = 2
-theme_type_variation = &"FlatButton"
-theme_override_colors/font_hover_color = Color(0, 0.560784, 0.878431, 1)
-theme_override_fonts/font = ExtResource("1_4iq5k")
-theme_override_font_sizes/font_size = 20
-text = "Level 2"
 
 [node name="Back" type="Button" parent="Select Level"]
 layout_mode = 2
@@ -173,6 +150,14 @@ offset_bottom = 442.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="FullScreen" type="Button" parent="Options"]
+layout_mode = 2
+theme_type_variation = &"FlatButton"
+theme_override_colors/font_hover_color = Color(0, 0.560784, 0.878431, 1)
+theme_override_fonts/font = ExtResource("1_4iq5k")
+theme_override_font_sizes/font_size = 15
+text = "Fullscreen"
+
 [node name="Back" type="Button" parent="Options"]
 layout_mode = 2
 theme_type_variation = &"FlatButton"
@@ -186,12 +171,12 @@ stream = ExtResource("4_m1lpe")
 volume_db = -26.252
 autoplay = true
 
-[connection signal="pressed" from="Main Menu/Start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="Main Menu/New Game" to="." method="_on_new_game_pressed"]
+[connection signal="pressed" from="Main Menu/LevelSelect" to="." method="_on_level_select_pressed"]
 [connection signal="pressed" from="Main Menu/Options" to="." method="_on_options_pressed"]
 [connection signal="pressed" from="Main Menu/Quit" to="." method="_on_quit_pressed"]
-[connection signal="pressed" from="Start/TestGame" to="." method="_on_test_game_pressed"]
-[connection signal="pressed" from="Start/Game" to="." method="_on_new_game_pressed"]
-[connection signal="pressed" from="Start/Select Level" to="." method="_on_select_level_pressed"]
-[connection signal="pressed" from="Start/Back" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="Select Level/Tutorial" to="." method="_on_level_pressed"]
+[connection signal="pressed" from="Select Level/Level 1" to="." method="_on_level_1_pressed"]
 [connection signal="pressed" from="Select Level/Back" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="Options/FullScreen" to="." method="_on_full_screen_pressed"]
 [connection signal="pressed" from="Options/Back" to="." method="_on_back_pressed"]
