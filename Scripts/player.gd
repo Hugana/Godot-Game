@@ -180,7 +180,7 @@ func _physics_process(delta: float) -> void:
 	if is_dashing:
 		handle_dash(delta)
 		
-	if is_on_floor() and direction != 0 and not is_sliding and not is_dashing:
+	if (is_on_floor() or is_on_ceiling()) and direction != 0 and not is_sliding and not is_dashing:
 		step_timer -= delta
 		if step_timer <= 0:
 			play_step_sound()
