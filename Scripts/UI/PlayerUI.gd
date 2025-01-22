@@ -24,11 +24,15 @@ var last_camera_mode: int = -1  # Initialize to an invalid state
 
 
 func _ready():
+	
 	_update_icon_opacity(null)
 	
 	dash_cooldown.visible = false
 
 func _process(delta):
+	
+	
+
 	# Check for a change in camera mode
 	if camera_2d.camera_mode != last_camera_mode:
 		# Update the active camera only if the mode has changed
@@ -126,3 +130,4 @@ func _on_level_1_obj_update(objective, progress) -> void:
 		current_objective.text = obj_text
 	if progress:
 		current_objective.text += "(" + str(progress) + "/3)"
+		

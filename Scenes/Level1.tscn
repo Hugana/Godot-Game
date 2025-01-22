@@ -1,4 +1,4 @@
-[gd_scene load_steps=55 format=3 uid="uid://ck5drhb0g6lyq"]
+[gd_scene load_steps=57 format=3 uid="uid://ck5drhb0g6lyq"]
 
 [ext_resource type="Script" path="res://Scripts/level_1.gd" id="1_i1xno"]
 [ext_resource type="Texture2D" uid="uid://dm8dlkoorq7fy" path="res://Assets/Tiles/Cyberpunk-Sprite/Tiles.png" id="2_01n2c"]
@@ -21,6 +21,8 @@
 [ext_resource type="Texture2D" uid="uid://b00uud4cfrbc1" path="res://Assets/UI/Pixel UI pack 3/ProgressBars.png" id="14_otav3"]
 [ext_resource type="Texture2D" uid="uid://5jns804ecwfw" path="res://Assets/UI/Pixel UI pack 3/Bars&Buttons.png" id="16_im1c3"]
 [ext_resource type="PackedScene" uid="uid://0gm11xapo7xo" path="res://Objects/Level_Design/kill_platform.tscn" id="18_7sgn5"]
+[ext_resource type="Script" path="res://Scenes/pause_handler.gd" id="19_yvwe5"]
+[ext_resource type="Texture2D" uid="uid://c5n21wje8ye0p" path="res://Assets/UI/back.png" id="20_6e26q"]
 [ext_resource type="PackedScene" uid="uid://dcp0tqp5ganyh" path="res://Objects/Level_Design/box.tscn" id="20_gi4hf"]
 [ext_resource type="PackedScene" uid="uid://tu2ugte7svm8" path="res://Objects/Level_Design/interactive_door.tscn" id="21_3pnpo"]
 [ext_resource type="PackedScene" uid="uid://3xtcnema66ag" path="res://Objects/Level_Design/pub.tscn" id="22_40fsw"]
@@ -1679,6 +1681,7 @@ grow_horizontal = 0
 theme_override_fonts/font = ExtResource("12_ba77r")
 theme_override_font_sizes/font_size = 20
 script = ExtResource("13_4ugo1")
+current_lvl = "lvl1"
 
 [node name="Battery" type="TextureProgressBar" parent="UI"]
 z_index = 20
@@ -1775,6 +1778,66 @@ text = "
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
+
+[node name="PauseHandler" type="Node" parent="UI"]
+script = ExtResource("19_yvwe5")
+
+[node name="TextureRect" type="TextureRect" parent="UI/PauseHandler"]
+visible = false
+self_modulate = Color(1, 1, 1, 0.631373)
+offset_left = 1.0
+offset_top = 6.0
+offset_right = 219.0
+offset_bottom = 121.337
+scale = Vector2(2.79533, 3.03132)
+texture = ExtResource("20_6e26q")
+expand_mode = 5
+stretch_mode = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/PauseHandler"]
+visible = false
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -75.0
+offset_top = 277.0
+offset_right = 76.0
+offset_bottom = 390.0
+grow_horizontal = 2
+
+[node name="Resume" type="Button" parent="UI/PauseHandler/VBoxContainer"]
+layout_mode = 2
+theme_type_variation = &"FlatButton"
+theme_override_colors/font_hover_color = Color(2.11775e-06, 0.56107, 0.878477, 1)
+theme_override_fonts/font = ExtResource("12_ba77r")
+theme_override_font_sizes/font_size = 20
+text = "Resume"
+
+[node name="Restart Level" type="Button" parent="UI/PauseHandler/VBoxContainer"]
+layout_mode = 2
+theme_type_variation = &"FlatButton"
+theme_override_colors/font_hover_color = Color(0, 0.560784, 0.878431, 1)
+theme_override_fonts/font = ExtResource("12_ba77r")
+theme_override_font_sizes/font_size = 20
+text = "Restart Level
+"
+
+[node name="Main_Menu" type="Button" parent="UI/PauseHandler/VBoxContainer"]
+layout_mode = 2
+theme_type_variation = &"FlatButton"
+theme_override_colors/font_hover_color = Color(2.11775e-06, 0.56107, 0.878477, 1)
+theme_override_fonts/font = ExtResource("12_ba77r")
+theme_override_font_sizes/font_size = 20
+text = "Main Menu"
+
+[node name="Quit" type="Button" parent="UI/PauseHandler/VBoxContainer"]
+layout_mode = 2
+theme_type_variation = &"FlatButton"
+theme_override_colors/font_hover_color = Color(1, 0, 0, 1)
+theme_override_fonts/font = ExtResource("12_ba77r")
+theme_override_font_sizes/font_size = 15
+text = "Quit
+"
 
 [node name="Kill_Platforms" type="Node" parent="."]
 
@@ -2203,6 +2266,10 @@ region_rect = Rect2(305.082, 3.02167, 13.6359, 27.6403)
 
 [connection signal="obj_update" from="." to="UI" method="_on_level_1_obj_update"]
 [connection signal="puzzle_solved" from="." to="." method="_on_puzzle_solved"]
+[connection signal="pressed" from="UI/PauseHandler/VBoxContainer/Resume" to="UI/PauseHandler" method="_on_resume_pressed"]
+[connection signal="pressed" from="UI/PauseHandler/VBoxContainer/Restart Level" to="UI/PauseHandler" method="_on_restart_level_pressed"]
+[connection signal="pressed" from="UI/PauseHandler/VBoxContainer/Main_Menu" to="UI/PauseHandler" method="_on_main_menu_pressed"]
+[connection signal="pressed" from="UI/PauseHandler/VBoxContainer/Quit" to="UI/PauseHandler" method="_on_quit_pressed"]
 [connection signal="body_entered" from="ObjChecker" to="ObjChecker" method="_on_body_entered"]
 
 [editable path="Exit_Level"]

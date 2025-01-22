@@ -67,3 +67,33 @@ func _on_level_select_pressed() -> void:
 func _on_main_menu_pressed() -> void:
 	SceneHandler.got_to_menu()
 	pass # Replace with function body.
+
+
+func _on_death_tutorial_pressed() -> void:
+	SceneHandler.got_to_level_tutorial()
+	pass # Replace with function body.
+
+
+func _on_death_main_menu_pressed() -> void:
+	SceneHandler.got_to_menu()
+	pass # Replace with function body.
+
+
+func _on_death_quit_pressed() -> void:
+	get_tree().quit()
+	pass # Replace with function body.
+
+
+func _on_death_1_level_1_pressed() -> void:
+	SceneHandler.got_to_level1()
+	pass # Replace with function body.
+
+
+func _on_death_1_main_menu_pressed() -> void:
+	SceneHandler.got_to_menu()
+	pass # Replace with function body.
+
+
+func _on_death_1_quit_pressed() -> void:
+	get_tree().quit()
+	pass # Replace with function body.
