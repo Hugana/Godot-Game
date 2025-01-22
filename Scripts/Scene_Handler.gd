@@ -2,7 +2,7 @@ extends Node
 
 var menu_scene = "res://Scenes/UI/menu.tscn"
 var level_1 = "res://Scenes/Game.tscn"
-var level_2 = "res://Scenes/Test_Scene.tscn"
+var level_2 = "res://Scenes/Level1.tscn"
 var level_3
 
 func got_to_menu():
