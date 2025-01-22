@@ -65,7 +65,7 @@ var sound_dict = {
 }
 
 # X-ray battery values
-@export var max_battery = 60.0 # Maximum battery life in seconds
+@export var max_battery = 30.0 # Maximum battery life in seconds
 var current_battery = max_battery
 var xray_active = false
 

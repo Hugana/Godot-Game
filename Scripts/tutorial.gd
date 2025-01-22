@@ -9,4 +9,4 @@ func _ready() -> void:
 
 
 func _on_interactable_interacted(state: bool, button_name : String) -> void:
-	SceneHandler.got_to_level2()
+	SceneHandler.got_to_level1()

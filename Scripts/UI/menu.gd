@@ -2,7 +2,6 @@ extends Control
 
 
 @onready var main_menu: VBoxContainer = $"Main Menu"
-@onready var start: VBoxContainer = $Start
 @onready var select_level: VBoxContainer = $"Select Level"
 @onready var options: VBoxContainer = $Options
 

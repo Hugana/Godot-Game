@@ -35,7 +35,11 @@ func _on_time_up():
 	elif current_lvl == "lvl1":
 		SceneHandler.go_to_deathScreen_lvl1()
 	
-func _on_puzzle_solved():
-	print("Puzzle solved! Adding 120 seconds to the timer.")
+func _on_puzzle_solved(puzzle_name):
+	print("Puzzle ", puzzle_name , " solved! Adding 120 seconds to the timer.")
+	remaining_time += 120
+	_update_label()
+
+func _on_add_2mins():
 	remaining_time += 120
 	_update_label()
