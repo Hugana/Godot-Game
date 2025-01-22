@@ -60,7 +60,8 @@ var sound_dict = {
 	"dash": preload("res://Assets/sounds/Dash Sound Effect.mp3"),
 	"x-ray":preload("res://Assets/sounds/x-ray_sound_effect.mp3"),
 	"sliding": preload("res://Assets/sounds/Sliding_sound_effect.mp3"),
-	"death": preload("res://Assets/sounds/Death.wav")
+	"death": preload("res://Assets/sounds/Death.wav"),
+	"warp": preload("res://Assets/sounds/warp.wav")
 }
 
 # X-ray battery values
@@ -345,16 +346,20 @@ func screen_wrap(camera_perpective) -> void:
 			var center_x = (left_edge + right_edge) / 2
 			var center_y = (top_edge + bottom_edge) / 2
 			if global_position.x > right_edge:
+				play_sound("warp")
 				global_position.x = left_edge
 				global_position.y = center_y - (global_position.y - center_y)
 				reset_axial()
 			elif global_position.x < left_edge:
+				play_sound("warp")
 				global_position.x = right_edge
 				global_position.y = center_y - (global_position.y - center_y)
 				reset_axial()
 			if global_position.y > bottom_edge:
+				play_sound("warp")
 				reset_axial()
 			elif global_position.y < top_edge:
+				play_sound("warp")
 				reset_axial()
 			
 				
@@ -362,12 +367,14 @@ func screen_wrap(camera_perpective) -> void:
 			var center_x = (left_edge + right_edge) / 2
 			var center_y = (top_edge + bottom_edge) / 2
 			if global_position.x > right_edge:
+				play_sound("warp")
 				global_position.x = left_edge
 				global_position.y = global_position.y
 				camera_focus_bool = !camera_focus_bool
 				toogle_gravity()
 				reset_gravity()
 			elif global_position.x < left_edge:
+				play_sound("warp")
 				global_position.x = right_edge
 				global_position.y = global_position.y
 				camera_focus_bool = !camera_focus_bool
@@ -375,19 +382,25 @@ func screen_wrap(camera_perpective) -> void:
 				reset_gravity()
 				
 			if global_position.y > bottom_edge:
+				play_sound("warp")
 				reset_gravity()
 			elif global_position.y < top_edge:
+				play_sound("warp")
 				reset_gravity()
 		elif camera_focus_bool == false:
 			if global_position.x > right_edge:
+				play_sound("warp")
 				global_position.x = left_edge
 				reset_focus()
 			elif global_position.x < left_edge:
+				play_sound("warp")
 				global_position.x = right_edge
 				reset_focus()
 			if global_position.y > bottom_edge:
+				play_sound("warp")
 				reset_focus()
 			elif global_position.y < top_edge:
+				play_sound("warp")
 				reset_focus()
 			
 
