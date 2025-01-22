@@ -1,0 +1,82 @@
+[gd_scene load_steps=5 format=3 uid="uid://bs0hax6e12sbk"]
+
+[ext_resource type="Script" path="res://Scripts/UI/menu.gd" id="1_hvwv1"]
+[ext_resource type="FontFile" uid="uid://c0hpm1xj735hl" path="res://Assets/fonts/Cyber Alert.ttf" id="2_24aix"]
+[ext_resource type="FontFile" uid="uid://8kqas1157155" path="res://Assets/fonts/PixelOperator8.ttf" id="3_w6t75"]
+[ext_resource type="AudioStream" uid="uid://cu18qpc07cabx" path="res://Assets/sounds/theme_sound.mp3" id="4_0fyqs"]
+
+[node name="Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("1_hvwv1")
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 2
+offset_left = -352.0
+offset_top = -80.0
+offset_right = 352.0
+offset_bottom = 25.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.788235, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0.760784, 0.478431, 0, 1)
+theme_override_fonts/font = ExtResource("2_24aix")
+theme_override_font_sizes/font_size = 56
+text = "YOU DIED 
+THE BOMB EXPLODED"
+horizontal_alignment = 1
+
+[node name="BackToMenu" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -142.0
+offset_top = 186.0
+offset_right = 154.0
+offset_bottom = 371.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="death1_Level 1" type="Button" parent="BackToMenu"]
+layout_mode = 2
+theme_type_variation = &"FlatButton"
+theme_override_colors/font_hover_color = Color(0, 0.560784, 0.878431, 1)
+theme_override_fonts/font = ExtResource("3_w6t75")
+theme_override_font_sizes/font_size = 30
+text = "Level 1"
+
+[node name="death1_MainMenu" type="Button" parent="BackToMenu"]
+layout_mode = 2
+theme_type_variation = &"FlatButton"
+theme_override_colors/font_hover_color = Color(0, 0.560784, 0.878431, 1)
+theme_override_fonts/font = ExtResource("3_w6t75")
+theme_override_font_sizes/font_size = 20
+text = "Main Menu"
+
+[node name="death1_Quit" type="Button" parent="BackToMenu"]
+layout_mode = 2
+theme_type_variation = &"FlatButton"
+theme_override_colors/font_hover_color = Color(1, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_w6t75")
+theme_override_font_sizes/font_size = 15
+text = "Quit
+"
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_0fyqs")
+volume_db = -26.252
+autoplay = true
+
+[connection signal="pressed" from="BackToMenu/death1_Level 1" to="." method="_on_death_1_level_1_pressed"]
+[connection signal="pressed" from="BackToMenu/death1_MainMenu" to="." method="_on_death_1_main_menu_pressed"]
+[connection signal="pressed" from="BackToMenu/death1_Quit" to="." method="_on_death_1_quit_pressed"]

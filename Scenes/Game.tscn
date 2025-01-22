@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://barbo3y3aan5t"]
+[gd_scene load_steps=43 format=3 uid="uid://barbo3y3aan5t"]
 
 [ext_resource type="Script" path="res://Scripts/tutorial.gd" id="1_8qq37"]
 [ext_resource type="Texture2D" uid="uid://dm8dlkoorq7fy" path="res://Assets/Tiles/Cyberpunk-Sprite/Tiles.png" id="1_bu5ru"]
@@ -18,6 +18,8 @@
 [ext_resource type="Script" path="res://Scripts/UI/timer_display.gd" id="16_y4egy"]
 [ext_resource type="Texture2D" uid="uid://b00uud4cfrbc1" path="res://Assets/UI/Pixel UI pack 3/ProgressBars.png" id="17_s4aay"]
 [ext_resource type="Texture2D" uid="uid://5jns804ecwfw" path="res://Assets/UI/Pixel UI pack 3/Bars&Buttons.png" id="18_4a4fl"]
+[ext_resource type="Script" path="res://Scenes/pause_handler.gd" id="19_nbsl0"]
+[ext_resource type="Texture2D" uid="uid://c5n21wje8ye0p" path="res://Assets/UI/back.png" id="20_se8r2"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_uf2iv"]
 texture = ExtResource("1_bu5ru")
@@ -1345,6 +1347,7 @@ grow_horizontal = 0
 theme_override_fonts/font = ExtResource("15_3c1lj")
 theme_override_font_sizes/font_size = 20
 script = ExtResource("16_y4egy")
+current_lvl = "tutorial"
 
 [node name="Battery" type="TextureProgressBar" parent="UI"]
 z_index = 20
@@ -1413,8 +1416,72 @@ texture_under = SubResource("AtlasTexture_8gfq3")
 texture_progress = SubResource("AtlasTexture_i25n5")
 texture_progress_offset = Vector2(1, 1)
 
+[node name="PauseHandler" type="Node" parent="UI"]
+script = ExtResource("19_nbsl0")
+
+[node name="TextureRect" type="TextureRect" parent="UI/PauseHandler"]
+visible = false
+self_modulate = Color(1, 1, 1, 0.631373)
+offset_left = 1.0
+offset_top = 6.0
+offset_right = 219.0
+offset_bottom = 121.337
+scale = Vector2(2.79533, 3.03132)
+texture = ExtResource("20_se8r2")
+expand_mode = 5
+stretch_mode = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/PauseHandler"]
+visible = false
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -75.0
+offset_top = 277.0
+offset_right = 76.0
+offset_bottom = 390.0
+grow_horizontal = 2
+
+[node name="Resume" type="Button" parent="UI/PauseHandler/VBoxContainer"]
+layout_mode = 2
+theme_type_variation = &"FlatButton"
+theme_override_colors/font_hover_color = Color(2.11775e-06, 0.56107, 0.878477, 1)
+theme_override_fonts/font = ExtResource("15_3c1lj")
+theme_override_font_sizes/font_size = 20
+text = "Resume"
+
+[node name="Restart Level" type="Button" parent="UI/PauseHandler/VBoxContainer"]
+layout_mode = 2
+theme_type_variation = &"FlatButton"
+theme_override_colors/font_hover_color = Color(0, 0.560784, 0.878431, 1)
+theme_override_fonts/font = ExtResource("15_3c1lj")
+theme_override_font_sizes/font_size = 20
+text = "Restart Level
+"
+
+[node name="Main_Menu" type="Button" parent="UI/PauseHandler/VBoxContainer"]
+layout_mode = 2
+theme_type_variation = &"FlatButton"
+theme_override_colors/font_hover_color = Color(2.11775e-06, 0.56107, 0.878477, 1)
+theme_override_fonts/font = ExtResource("15_3c1lj")
+theme_override_font_sizes/font_size = 20
+text = "Main Menu"
+
+[node name="Quit" type="Button" parent="UI/PauseHandler/VBoxContainer"]
+layout_mode = 2
+theme_type_variation = &"FlatButton"
+theme_override_colors/font_hover_color = Color(1, 0, 0, 1)
+theme_override_fonts/font = ExtResource("15_3c1lj")
+theme_override_font_sizes/font_size = 15
+text = "Quit
+"
+
 [connection signal="activated" from="Trigger_Door" to="InteractiveDoor" method="_on_trigger_platform_activated"]
 [connection signal="deactivated" from="Trigger_Door" to="InteractiveDoor" method="_on_trigger_platform_deactivated"]
+[connection signal="pressed" from="UI/PauseHandler/VBoxContainer/Resume" to="UI/PauseHandler" method="_on_resume_pressed"]
+[connection signal="pressed" from="UI/PauseHandler/VBoxContainer/Restart Level" to="UI/PauseHandler" method="_on_restart_level_pressed"]
+[connection signal="pressed" from="UI/PauseHandler/VBoxContainer/Main_Menu" to="UI/PauseHandler" method="_on_main_menu_pressed"]
+[connection signal="pressed" from="UI/PauseHandler/VBoxContainer/Quit" to="UI/PauseHandler" method="_on_quit_pressed"]
 
 [editable path="Labels/Interact"]
 [editable path="Labels/GravityCam"]
