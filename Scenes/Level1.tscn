@@ -1626,15 +1626,13 @@ player = NodePath("../Player")
 
 [node name="Player" parent="." instance=ExtResource("7_wyajr")]
 z_index = 100
-
-position = Vector2(2819, -602)
-
+position = Vector2(3861, -397)
 collision_layer = 7
 collision_mask = 7
 camera_node_path = NodePath("../Camera2D")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(2787, -589)
+position = Vector2(3861, -403)
 zoom = Vector2(2, 2)
 limit_left = -5000000
 limit_top = -5000000
@@ -2287,6 +2285,7 @@ region_rect = Rect2(305.082, 3.02167, 13.6359, 27.6403)
 [connection signal="pressed" from="UI/PauseHandler/VBoxContainer/Quit" to="UI/PauseHandler" method="_on_quit_pressed"]
 [connection signal="body_entered" from="ObjChecker" to="ObjChecker" method="_on_body_entered"]
 
+[editable path="Player"]
 [editable path="Exit_Level"]
 [editable path="Puzzle3/Button1"]
 [editable path="Puzzle3/Button2"]
