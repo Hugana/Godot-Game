@@ -36,6 +36,7 @@ func _on_resume_pressed() -> void:
 
 
 func _on_restart_level_pressed() -> void:
+	toggle_pause()
 	if current_lvl == "tutorial":
 		SceneHandler.got_to_level_tutorial()
 	elif current_lvl == "lvl1":
@@ -44,10 +45,12 @@ func _on_restart_level_pressed() -> void:
 
 
 func _on_main_menu_pressed() -> void:
+	toggle_pause()
 	SceneHandler.got_to_menu()
 	pass # Replace with function body.
 
 
 func _on_quit_pressed() -> void:
+	toggle_pause()
 	get_tree().quit()
 	pass # Replace with function body.

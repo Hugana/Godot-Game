@@ -1521,7 +1521,7 @@ timer_display = NodePath("UI/TimerDisplay")
 
 [node name="LevelHanndler" type="Node" parent="." node_paths=PackedStringArray("checkpoints", "player")]
 script = ExtResource("2_vorgw")
-checkpoints = [NodePath("../CheckPoint_1"), NodePath("../CheckPoint_3")]
+checkpoints = [NodePath("../CheckPoint_1"), NodePath("../CheckPoint_3"), NodePath("../CheckPoint_2")]
 player = NodePath("../Player")
 
 [node name="Background" type="Control" parent="."]
@@ -1626,7 +1626,9 @@ player = NodePath("../Player")
 
 [node name="Player" parent="." instance=ExtResource("7_wyajr")]
 z_index = 100
-position = Vector2(2787, -581)
+
+position = Vector2(2819, -602)
+
 collision_layer = 7
 collision_mask = 7
 camera_node_path = NodePath("../Camera2D")
@@ -2212,6 +2214,30 @@ script = ExtResource("25_3rsd6")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ObjChecker"]
 position = Vector2(145, -162)
 shape = SubResource("RectangleShape2D_fijfn")
+
+[node name="CheckPoint_2" type="Area2D" parent="."]
+z_index = 27
+position = Vector2(4300, -568)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CheckPoint_2"]
+z_index = 27
+shape = SubResource("RectangleShape2D_tgsr0")
+
+[node name="Sprite2D" type="Sprite2D" parent="CheckPoint_2"]
+z_index = 27
+texture = ExtResource("16_im1c3")
+region_enabled = true
+region_rect = Rect2(305.082, 3.02167, 13.6359, 27.6403)
+
+[node name="Label" type="Label" parent="CheckPoint_2"]
+z_index = 27
+offset_left = -71.0
+offset_top = -33.0
+offset_right = 83.0
+offset_bottom = -10.0
+theme_override_fonts/font = ExtResource("27_cv0ji")
+text = "Checkpoint"
+metadata/_edit_use_anchors_ = true
 
 [node name="CheckPoint_1" type="Area2D" parent="."]
 z_index = 27
