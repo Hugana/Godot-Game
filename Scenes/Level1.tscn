@@ -1521,7 +1521,7 @@ timer_display = NodePath("UI/TimerDisplay")
 
 [node name="LevelHanndler" type="Node" parent="." node_paths=PackedStringArray("checkpoints", "player")]
 script = ExtResource("2_vorgw")
-checkpoints = [NodePath("../CheckPoint_1"), NodePath("../CheckPoint_2"), NodePath("../CheckPoint_3")]
+checkpoints = [NodePath("../CheckPoint_1"), NodePath("../CheckPoint_3")]
 player = NodePath("../Player")
 
 [node name="Background" type="Control" parent="."]
@@ -2236,21 +2236,6 @@ offset_bottom = -10.0
 theme_override_fonts/font = ExtResource("27_cv0ji")
 text = "Checkpoint"
 metadata/_edit_use_anchors_ = true
-
-[node name="CheckPoint_2" type="Area2D" parent="."]
-z_index = 27
-position = Vector2(3225, -675)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CheckPoint_2"]
-z_index = 27
-shape = SubResource("RectangleShape2D_tgsr0")
-
-[node name="Sprite2D" type="Sprite2D" parent="CheckPoint_2"]
-z_index = 27
-position = Vector2(1075, 103)
-texture = ExtResource("16_im1c3")
-region_enabled = true
-region_rect = Rect2(305.082, 3.02167, 13.6359, 27.6403)
 
 [node name="CheckPoint_3" type="Area2D" parent="."]
 z_index = 27
