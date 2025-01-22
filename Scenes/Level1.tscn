@@ -1626,7 +1626,7 @@ player = NodePath("../Player")
 
 [node name="Player" parent="." instance=ExtResource("7_wyajr")]
 z_index = 100
-position = Vector2(3861, -397)
+position = Vector2(2819, -602)
 collision_layer = 7
 collision_mask = 7
 camera_node_path = NodePath("../Camera2D")
