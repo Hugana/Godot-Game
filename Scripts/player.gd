@@ -474,6 +474,7 @@ func handle_inputs(direction,delta):
 	
 	# Checkpoints (ESC)
 	if Input.is_action_just_pressed("checkpoint"):
+		gravity_toggle = false
 		death_bool = false
 	
 	# Pulling (C)
