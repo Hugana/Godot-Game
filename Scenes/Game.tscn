@@ -1488,7 +1488,7 @@ player = NodePath("../Player")
 
 [node name="CheckPoint_1" type="Area2D" parent="."]
 z_index = 27
-position = Vector2(3172, 511)
+position = Vector2(3042, 503)
 collision_layer = 7
 collision_mask = 7
 
