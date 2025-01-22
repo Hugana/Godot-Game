@@ -1781,6 +1781,7 @@ autowrap_mode = 2
 
 [node name="PauseHandler" type="Node" parent="UI"]
 script = ExtResource("19_yvwe5")
+current_lvl = "lvl1"
 
 [node name="TextureRect" type="TextureRect" parent="UI/PauseHandler"]
 visible = false
