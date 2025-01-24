@@ -1626,13 +1626,13 @@ player = NodePath("../Player")
 
 [node name="Player" parent="." instance=ExtResource("7_wyajr")]
 z_index = 100
-position = Vector2(5751, -104)
+position = Vector2(56, -26)
 collision_layer = 7
 collision_mask = 7
 camera_node_path = NodePath("../Camera2D")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(5751, -113)
+position = Vector2(56, -35)
 zoom = Vector2(2, 2)
 limit_left = -5000000
 limit_top = -5000000
