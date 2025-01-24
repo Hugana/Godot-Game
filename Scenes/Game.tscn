@@ -1299,22 +1299,6 @@ collision_layer = 7
 collision_mask = 7
 trigger_name = "Trigger_Door"
 
-[node name="Box" parent="." instance=ExtResource("10_aidjj")]
-z_index = 50
-position = Vector2(6987, 552)
-scale = Vector2(1, 1)
-collision_layer = 7
-collision_mask = 7
-mass = 20.0
-
-[node name="Sprite2D" parent="Box" index="0"]
-position = Vector2(281, 2)
-scale = Vector2(1.5, 1.5)
-
-[node name="CollisionShape2D" parent="Box" index="1"]
-position = Vector2(281, 2)
-scale = Vector2(1.5, 1.5)
-
 [node name="Trigger_Door" parent="." instance=ExtResource("11_u0cfa")]
 position = Vector2(7365, 580)
 collision_layer = 7
@@ -1513,6 +1497,10 @@ theme_override_fonts/font = ExtResource("22_e80ql")
 text = "Checkpoint"
 metadata/_edit_use_anchors_ = true
 
+[node name="Box2" parent="." groups=["puzzle1"] instance=ExtResource("10_aidjj")]
+position = Vector2(7256, 548)
+scale = Vector2(1.5, 1.5)
+
 [connection signal="activated" from="Trigger_Door" to="InteractiveDoor" method="_on_trigger_platform_activated"]
 [connection signal="deactivated" from="Trigger_Door" to="InteractiveDoor" method="_on_trigger_platform_deactivated"]
 [connection signal="pressed" from="UI/PauseHandler/VBoxContainer/Resume" to="UI/PauseHandler" method="_on_resume_pressed"]
@@ -1522,5 +1510,4 @@ metadata/_edit_use_anchors_ = true
 
 [editable path="Labels/Interact"]
 [editable path="Labels/GravityCam"]
-[editable path="Box"]
 [editable path="Interactable"]
